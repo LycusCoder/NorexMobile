@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Logo Kasir POS - Cash Register Icon -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+    
+    <!-- Background Circle -->
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M60,10 A50,50 0 1,1 60,110 A50,50 0 1,1 60,10 Z" />
+    
+    <!-- Cash Register Body -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M35,45 L85,45 L85,85 L35,85 Z" />
+    
+    <!-- Display Screen -->
+    <path
+        android:fillColor="#263238"
+        android:pathData="M40,50 L80,50 L80,60 L40,60 Z" />
+    
+    <!-- Button Grid -->
+    <!-- Row 1 -->
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M42,65 L48,65 L48,70 L42,70 Z" />
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M50,65 L56,65 L56,70 L50,70 Z" />
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M58,65 L64,65 L64,70 L58,70 Z" />
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M66,65 L72,65 L72,70 L66,70 Z" />
+    <path
+        android:fillColor="#FF5722"
+        android:pathData="M74,65 L78,65 L78,70 L74,70 Z" />
+    
+    <!-- Row 2 -->
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M42,72 L48,72 L48,77 L42,77 Z" />
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M50,72 L56,72 L56,77 L50,77 Z" />
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M58,72 L64,72 L64,77 L58,77 Z" />
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M66,72 L72,72 L72,77 L66,77 Z" />
+    <path
+        android:fillColor="#4CAF50"
+        android:pathData="M74,72 L78,72 L78,82 L74,82 Z" />
+    
+    <!-- Row 3 -->
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M42,79 L48,79 L48,82 L42,82 Z" />
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M50,79 L64,79 L64,82 L50,82 Z" />
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M66,79 L72,79 L72,82 L66,82 Z" />
+    
+    <!-- Receipt Paper -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#263238"
+        android:strokeWidth="1"
+        android:pathData="M50,35 L70,35 L70,45 L68,43 L66,45 L64,43 L62,45 L60,43 L58,45 L56,43 L54,45 L52,43 L50,45 Z" />
+    
+    <!-- Receipt Lines -->
+    <path
+        android:strokeColor="#1976D2"
+        android:strokeWidth="1"
+        android:pathData="M53,37 L67,37" />
+    <path
+        android:strokeColor="#1976D2"
+        android:strokeWidth="1"
+        android:pathData="M53,40 L67,40" />
+    <path
+        android:strokeColor="#1976D2"
+        android:strokeWidth="1"
+        android:pathData="M53,43 L60,43" />
+    
+    <!-- Currency Symbol (Rp) -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M88,72 Q92,72 92,68 Q92,64 88,64 L85,64 L85,80 L87,80 L87,72 L88,72 M87,66 L88,66 Q90,66 90,68 Q90,70 88,70 L87,70 Z" />
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M87,72 L92,80" />
+</vector>

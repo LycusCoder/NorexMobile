@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Background Color - Ocean Primary -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#1976D2" />
+        </shape>
+    </item>
+    
+    <!-- Logo in Center -->
+    <item
+        android:drawable="@drawable/logo_kasir"
+        android:gravity="center" />
+    
+</layer-list>
