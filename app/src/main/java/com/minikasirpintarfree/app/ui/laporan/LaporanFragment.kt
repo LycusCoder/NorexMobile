@@ -55,16 +55,12 @@ class LaporanFragment : Fragment() {
     }
     
     private fun setupClickListeners() {
-        binding.btnHariIni.setOnClickListener {
-            viewModel.loadTransaksiHariIni()
-        }
-        
-        binding.btnMingguIni.setOnClickListener {
-            viewModel.loadTransaksiMingguIni()
-        }
-        
-        binding.btnBulanIni.setOnClickListener {
-            viewModel.loadTransaksiBulanIni()
+        binding.radioGroupPeriod.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.radioHariIni -> viewModel.loadTransaksiHariIni()
+                R.id.radioMingguIni -> viewModel.loadTransaksiMingguIni()
+                R.id.radioBulanIni -> viewModel.loadTransaksiBulanIni()
+            }
         }
         
         binding.btnExportPdf.setOnClickListener {
@@ -78,10 +74,6 @@ class LaporanFragment : Fragment() {
                 updateStatistics()
                 updateChart()
             }
-        }
-        
-        viewModel.selectedPeriod.observe(viewLifecycleOwner) { period ->
-            binding.tvSelectedPeriod.text = "Periode: $period"
         }
     }
     

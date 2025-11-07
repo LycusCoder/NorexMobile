@@ -6,6 +6,7 @@
     <color name="grey">#9E9E9E</color>
     <color name="light_grey">#F5F5F5</color>
     <color name="dark_grey">#424242</color>
+    <color name="background">#F5F5F5</color>
     
     <!-- Legacy Colors (backward compatibility) -->
     <color name="orange">#FF9800</color>

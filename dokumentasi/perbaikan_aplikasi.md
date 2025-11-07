@@ -218,8 +218,19 @@ Semua karakter `&` dalam string XML harus di-escape menjadi `&amp;` untuk menghi
 - ✅ Personalisasi user experience
 - ✅ Tema tersimpan permanen
 - ✅ Smooth theme switching
-- ✅ Build error fixed (missing @color/white)
+- ✅ Build error fixed (missing @color/white & @color/background)
 - ✅ Modern UI dengan berbagai pilihan warna
+
+#### Build Fixes
+**Issue 1: Missing @color/white**
+- Added `<color name="white">#FFFFFF</color>` to colors.xml
+
+**Issue 2: Missing @color/background**  
+- Added `<color name="background">#F5F5F5</color>` to colors.xml
+- Affected files: fragment_dashboard.xml, fragment_laporan.xml, fragment_notifications.xml, fragment_produk.xml, fragment_transaksi.xml
+
+**Issue 3: XML Entity Error**
+- Changed `&` to `&amp;` in dialog_theme_selector.xml
 
 ---
 

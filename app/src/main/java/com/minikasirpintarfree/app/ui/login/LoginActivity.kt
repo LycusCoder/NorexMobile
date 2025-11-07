@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.minikasirpintarfree.app.R
 import com.minikasirpintarfree.app.databinding.ActivityLoginBinding
-import com.minikasirpintarfree.app.ui.dashboard.DashboardActivity
+import com.minikasirpintarfree.app.MainActivity
 import com.minikasirpintarfree.app.viewmodel.LoginViewModel
 import com.minikasirpintarfree.app.viewmodel.LoginViewModelFactory
 
@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
         
         // Check if already logged in
         if (viewModel.isLoggedIn()) {
-            startActivity(Intent(this, DashboardActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
             return
         }
@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
             
             if (viewModel.login(username, password)) {
                 Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, DashboardActivity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {
                 Toast.makeText(this, "Username atau password salah", Toast.LENGTH_SHORT).show()
