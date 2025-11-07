@@ -11,12 +11,16 @@ import androidx.navigation.ui.NavigationUI
 import androidx.preference.PreferenceManager
 import com.minikasirpintarfree.app.databinding.ActivityMainBinding
 import com.minikasirpintarfree.app.ui.login.LoginActivity
+import com.minikasirpintarfree.app.utils.ThemeHelper
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Apply theme before super.onCreate
+        ThemeHelper.applyTheme(this)
+        
         super.onCreate(savedInstanceState)
         
         // Check login status first
@@ -36,6 +40,9 @@ class MainActivity : AppCompatActivity() {
             setContentView(binding.root)
             
             setSupportActionBar(binding.toolbar)
+            
+            // Apply theme color to toolbar
+            binding.toolbar.setBackgroundColor(ThemeHelper.getToolbarColor(this))
             
             // Setup Navigation Component
             val navHostFragment = supportFragmentManager

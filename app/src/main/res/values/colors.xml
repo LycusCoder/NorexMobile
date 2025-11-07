@@ -1,7 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="orange">#FF9800</color>
+    <!-- Base Colors -->
+    <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="grey">#9E9E9E</color>
+    <color name="light_grey">#F5F5F5</color>
+    <color name="dark_grey">#424242</color>
+    
+    <!-- Legacy Colors (backward compatibility) -->
+    <color name="orange">#FF9800</color>
     <color name="red">#FF5722</color>
+    
+    <!-- Ocean Blue Theme -->
+    <color name="ocean_primary">#1976D2</color>
+    <color name="ocean_primary_dark">#0D47A1</color>
+    <color name="ocean_accent">#03A9F4</color>
+    <color name="ocean_light">#E3F2FD</color>
+    
+    <!-- Forest Green Theme -->
+    <color name="forest_primary">#388E3C</color>
+    <color name="forest_primary_dark">#1B5E20</color>
+    <color name="forest_accent">#66BB6A</color>
+    <color name="forest_light">#E8F5E9</color>
+    
+    <!-- Royal Purple Theme -->
+    <color name="royal_primary">#7B1FA2</color>
+    <color name="royal_primary_dark">#4A148C</color>
+    <color name="royal_accent">#AB47BC</color>
+    <color name="royal_light">#F3E5F5</color>
+    
+    <!-- Sunset Orange Theme (Modern) -->
+    <color name="sunset_primary">#F57C00</color>
+    <color name="sunset_primary_dark">#E65100</color>
+    <color name="sunset_accent">#FF9800</color>
+    <color name="sunset_light">#FFF3E0</color>
+    
+    <!-- Crimson Red Theme -->
+    <color name="crimson_primary">#D32F2F</color>
+    <color name="crimson_primary_dark">#B71C1C</color>
+    <color name="crimson_accent">#EF5350</color>
+    <color name="crimson_light">#FFEBEE</color>
+    
+    <!-- Dark Mode Theme -->
+    <color name="dark_primary">#212121</color>
+    <color name="dark_primary_dark">#000000</color>
+    <color name="dark_accent">#BB86FC</color>
+    <color name="dark_surface">#303030</color>
+    <color name="dark_background">#121212</color>
+    
+    <!-- Dynamic Theme Colors (will be changed based on selected theme) -->
+    <color name="colorPrimary">#F57C00</color>
+    <color name="colorPrimaryDark">#E65100</color>
+    <color name="colorAccent">#FF9800</color>
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorOnBackground">#000000</color>
+    <color name="colorOnSurface">#000000</color>
 </resources>
 

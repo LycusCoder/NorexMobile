@@ -1,6 +1,232 @@
 # 📋 Dokumentasi Perbaikan Aplikasi Mini Kasir Pintar
 
 ## 📌 Overview
+Dokumen ini berisi rencana perbaikan aplikasi Mini Kasir Pintar dari masalah kritis hingga technical debt. Perbaikan dibagi menjadi beberapa fase berdasarkan prioritas.
+
+---
+
+## ✅ FASE 4: REFACTORING KE SINGLE-ACTIVITY ARCHITECTURE - **SELESAI**
+
+### 4.1 ✅ Migrasi ke Single-Activity + Fragments dengan Navigation Component
+
+**Status: SELESAI ✅**
+
+#### Masalah
+- Aplikasi menggunakan Multi-Activity Architecture (5 Activities terpisah)
+- BottomNavigationView hilang setiap kali pindah activity
+- Navigasi menggunakan `startActivity()` - tidak efisien dan menyebabkan "kedip"
+- User experience kurang smooth karena activity transition yang terlalu visible
+
+#### Solusi yang Diimplementasikan
+
+**Arsitektur Baru:**
+```
+MainActivity (Single Activity Host)
+  ├─ Toolbar (persistent)
+  ├─ NavHostFragment (dynamic content)
+  │   ├─ DashboardFragment ✅
+  │   ├─ ProdukFragment ✅
+  │   ├─ TransaksiFragment ✅
+  │   ├─ LaporanFragment ✅
+  │   ├─ SettingsFragment ✅
+  │   └─ NotificationsFragment ✅
+  └─ BottomNavigationView (persistent)
+```
+
+**File yang Dibuat/Dimodifikasi:**
+
+1. **Navigation Graph**
+   - Created: `res/navigation/mobile_navigation.xml`
+   - Define 6 fragments sebagai destinations
+   - Setup navigation actions antar fragments
+   - Set `dashboardFragment` sebagai startDestination
+
+2. **Fragment Classes (6 files)**
+   - Created: `DashboardFragment.kt`
+   - Created: `ProdukFragment.kt`
+   - Created: `TransaksiFragment.kt`
+   - Created: `LaporanFragment.kt`
+   - Created: `SettingsFragment.kt`
+   - Created: `NotificationsFragment.kt`
+   
+   **Key Migration Changes:**
+   - `onCreate()` → `onViewCreated()`
+   - Activity context → `requireContext()` / `requireActivity()`
+   - `startActivity()` → `findNavController().navigate()`
+   - `supportFragmentManager` → `parentFragmentManager`
+   - ViewBinding with nullable `_binding` pattern
+   - Proper cleanup in `onDestroyView()`
+
+3. **Fragment Layouts (6 files)**
+   - Created: `fragment_dashboard.xml`
+   - Created: `fragment_produk.xml`
+   - Created: `fragment_transaksi.xml`
+   - Created: `fragment_laporan.xml`
+   - Created: `fragment_settings.xml`
+   - Created: `fragment_notifications.xml`
+   
+   Note: Toolbar & BottomNavigationView removed from fragment layouts (now in MainActivity)
+
+4. **MainActivity.kt**
+   - Setup NavController with FragmentContainerView
+   - Wire up BottomNavigationView using `NavigationUI.setupWithNavController()`
+   - Handle toolbar menu navigation
+   - Auto-sync bottom nav with current fragment
+
+5. **AndroidManifest.xml**
+   - Removed: DashboardActivity, ProdukActivity, TransaksiActivity, LaporanActivity, SettingsActivity, NotificationsActivity
+   - Kept: MainActivity & LoginActivity (separate flow)
+
+6. **Cleanup**
+   - Deleted: All old Activity files (6 files)
+   - Deleted: All old Activity layouts (6 files)
+
+#### Benefits
+
+**User Experience:**
+- ✅ BottomNav selalu visible (tidak hilang lagi!)
+- ✅ Navigasi smooth tanpa "kedip"
+- ✅ Transisi antar layar lebih cepat
+- ✅ Better back button behavior dengan Navigation Component
+
+**Technical:**
+- ✅ Modern Android Architecture (Best Practice)
+- ✅ Memory efficient (1 Activity vs 5 Activities)
+- ✅ Navigation logic centralized di nav_graph
+- ✅ Easier maintenance & testing
+- ✅ Type-safe navigation dengan Navigation Component
+- ✅ Shared ViewModel support antar fragments
+- ✅ Fragment lifecycle properly managed
+
+#### Navigation Patterns
+
+**BottomNavigation (Auto-handled):**
+```kotlin
+NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
+```
+- Home → DashboardFragment
+- Produk → ProdukFragment
+- Transaksi → TransaksiFragment
+- Laporan → LaporanFragment
+- Pengaturan → SettingsFragment
+
+**Programmatic Navigation:**
+```kotlin
+// From DashboardFragment
+findNavController().navigate(R.id.action_dashboard_to_produk)
+
+// From Toolbar menu
+navController.navigate(R.id.notificationsFragment)
+
+// Logout (separate activity flow)
+startActivity(Intent(requireActivity(), LoginActivity::class.java))
+requireActivity().finish()
+```
+
+#### Testing Checklist
+- ✅ Login flow still separate (LoginActivity)
+- ✅ Bottom nav transitions smooth
+- ✅ All menu cards clickable from Dashboard
+- ✅ Toolbar notifications icon navigates correctly
+- ✅ Back button behavior correct
+- ✅ No "kedip" during navigation
+- ✅ BottomNav always visible across fragments
+
+---
+
+## ✅ FASE 5: SISTEM TEMA MODERN - **SELESAI**
+
+### 5.1 ✅ Multiple Theme Options dengan Theme Selector
+
+**Status: SELESAI ✅**
+
+#### Masalah
+- Build error: `@color/white` tidak ditemukan di `colors.xml`
+- Tema aplikasi hanya kuning (orange) default
+- Tidak ada pilihan tema untuk user
+- UI terlihat monoton dan tidak customizable
+
+#### Solusi yang Diimplementasikan
+
+**6 Tema Modern:**
+1. **Ocean Blue** - Professional & modern (biru elegan)
+2. **Forest Green** - Segar & tenang (hijau natural)
+3. **Royal Purple** - Elegan & premium (ungu royal)
+4. **Sunset Orange** - Hangat & modern (default saat ini)
+5. **Crimson Red** - Berani & energik (merah berani)
+6. **Dark Mode** - Tema gelap ramah mata
+
+**File yang Dibuat/Dimodifikasi:**
+
+1. **colors.xml**
+   - Fixed: Added missing `@color/white` and base colors
+   - Added: Warna untuk 6 tema (primary, primaryDark, accent per tema)
+   - Added: Common colors (black, white, grey, light_grey, background, etc.)
+
+2. **themes.xml**
+   - Updated: Base theme untuk support dynamic colors
+   - Created: 6 theme styles (`Theme.Ocean`, `Theme.Forest`, `Theme.Royal`, `Theme.Sunset`, `Theme.Crimson`, `Theme.Dark`)
+   - Each theme menggunakan warna primary, primaryDark, dan accent yang berbeda
+
+3. **ThemeHelper.kt**
+   - Created: Utility class untuk manage tema
+   - Functions:
+     - `applyTheme()` - Apply tema berdasarkan nama
+     - `saveTheme()` - Simpan preferensi tema ke SharedPreferences
+     - `getSavedTheme()` - Load tema yang tersimpan
+     - `getThemeName()` - Get display name dari tema
+
+4. **dialog_theme_selector.xml**
+   - Created: Dialog layout untuk theme picker
+   - Shows 6 theme cards with preview color & description
+   - Fixed XML entity error (`&` → `&amp;`)
+
+5. **SettingsFragment.kt**
+   - Updated: Implement `showThemeDialog()` dengan real functionality
+   - Show theme selector dialog saat "Pilih Tema" diklik
+   - Apply & save tema saat user memilih
+   - Recreate activity untuk apply tema baru
+
+6. **MainActivity.kt**
+   - Updated: Apply saved theme di `onCreate()`
+   - Call `ThemeHelper.applyTheme()` before `setContentView()`
+   - Ensure tema persistence across app restarts
+
+#### Cara Kerja
+1. User membuka **Pengaturan** → **Pilih Tema**
+2. Dialog menampilkan 6 pilihan tema dengan preview warna
+3. User tap pada tema yang diinginkan
+4. Tema langsung ter-apply dan tersimpan di SharedPreferences
+5. Activity di-recreate untuk menampilkan tema baru
+6. Tema akan tetap ter-apply saat app dibuka kembali
+
+#### XML Fix (Build Error)
+**Problem:**
+```xml
+android:text="Professional & modern"  <!-- ❌ Error: invalid entity -->
+```
+
+**Solution:**
+```xml
+android:text="Professional &amp; modern"  <!-- ✅ Fixed -->
+```
+
+Semua karakter `&` dalam string XML harus di-escape menjadi `&amp;` untuk menghindari XML parsing error.
+
+#### Benefits
+- ✅ User punya pilihan 6 tema modern
+- ✅ Personalisasi user experience
+- ✅ Tema tersimpan permanen
+- ✅ Smooth theme switching
+- ✅ Build error fixed (missing @color/white)
+- ✅ Modern UI dengan berbagai pilihan warna
+
+---
+
+
+# 📋 Dokumentasi Perbaikan Aplikasi Mini Kasir Pintar
+
+## 📌 Overview
 Dokumen ini berisi rencana perbaikan aplikasi Mini Kasir Pintar dari masalah kritis hingga technical debt. Perbaikan dibagi menjadi 3 fase berdasarkan prioritas.
 
 ---

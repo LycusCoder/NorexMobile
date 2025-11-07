@@ -1,9 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Base Theme -->
     <style name="Theme.MiniKasir" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">#FF9800</item>
-        <item name="colorPrimaryDark">#F57C00</item>
-        <item name="colorAccent">#FF9800</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    
+    <!-- Ocean Blue Theme -->
+    <style name="Theme.MiniKasir.Ocean" parent="Theme.MiniKasir">
+        <item name="colorPrimary">@color/ocean_primary</item>
+        <item name="colorPrimaryDark">@color/ocean_primary_dark</item>
+        <item name="colorAccent">@color/ocean_accent</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+    </style>
+    
+    <!-- Forest Green Theme -->
+    <style name="Theme.MiniKasir.Forest" parent="Theme.MiniKasir">
+        <item name="colorPrimary">@color/forest_primary</item>
+        <item name="colorPrimaryDark">@color/forest_primary_dark</item>
+        <item name="colorAccent">@color/forest_accent</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+    </style>
+    
+    <!-- Royal Purple Theme -->
+    <style name="Theme.MiniKasir.Royal" parent="Theme.MiniKasir">
+        <item name="colorPrimary">@color/royal_primary</item>
+        <item name="colorPrimaryDark">@color/royal_primary_dark</item>
+        <item name="colorAccent">@color/royal_accent</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+    </style>
+    
+    <!-- Sunset Orange Theme (Modern) -->
+    <style name="Theme.MiniKasir.Sunset" parent="Theme.MiniKasir">
+        <item name="colorPrimary">@color/sunset_primary</item>
+        <item name="colorPrimaryDark">@color/sunset_primary_dark</item>
+        <item name="colorAccent">@color/sunset_accent</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+    </style>
+    
+    <!-- Crimson Red Theme -->
+    <style name="Theme.MiniKasir.Crimson" parent="Theme.MiniKasir">
+        <item name="colorPrimary">@color/crimson_primary</item>
+        <item name="colorPrimaryDark">@color/crimson_primary_dark</item>
+        <item name="colorAccent">@color/crimson_accent</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+    </style>
+    
+    <!-- Dark Mode Theme -->
+    <style name="Theme.MiniKasir.Dark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/dark_primary</item>
+        <item name="colorPrimaryDark">@color/dark_primary_dark</item>
+        <item name="colorAccent">@color/dark_accent</item>
+        <item name="android:colorBackground">@color/dark_background</item>
+        <item name="colorSurface">@color/dark_surface</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

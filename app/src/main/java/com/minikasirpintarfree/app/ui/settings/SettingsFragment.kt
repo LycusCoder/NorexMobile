@@ -16,6 +16,7 @@ import com.minikasirpintarfree.app.data.repository.ProdukRepository
 import com.minikasirpintarfree.app.data.repository.TransaksiRepository
 import com.minikasirpintarfree.app.databinding.FragmentSettingsBinding
 import com.minikasirpintarfree.app.ui.login.LoginActivity
+import com.minikasirpintarfree.app.utils.ThemeHelper
 import com.minikasirpintarfree.app.viewmodel.LoginViewModel
 import com.minikasirpintarfree.app.viewmodel.LoginViewModelFactory
 import com.minikasirpintarfree.app.viewmodel.SettingsViewModel
@@ -101,17 +102,78 @@ class SettingsFragment : Fragment() {
     }
     
     private fun loadCurrentSettings() {
+        // Update current theme display
+        val currentTheme = ThemeHelper.getCurrentTheme(requireContext())
+        val themeName = ThemeHelper.getThemeDisplayName(currentTheme)
+        binding.tvCurrentTheme.text = "Tema Saat Ini: $themeName"
+        
+        // Hide switch for backward compatibility
         binding.switchTheme.isChecked = false
         binding.switchTheme.isEnabled = false
     }
     
     private fun showThemeDialog() {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Tema Aplikasi")
-            .setMessage("Fitur tema aplikasi sedang dalam pengembangan dan akan segera hadir di versi berikutnya.")
-            .setPositiveButton("OK", null)
-            .setIcon(android.R.drawable.ic_dialog_info)
-            .show()
+        val dialogView = layoutInflater.inflate(R.layout.dialog_theme_selector, null)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .create()
+        
+        // Ocean Blue
+        dialogView.findViewById<View>(R.id.cardThemeOcean).setOnClickListener {
+            applyTheme(ThemeHelper.THEME_OCEAN)
+            dialog.dismiss()
+        }
+        
+        // Forest Green
+        dialogView.findViewById<View>(R.id.cardThemeForest).setOnClickListener {
+            applyTheme(ThemeHelper.THEME_FOREST)
+            dialog.dismiss()
+        }
+        
+        // Royal Purple
+        dialogView.findViewById<View>(R.id.cardThemeRoyal).setOnClickListener {
+            applyTheme(ThemeHelper.THEME_ROYAL)
+            dialog.dismiss()
+        }
+        
+        // Sunset Orange
+        dialogView.findViewById<View>(R.id.cardThemeSunset).setOnClickListener {
+            applyTheme(ThemeHelper.THEME_SUNSET)
+            dialog.dismiss()
+        }
+        
+        // Crimson Red
+        dialogView.findViewById<View>(R.id.cardThemeCrimson).setOnClickListener {
+            applyTheme(ThemeHelper.THEME_CRIMSON)
+            dialog.dismiss()
+        }
+        
+        // Dark Mode
+        dialogView.findViewById<View>(R.id.cardThemeDark).setOnClickListener {
+            applyTheme(ThemeHelper.THEME_DARK)
+            dialog.dismiss()
+        }
+        
+        dialog.show()
+    }
+    
+    private fun applyTheme(theme: String) {
+        // Save theme preference
+        ThemeHelper.saveTheme(requireContext(), theme)
+        
+        // Update display
+        val themeName = ThemeHelper.getThemeDisplayName(theme)
+        binding.tvCurrentTheme.text = "Tema Saat Ini: $themeName"
+        
+        // Show toast
+        Toast.makeText(
+            requireContext(),
+            "Tema $themeName diterapkan! Restart aplikasi untuk melihat perubahan.",
+            Toast.LENGTH_LONG
+        ).show()
+        
+        // Recreate activity to apply theme
+        requireActivity().recreate()
     }
     
     private fun showChangePasswordDialog() {
