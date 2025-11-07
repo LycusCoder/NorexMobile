@@ -18,10 +18,13 @@ import com.minikasirpintarfree.app.ui.login.LoginActivity
 import com.minikasirpintarfree.app.ui.notifications.NotificationsActivity
 import com.minikasirpintarfree.app.viewmodel.SettingsViewModel
 import com.minikasirpintarfree.app.viewmodel.SettingsViewModelFactory
+import com.minikasirpintarfree.app.viewmodel.LoginViewModel
+import com.minikasirpintarfree.app.viewmodel.LoginViewModelFactory
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var viewModel: SettingsViewModel
+    private lateinit var loginViewModel: LoginViewModel
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +38,9 @@ class SettingsActivity : AppCompatActivity() {
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
             
             viewModel = ViewModelProvider(this, SettingsViewModelFactory(produkRepository, transaksiRepository, sharedPreferences))[SettingsViewModel::class.java]
+            
+            // Initialize LoginViewModel untuk fungsi change password
+            loginViewModel = ViewModelProvider(this, LoginViewModelFactory(sharedPreferences))[LoginViewModel::class.java]
             
             setSupportActionBar(binding.toolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -115,9 +121,14 @@ class SettingsActivity : AppCompatActivity() {
                 val newPassword = etNewPassword.text.toString()
                 val confirmPassword = etConfirmPassword.text.toString()
                 
-                // Validate old password (placeholder - implement actual validation)
+                // Validasi input
                 if (oldPassword.isEmpty()) {
                     Toast.makeText(this, "Password lama harus diisi", Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+                
+                if (newPassword.isEmpty()) {
+                    Toast.makeText(this, "Password baru harus diisi", Toast.LENGTH_SHORT).show()
                     return@setPositiveButton
                 }
                 
@@ -131,8 +142,14 @@ class SettingsActivity : AppCompatActivity() {
                     return@setPositiveButton
                 }
                 
-                // Change password logic would go here
-                Toast.makeText(this, "Password berhasil diubah", Toast.LENGTH_SHORT).show()
+                // Panggil LoginViewModel untuk change password
+                val success = loginViewModel.changePassword(oldPassword, newPassword)
+                
+                if (success) {
+                    Toast.makeText(this, "Password berhasil diubah", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Password lama salah", Toast.LENGTH_SHORT).show()
+                }
             }
             .setNegativeButton("Batal", null)
             .show()

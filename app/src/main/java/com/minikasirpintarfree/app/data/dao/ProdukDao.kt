@@ -35,5 +35,15 @@ interface ProdukDao {
     
     @Query("SELECT COUNT(*) FROM produk")
     fun getTotalProduk(): Flow<Int>
+    
+    /**
+     * Atomic operation untuk mengurangi stok produk
+     * Query ini akan:
+     * 1. Mengurangi stok secara atomic di database level
+     * 2. Hanya update jika stok >= quantity (kondisi dalam WHERE clause)
+     * 3. Return jumlah row yang ter-update (0 jika gagal/stok tidak cukup, 1 jika berhasil)
+     */
+    @Query("UPDATE produk SET stok = stok - :quantity WHERE id = :productId AND stok >= :quantity")
+    suspend fun decrementStok(productId: Long, quantity: Int): Int
 }
 

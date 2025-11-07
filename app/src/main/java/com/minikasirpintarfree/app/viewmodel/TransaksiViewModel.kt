@@ -125,16 +125,16 @@ class TransaksiViewModel(
                     return@launch
                 }
                 
-                // Update stok produk
+                // Update stok produk menggunakan atomic operation
+                // Ini mencegah race condition karena operasi dilakukan di database level
                 _cartItems.value.forEach { item ->
-                    val produk = produkRepository.getProdukById(item.produkId)
-                    produk?.let {
-                        val updatedProduk = it.copy(stok = it.stok - item.quantity)
-                        if (updatedProduk.stok >= 0) {
-                            produkRepository.updateProduk(updatedProduk)
-                        } else {
-                            throw Exception("Stok ${it.nama} tidak mencukupi")
-                        }
+                    val rowsUpdated = produkRepository.decrementStok(item.produkId, item.quantity)
+                    
+                    if (rowsUpdated == 0) {
+                        // Jika return 0, berarti stok tidak cukup atau produk tidak ditemukan
+                        val produk = produkRepository.getProdukById(item.produkId)
+                        val produkNama = produk?.nama ?: "Produk ID ${item.produkId}"
+                        throw Exception("Stok $produkNama tidak mencukupi")
                     }
                 }
                 

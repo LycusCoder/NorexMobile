@@ -24,5 +24,11 @@ class ProdukRepository(private val produkDao: ProdukDao) {
     suspend fun deleteAllProduk() = produkDao.deleteAllProduk()
     
     fun getTotalProduk(): Flow<Int> = produkDao.getTotalProduk()
+    
+    /**
+     * Atomic operation untuk mengurangi stok produk
+     * @return jumlah row yang ter-update (0 jika gagal, 1 jika berhasil)
+     */
+    suspend fun decrementStok(productId: Long, quantity: Int): Int = produkDao.decrementStok(productId, quantity)
 }
 
