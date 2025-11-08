@@ -1,7 +1,7 @@
 package com.minikasirpintarfree.app.ui.dashboard
 
-import android.app.AlertDialog // Pastikan pakai android.app.AlertDialog atau androidx.appcompat.app.AlertDialog
-import android.content.Intent // Digunakan untuk shareReceipt
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController // Tetap ada, meski tidak dipakai di sini
+import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
-import androidx.recyclerview.widget.LinearLayoutManager // Sudah ada, tidak perlu di-import ulang
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.minikasirpintarfree.app.R
 import com.minikasirpintarfree.app.data.database.AppDatabase
 import com.minikasirpintarfree.app.data.model.Transaksi
@@ -21,16 +21,17 @@ import com.minikasirpintarfree.app.data.repository.TransaksiRepository
 import com.minikasirpintarfree.app.databinding.FragmentDashboardBinding
 import com.minikasirpintarfree.app.ui.dashboard.BestSellerAdapter
 import com.minikasirpintarfree.app.ui.dashboard.RecentTransaksiAdapter
-import com.minikasirpintarfree.app.ui.transaksi.ReceiptItemAdapter // NEW: untuk struk modern
+import com.minikasirpintarfree.app.ui.transaksi.ReceiptItemAdapter
 import com.minikasirpintarfree.app.utils.NotificationHelper
-import com.minikasirpintarfree.app.utils.PdfGenerator // NEW: untuk save PDF
-import com.minikasirpintarfree.app.utils.StoreProfileHelper // NEW: untuk info toko
+import com.minikasirpintarfree.app.utils.PdfGenerator
+import com.minikasirpintarfree.app.utils.StoreProfileHelper
 import com.minikasirpintarfree.app.viewmodel.DashboardViewModel
 import com.minikasirpintarfree.app.viewmodel.DashboardViewModelFactory
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 class DashboardFragment : Fragment() {
@@ -75,27 +76,36 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setupGreeting() {
-        // Get nama toko from SharedPreferences
-        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val namaToko = prefs.getString("nama_toko", "Mini Kasir Pintar") ?: "Mini Kasir Pintar"
-        binding.tvGreeting.text = "Halo, $namaToko 👋"
+        // Get store profile using the helper
+        val storeProfile = StoreProfileHelper.getStoreProfile(requireContext())
+        val namaToko = storeProfile.name
+        val greeting = getGreetingMessage()
+        binding.tvGreeting.text = "$greeting, $namaToko 👋"
 
-        // Set current date
         val currentDate = SimpleDateFormat("d MMMM yyyy", Locale("id", "ID")).format(java.util.Date())
         binding.tvDate.text = currentDate
     }
 
+    private fun getGreetingMessage(): String {
+        val calendar = Calendar.getInstance()
+        return when (calendar.get(Calendar.HOUR_OF_DAY)) {
+            in 0..10 -> "Selamat Pagi"
+            in 11..14 -> "Selamat Siang"
+            in 15..17 -> "Selamat Sore"
+            in 18..23 -> "Selamat Malam"
+            else -> "Halo"
+        }
+    }
+
     private fun setupRecyclerViews() {
-        // Setup Best Seller RecyclerView
         bestSellerAdapter = BestSellerAdapter()
         binding.recyclerBestSeller.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = bestSellerAdapter
         }
 
-        // Setup Recent Transaksi RecyclerView
         recentTransaksiAdapter = RecentTransaksiAdapter { transaksi ->
-            showTransaksiDetail(transaksi) // Call rewritten function
+            showTransaksiDetail(transaksi)
         }
         binding.recyclerRecentTransaksi.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -104,11 +114,9 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setupClickListeners() {
-        // Menu cards removed - navigation now handled by BottomNavigationView only
-        // Future feature: Add click listeners for new dashboard features here
+        // No-op for now
     }
 
-    // ✅ PERUBAHAN 1: Rewrite showTransaksiDetail untuk memanggil dialog modern
     private fun showTransaksiDetail(transaksi: Transaksi) {
         try {
             val itemsType = object : TypeToken<List<TransaksiItem>>() {}.type
@@ -141,7 +149,6 @@ class DashboardFragment : Fragment() {
 
         viewModel.stokMenipis.observe(viewLifecycleOwner) { total: Int ->
             binding.tvStokMenipis.text = total.toString()
-            // ✅ FIXED: Notification spam dihapus, hanya update UI
         }
 
         viewModel.bestSellingProducts.observe(viewLifecycleOwner) { products ->
@@ -167,14 +174,9 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    // ✅ FUNGSI BARU 1: Menampilkan Struk Modern
     private fun showModernReceiptDialog(transaksi: Transaksi, items: List<TransaksiItem>) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_receipt_modern, null)
-
-        // Get store profile
         val storeProfile = StoreProfileHelper.getStoreProfile(requireContext())
-
-        // Setup views
         val tvStoreName = dialogView.findViewById<android.widget.TextView>(R.id.tvStoreName)
         val tvStoreAddress = dialogView.findViewById<android.widget.TextView>(R.id.tvStoreAddress)
         val tvStorePhone = dialogView.findViewById<android.widget.TextView>(R.id.tvStorePhone)
@@ -188,39 +190,32 @@ class DashboardFragment : Fragment() {
         val btnShare = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnShare)
         val btnClose = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnClose)
 
-        // Set store info
         tvStoreName.text = storeProfile.name
-        if (storeProfile.address.isNotEmpty()) {
+        tvStoreAddress.visibility = if (storeProfile.address.isNotEmpty()) {
             tvStoreAddress.text = storeProfile.address
-            tvStoreAddress.visibility = View.VISIBLE
+            View.VISIBLE
         } else {
-            tvStoreAddress.visibility = View.GONE
+            View.GONE
         }
-        if (storeProfile.phone.isNotEmpty()) {
+        tvStorePhone.visibility = if (storeProfile.phone.isNotEmpty()) {
             tvStorePhone.text = storeProfile.phone
-            tvStorePhone.visibility = View.VISIBLE
+            View.VISIBLE
         } else {
-            tvStorePhone.visibility = View.GONE
+            View.GONE
         }
 
-        // Set transaction info
         tvDate.text = android.text.format.DateFormat.format("dd/MM/yyyy HH:mm", transaksi.tanggal)
         tvTransactionNo.text = "#TRX-${transaksi.id.toString().padStart(3, '0')}"
 
-        // Setup RecyclerView for items
         recyclerViewItems.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
         recyclerViewItems.adapter = ReceiptItemAdapter(items)
 
-        // Set totals
         tvTotal.text = formatCurrency(transaksi.totalHarga)
         tvPaid.text = formatCurrency(transaksi.uangDiterima)
         tvChange.text = formatCurrency(transaksi.kembalian)
 
-        val dialog = AlertDialog.Builder(requireContext())
-            .setView(dialogView)
-            .create()
+        val dialog = AlertDialog.Builder(requireContext()).setView(dialogView).create()
 
-        // Button actions
         btnSavePdf.setOnClickListener { saveReceiptAsPdf(transaksi, items) }
         btnShare.setOnClickListener {
             val receiptText = buildReceiptText(transaksi, items)
@@ -231,24 +226,19 @@ class DashboardFragment : Fragment() {
         dialog.show()
     }
 
-    // ✅ FUNGSI BARU 2: Format Text untuk Share
     private fun buildReceiptText(transaksi: Transaksi, items: List<TransaksiItem>): String {
         val sb = StringBuilder()
         val storeProfile = StoreProfileHelper.getStoreProfile(requireContext())
         sb.appendLine("=== ${storeProfile.name.uppercase(Locale.ROOT)} ===")
-        if (storeProfile.address.isNotEmpty()) {
-            sb.appendLine(storeProfile.address)
-        }
-        if (storeProfile.phone.isNotEmpty()) {
-            sb.appendLine(storeProfile.phone)
-        }
+        if (storeProfile.address.isNotEmpty()) sb.appendLine(storeProfile.address)
+        if (storeProfile.phone.isNotEmpty()) sb.appendLine(storeProfile.phone)
         sb.appendLine("======================")
         sb.appendLine("Tanggal: ${android.text.format.DateFormat.format("dd/MM/yyyy HH:mm", transaksi.tanggal)}")
         sb.appendLine("No: #TRX-${transaksi.id.toString().padStart(3, '0')}")
         sb.appendLine("----------------------")
-        items.forEach { item ->
-            sb.appendLine("${item.namaProduk}")
-            sb.appendLine("  ${item.quantity}x ${formatCurrency(item.harga)} = ${formatCurrency(item.subtotal)}")
+        items.forEach {
+            sb.appendLine("${it.namaProduk}")
+            sb.appendLine("  ${it.quantity}x ${formatCurrency(it.harga)} = ${formatCurrency(it.subtotal)}")
         }
         sb.appendLine("----------------------")
         sb.appendLine("Total: ${formatCurrency(transaksi.totalHarga)}")
@@ -259,7 +249,6 @@ class DashboardFragment : Fragment() {
         return sb.toString()
     }
 
-    // ✅ FUNGSI BARU 3: Simpan Struk sebagai PDF
     private fun saveReceiptAsPdf(transaksi: Transaksi, items: List<TransaksiItem>) {
         try {
             val pdfPath = PdfGenerator.generateReceipt(requireContext(), transaksi, items)
@@ -269,7 +258,6 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    // ✅ FUNGSI BARU 4: Share Struk
     private fun shareReceipt(receiptText: String) {
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
@@ -278,7 +266,6 @@ class DashboardFragment : Fragment() {
         startActivity(Intent.createChooser(intent, "Bagikan struk"))
     }
 
-    // ✅ FUNGSI BARU 5: Format Rupiah
     private fun formatCurrency(amount: Double): String {
         val format = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
         return format.format(amount)

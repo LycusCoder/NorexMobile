@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Base.Theme.NorexMobile" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/ocean_accent</item>
+        <item name="colorPrimaryVariant">@color/ocean_primary_dark</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/royal_accent</item>
+        <item name="colorSecondaryVariant">@color/royal_primary_dark</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+        <!-- Main Dark Theme Colors -->
+        <item name="colorSurface">@color/dark_surface</item>
+        <item name="colorBackground">@color/dark_background</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorOnBackground">@color/white</item>
+
+        <!-- Window & Status Bar -->
+        <item name="android:windowBackground">?attr/colorBackground</item>
+        <item name="android:statusBarColor">?attr/colorSurface</item>
+    </style>
+</resources>

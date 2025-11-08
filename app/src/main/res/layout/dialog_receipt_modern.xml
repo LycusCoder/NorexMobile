@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="?attr/colorSurface">
     
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/ic_store"
-                app:tint="@color/white"
+                app:tint="?attr/colorOnPrimary"
                 android:layout_marginBottom="8dp" />
             
             <TextView
@@ -36,7 +36,7 @@
                 android:text="MiniKasir"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="@color/white" />
+                android:textColor="?attr/colorOnPrimary" />
             
             <TextView
                 android:id="@+id/tvStoreAddress"
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textSize="12sp"
-                android:textColor="@color/white"
+                android:textColor="?attr/colorOnPrimary"
                 android:alpha="0.9"
                 android:visibility="gone"
                 android:layout_marginTop="4dp" />
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textSize="12sp"
-                android:textColor="@color/white"
+                android:textColor="?attr/colorOnPrimary"
                 android:alpha="0.9"
                 android:visibility="gone"
                 android:layout_marginTop="2dp" />
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/light_grey"
+            app:cardBackgroundColor="?attr/colorBackground"
             app:cardCornerRadius="8dp">
             
             <LinearLayout
@@ -87,7 +87,7 @@
                         android:layout_weight="1"
                         android:text="Tanggal"
                         android:textSize="13sp"
-                        android:textColor="@color/dark_grey" />
+                        android:textColor="?attr/colorOnSurface" />
                     
                     <TextView
                         android:id="@+id/tvDate"
@@ -96,7 +96,7 @@
                         android:text="01/01/2025 12:00"
                         android:textSize="13sp"
                         android:textStyle="bold"
-                        android:textColor="@color/dark_grey" />
+                        android:textColor="?attr/colorOnSurface" />
                 </LinearLayout>
                 
                 <LinearLayout
@@ -111,7 +111,7 @@
                         android:layout_weight="1"
                         android:text="No. Transaksi"
                         android:textSize="13sp"
-                        android:textColor="@color/dark_grey" />
+                        android:textColor="?attr/colorOnSurface" />
                     
                     <TextView
                         android:id="@+id/tvTransactionNo"
@@ -120,7 +120,7 @@
                         android:text="#TRX-001"
                         android:textSize="13sp"
                         android:textStyle="bold"
-                        android:textColor="@color/dark_grey" />
+                        android:textColor="?attr/colorOnSurface" />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -132,7 +132,7 @@
             android:text="Daftar Item"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="@color/dark_grey"
+            android:textColor="?attr/colorOnSurface"
             android:layout_marginBottom="8dp" />
         
         <!-- Items RecyclerView -->
@@ -147,7 +147,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/light_grey"
+            android:background="?attr/colorOnSurface"
+            android:alpha="0.12"
             android:layout_marginVertical="8dp" />
         
         <!-- Summary Section -->
@@ -170,7 +171,7 @@
                     android:text="Total"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="@color/dark_grey" />
+                    android:textColor="?attr/colorOnSurface" />
                 
                 <TextView
                     android:id="@+id/tvTotal"
@@ -194,7 +195,7 @@
                     android:layout_weight="1"
                     android:text="Bayar"
                     android:textSize="14sp"
-                    android:textColor="@color/dark_grey" />
+                    android:textColor="?attr/colorOnSurface" />
                 
                 <TextView
                     android:id="@+id/tvPaid"
@@ -202,7 +203,7 @@
                     android:layout_height="wrap_content"
                     android:text="Rp 0"
                     android:textSize="14sp"
-                    android:textColor="@color/dark_grey" />
+                    android:textColor="?attr/colorOnSurface" />
             </LinearLayout>
             
             <LinearLayout
@@ -216,7 +217,7 @@
                     android:layout_weight="1"
                     android:text="Kembali"
                     android:textSize="14sp"
-                    android:textColor="@color/dark_grey" />
+                    android:textColor="?attr/colorOnSurface" />
                 
                 <TextView
                     android:id="@+id/tvChange"
@@ -266,7 +267,7 @@
             android:layout_height="wrap_content"
             android:text="Terima kasih telah berbelanja!"
             android:textSize="13sp"
-            android:textColor="@color/grey"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:gravity="center"
             android:layout_marginTop="16dp" />
     </LinearLayout>

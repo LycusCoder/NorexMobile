@@ -7,7 +7,7 @@
     android:layout_marginBottom="8dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="2dp"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="?attr/colorSurface"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground">
@@ -42,7 +42,7 @@
                 android:text="#TRX-001"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="#333333" />
+                android:textColor="?attr/colorOnSurface" />
 
             <TextView
                 android:id="@+id/tvWaktu"
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:text="12 Nov 2024, 14:30"
                 android:textSize="11sp"
-                android:textColor="@color/grey"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:layout_marginTop="2dp" />
         </LinearLayout>
 

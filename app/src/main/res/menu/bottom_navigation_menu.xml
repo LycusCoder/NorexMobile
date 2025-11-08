@@ -10,15 +10,15 @@
         android:title="Produk" />
     <item
         android:id="@+id/transaksiFragment"
-        android:icon="@android:drawable/ic_menu_agenda"
+        android:icon="@drawable/ic_transaksi_baru"
         android:title="Transaksi" />
     <item
         android:id="@+id/laporanFragment"
-        android:icon="@android:drawable/ic_menu_recent_history"
+        android:icon="@drawable/ic_laporan_baru"
         android:title="Laporan" />
     <item
         android:id="@+id/settingsFragment"
-        android:icon="@android:drawable/ic_menu_preferences"
+        android:icon="@drawable/ic_pengaturan_baru"
         android:title="Pengaturan" />
 </menu>
 

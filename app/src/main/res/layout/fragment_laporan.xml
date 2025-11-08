@@ -15,65 +15,55 @@
         android:padding="16dp">
         
         <!-- Filter Period -->
-        <com.google.android.material.card.MaterialCardView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Periode Laporan"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnBackground"
+            android:layout_marginBottom="12dp" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleGroupPeriod"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="?attr/colorSurface">
-            
-            <LinearLayout
-                android:layout_width="match_parent"
+            app:singleSelection="true"
+            app:checkedButton="@+id/btnHariIni"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btnHariIni"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-                
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Periode Laporan"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="?attr/colorOnSurface"
-                    android:layout_marginBottom="12dp" />
-                
-                <RadioGroup
-                    android:id="@+id/radioGroupPeriod"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    
-                    <RadioButton
-                        android:id="@+id/radioHariIni"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Hari Ini"
-                        android:textColor="?attr/colorOnSurface"
-                        android:checked="true" />
-                    
-                    <RadioButton
-                        android:id="@+id/radioMingguIni"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Minggu Ini"
-                        android:textColor="?attr/colorOnSurface" />
-                    
-                    <RadioButton
-                        android:id="@+id/radioBulanIni"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Bulan Ini"
-                        android:textColor="?attr/colorOnSurface" />
-                </RadioGroup>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+                android:layout_weight="1"
+                android:text="Hari Ini"
+                style="?attr/materialButtonOutlinedStyle" />
+
+            <Button
+                android:id="@+id/btnMingguIni"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Minggu Ini"
+                style="?attr/materialButtonOutlinedStyle" />
+
+            <Button
+                android:id="@+id/btnBulanIni"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Bulan Ini"
+                style="?attr/materialButtonOutlinedStyle" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
         
         <!-- Summary Stats -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ringkasan"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="?attr/colorOnBackground"
             android:layout_marginBottom="12dp" />
@@ -84,77 +74,95 @@
             android:orientation="horizontal"
             android:layout_marginBottom="16dp">
             
-            <!-- Total Transaksi -->
+            <!-- Total Transaksi Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
-                app:cardElevation="4dp"
+                app:cardElevation="2dp"
                 app:cardCornerRadius="12dp"
                 app:cardBackgroundColor="?attr/colorSurface">
                 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:padding="16dp"
-                    android:gravity="center">
-                    
-                    <TextView
-                        android:id="@+id/tvTotalTransaksi"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_receipt_long"
+                        android:layout_marginEnd="16dp"/>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="28sp"
-                        android:textStyle="bold"
-                        android:textColor="?attr/colorPrimary" />
-                    
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Total Transaksi"
-                        android:textSize="12sp"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textAlignment="center"
-                        android:layout_marginTop="4dp" />
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tvTotalTransaksi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorPrimary" />
+                        
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total Transaksi"
+                            android:textSize="12sp"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
             
-            <!-- Total Pendapatan -->
+            <!-- Total Pendapatan Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="8dp"
-                app:cardElevation="4dp"
+                app:cardElevation="2dp"
                 app:cardCornerRadius="12dp"
                 app:cardBackgroundColor="?attr/colorSurface">
                 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:padding="16dp"
-                    android:gravity="center">
-                    
-                    <TextView
-                        android:id="@+id/tvTotalPendapatan"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_payments"
+                        android:layout_marginEnd="16dp"/>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rp 0"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:textColor="?attr/colorPrimary" />
-                    
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Total Pendapatan"
-                        android:textSize="12sp"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textAlignment="center"
-                        android:layout_marginTop="4dp" />
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tvTotalPendapatan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rp 0"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorPrimary" />
+                        
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total Pendapatan"
+                            android:textSize="12sp"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
@@ -164,7 +172,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:cardElevation="4dp"
+            app:cardElevation="2dp"
             app:cardCornerRadius="12dp"
             app:cardBackgroundColor="?attr/colorSurface">
             
@@ -178,7 +186,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Grafik Penjualan"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?attr/colorOnSurface"
                     android:layout_marginBottom="12dp" />
@@ -189,6 +197,49 @@
                     android:layout_height="250dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <!-- Best Seller Section -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="?attr/colorSurface">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⭐ Produk Terlaris"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface"
+                    android:layout_marginBottom="12dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerProdukTerlaris"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"/>
+
+                <TextView
+                    android:id="@+id/tvEmptyProdukTerlaris"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Belum ada data penjualan"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
         
         <!-- Export Button -->
         <Button
@@ -196,6 +247,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Export ke PDF"
-            android:drawableLeft="@android:drawable/ic_menu_save" />
+            android:drawableLeft="@drawable/ic_save_baru" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

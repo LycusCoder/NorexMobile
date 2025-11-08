@@ -1,80 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="2dp">
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:gravity="center_vertical"
+    android:background="?attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_notifications"
+        android:padding="10dp"
+        android:background="@drawable/ic_circle"
+        android:backgroundTint="?attr/colorSurface"
+        app:tint="?attr/colorPrimary" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        <FrameLayout
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="16dp">
-
-            <View
-                android:id="@+id/viewIconContainer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/ic_notification_bg" />
-
-            <ImageView
-                android:id="@+id/ivIcon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_notifications"
-                android:tint="@android:color/white" />
-        </FrameLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:text="Judul Notifikasi"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurface"
+            android:layout_marginBottom="4dp" />
 
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Judul Notifikasi"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#333333"
-                android:layout_marginBottom="4dp" />
+        <TextView
+            android:id="@+id/tvMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pesan notifikasi"
+            android:textSize="14sp"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginBottom="4dp" />
 
-            <TextView
-                android:id="@+id/tvMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pesan notifikasi"
-                android:textSize="14sp"
-                android:textColor="#666666"
-                android:layout_marginBottom="4dp" />
-
-            <TextView
-                android:id="@+id/tvDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="01 Januari 2025"
-                android:textSize="12sp"
-                android:textColor="#999999" />
-        </LinearLayout>
-
-        <View
-            android:id="@+id/viewUnread"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:background="@drawable/ic_notification_badge"
-            android:layout_marginStart="8dp"
-            android:visibility="gone" />
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="01 Januari 2025"
+            android:textSize="12sp"
+            android:textColor="?attr/colorOnSurfaceVariant" />
     </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
 
+    <View
+        android:id="@+id/viewUnread"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@drawable/ic_circle"
+        android:backgroundTint="?attr/colorPrimary"
+        android:layout_marginStart="8dp"
+        android:visibility="visible" />
+
+</LinearLayout>

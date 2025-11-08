@@ -16,6 +16,7 @@ data class Produk(
     var stok: Int,
     val barcode: String? = null,
     val gambar: String? = null,
-    val deskripsi: String? = null
+    val deskripsi: String? = null,
+    val notifikasiStokTerkirim: Boolean = false // Flag to prevent spam
 ) : Parcelable
 

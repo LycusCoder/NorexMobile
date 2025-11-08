@@ -1,0 +1,5 @@
+<resources>
+    <color name="warning_background">#424210</color>
+    <color name="warning_foreground">#FFD600</color>
+    <color name="warning_icon_tint">#FFAB00</color>
+</resources>

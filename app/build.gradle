@@ -11,10 +11,10 @@ android {
 
     defaultConfig {
         applicationId "com.minikasirpintarfree.app"
-        minSdk 24  // ✅ FASE 3.3: Turun dari 30 ke 24 (Android 7.0 Nougat) - Market share 94.1%
+        minSdk 24
         targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

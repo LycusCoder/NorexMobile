@@ -59,5 +59,9 @@
     <color name="colorOnPrimary">#FFFFFF</color>
     <color name="colorOnBackground">#000000</color>
     <color name="colorOnSurface">#000000</color>
-</resources>
 
+    <!-- Warning Colors -->
+    <color name="warning_background">#FFF9F0</color>
+    <color name="warning_foreground">#E65100</color>
+    <color name="warning_icon_tint">#FF9800</color>
+</resources>

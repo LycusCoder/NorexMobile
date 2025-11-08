@@ -19,7 +19,7 @@
             android:text="Nama Produk"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="@color/dark_grey" />
+            android:textColor="?attr/colorOnSurface" />
         
         <TextView
             android:id="@+id/tvItemSubtotal"
@@ -28,7 +28,7 @@
             android:text="Rp 0"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="@color/dark_grey" />
+            android:textColor="?attr/colorOnSurface" />
     </LinearLayout>
     
     <TextView
@@ -37,6 +37,6 @@
         android:layout_height="wrap_content"
         android:text="1x Rp 0"
         android:textSize="12sp"
-        android:textColor="@color/grey"
+        android:textColor="?attr/colorOnSurfaceVariant"
         android:layout_marginTop="2dp" />
 </LinearLayout>

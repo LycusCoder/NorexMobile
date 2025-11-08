@@ -1,9 +1,8 @@
 package com.minikasirpintarfree.app.ui.produk
 
+import android.util.TypedValue
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -43,7 +42,11 @@ class ProdukAdapter(
             if (produk.stok <= 10) {
                 binding.tvStok.setTextColor(ContextCompat.getColor(binding.root.context, R.color.red))
             } else {
-                binding.tvStok.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+                // Resolve colorOnSurface from the current theme to reset the text color
+                val typedValue = TypedValue()
+                val theme = binding.root.context.theme
+                theme.resolveAttribute(com.google.android.material.R.attr.colorOnSurface, typedValue, true)
+                binding.tvStok.setTextColor(typedValue.data)
             }
             
             binding.root.setOnClickListener {
@@ -71,4 +74,3 @@ class ProdukAdapter(
         }
     }
 }
-

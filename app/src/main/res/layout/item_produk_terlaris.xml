@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/tvRanking"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:text="1"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:textColor="?attr/colorOnPrimary"
+        android:background="@drawable/ic_circle"
+        android:backgroundTint="?attr/colorPrimary"
+        android:layout_marginEnd="16dp"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvNamaProduk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Produk"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurface"/>
+
+        <TextView
+            android:id="@+id/tvDetailTerjual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15 terjual • Rp 150.000"
+            android:textSize="12sp"
+            android:textColor="?attr/colorOnSurfaceVariant"/>
+    </LinearLayout>
+
+</LinearLayout>

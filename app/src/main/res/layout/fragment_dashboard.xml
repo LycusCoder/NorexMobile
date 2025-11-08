@@ -197,7 +197,7 @@
             android:layout_marginBottom="24dp"
             app:cardElevation="2dp"
             app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#FFF9F0">
+            app:cardBackgroundColor="@color/warning_background">
             
             <LinearLayout
                 android:layout_width="match_parent"
@@ -210,7 +210,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_notifications_badge"
-                    android:tint="#FF9800"
+                    android:tint="@color/warning_icon_tint"
                     android:layout_marginEnd="12dp" />
                 
                 <TextView
@@ -219,7 +219,7 @@
                     android:layout_weight="1"
                     android:text="Stok Menipis"
                     android:textSize="13sp"
-                    android:textColor="#E65100" />
+                    android:textColor="@color/warning_foreground" />
                 
                 <TextView
                     android:id="@+id/tvStokMenipis"
@@ -228,7 +228,7 @@
                     android:text="0"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="#E65100" />
+                    android:textColor="@color/warning_foreground" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
         

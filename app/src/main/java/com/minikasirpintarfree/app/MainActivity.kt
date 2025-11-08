@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_notifications -> {
+                // Always navigate to notifications fragment
                 navController.navigate(R.id.notificationsFragment)
                 true
             }

@@ -1,8 +1,7 @@
 package com.minikasirpintarfree.app
 
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.drawable.ColorDrawable
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -15,60 +14,62 @@ import com.minikasirpintarfree.app.ui.login.LoginActivity
 import com.minikasirpintarfree.app.viewmodel.LoginViewModel
 
 class SplashActivity : AppCompatActivity() {
-    
+
     private lateinit var binding: ActivitySplashBinding
-    private val SPLASH_DURATION = 1500L // 1.5 seconds
-    
+    private val splashDuration = 2000L // 2 seconds
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
-        // Hide action bar
+
         supportActionBar?.hide()
-        
-        // Apply theme color to splash background
+
         applyThemeColors()
-        
-        // Apply fade-in animation to logo
+        setupVersionInfo()
+        startAnimations()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            navigateToNextScreen()
+        }, splashDuration)
+    }
+
+    private fun applyThemeColors() {
+        val typedValue = TypedValue()
+        theme.resolveAttribute(com.google.android.material.R.attr.colorPrimary, typedValue, true)
+        val colorPrimary = typedValue.data
+        binding.splashBackground.setBackgroundColor(colorPrimary)
+    }
+
+    private fun setupVersionInfo() {
+        try {
+            val packageInfo = packageManager.getPackageInfo(packageName, 0)
+            val versionName = packageInfo.versionName
+            binding.tvVersion.text = getString(R.string.version_format, versionName)
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+            binding.tvVersion.text = getString(R.string.version_format, "1.2.0") // Fallback
+        }
+    }
+
+    private fun startAnimations() {
         val fadeIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
         binding.ivLogo.startAnimation(fadeIn)
         binding.tvAppName.startAnimation(fadeIn)
         binding.tvSubtitle.startAnimation(fadeIn)
-        
-        // Navigate after delay
-        Handler(Looper.getMainLooper()).postDelayed({
-            navigateToNextScreen()
-        }, SPLASH_DURATION)
     }
-    
-    private fun applyThemeColors() {
-        // Get colorPrimary from current theme
-        val typedValue = TypedValue()
-        theme.resolveAttribute(com.google.android.material.R.attr.colorPrimary, typedValue, true)
-        val colorPrimary = typedValue.data
-        
-        // Apply to splash background
-        binding.splashBackground.setBackgroundColor(colorPrimary)
-    }
-    
+
     private fun navigateToNextScreen() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val isLoggedIn = sharedPreferences.getBoolean(LoginViewModel.PREF_IS_LOGGED_IN, false)
-        
-        // Check if user is logged in
+
         val intent = if (isLoggedIn) {
-            // User is logged in, go to MainActivity
             Intent(this, MainActivity::class.java)
         } else {
-            // User is not logged in, go to LoginActivity
             Intent(this, LoginActivity::class.java)
         }
-        
+
         startActivity(intent)
         finish()
-        
-        // Apply fade transition
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 }
