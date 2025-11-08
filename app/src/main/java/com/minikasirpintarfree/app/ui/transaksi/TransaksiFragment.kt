@@ -29,6 +29,7 @@ import com.minikasirpintarfree.app.databinding.FragmentTransaksiBinding
 import com.minikasirpintarfree.app.ui.produk.AddEditProdukDialogFragment
 import com.minikasirpintarfree.app.utils.NotificationHelper
 import com.minikasirpintarfree.app.utils.PdfGenerator
+import com.minikasirpintarfree.app.utils.StoreProfileHelper
 import com.minikasirpintarfree.app.viewmodel.TransaksiViewModel
 import com.minikasirpintarfree.app.viewmodel.TransaksiViewModelFactory
 import kotlinx.coroutines.launch
@@ -280,19 +281,71 @@ class TransaksiFragment : Fragment() {
     
     private fun showReceiptDialog(transaksi: Transaksi) {
         val items = viewModel.getTransaksiItems(transaksi)
-        val receiptText = buildReceiptText(transaksi, items)
+        showModernReceiptDialog(transaksi, items)
+    }
+    
+    private fun showModernReceiptDialog(transaksi: Transaksi, items: List<TransaksiItem>) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_receipt_modern, null)
         
-        AlertDialog.Builder(requireContext())
-            .setTitle("Struk Transaksi")
-            .setMessage(receiptText)
-            .setPositiveButton("Simpan PDF") { _, _ ->
-                saveReceiptAsPdf(transaksi, items)
-            }
-            .setNeutralButton("Share") { _, _ ->
-                shareReceipt(receiptText)
-            }
-            .setNegativeButton("Tutup", null)
-            .show()
+        // Get store profile
+        val storeProfile = StoreProfileHelper.getStoreProfile(requireContext())
+        
+        // Setup views
+        val tvStoreName = dialogView.findViewById<android.widget.TextView>(R.id.tvStoreName)
+        val tvStoreAddress = dialogView.findViewById<android.widget.TextView>(R.id.tvStoreAddress)
+        val tvStorePhone = dialogView.findViewById<android.widget.TextView>(R.id.tvStorePhone)
+        val tvDate = dialogView.findViewById<android.widget.TextView>(R.id.tvDate)
+        val tvTransactionNo = dialogView.findViewById<android.widget.TextView>(R.id.tvTransactionNo)
+        val recyclerViewItems = dialogView.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.recyclerViewItems)
+        val tvTotal = dialogView.findViewById<android.widget.TextView>(R.id.tvTotal)
+        val tvPaid = dialogView.findViewById<android.widget.TextView>(R.id.tvPaid)
+        val tvChange = dialogView.findViewById<android.widget.TextView>(R.id.tvChange)
+        val btnSavePdf = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnSavePdf)
+        val btnShare = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnShare)
+        val btnClose = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnClose)
+        
+        // Set store info
+        tvStoreName.text = storeProfile.name
+        if (storeProfile.address.isNotEmpty()) {
+            tvStoreAddress.text = storeProfile.address
+            tvStoreAddress.visibility = View.VISIBLE
+        }
+        if (storeProfile.phone.isNotEmpty()) {
+            tvStorePhone.text = storeProfile.phone
+            tvStorePhone.visibility = View.VISIBLE
+        }
+        
+        // Set transaction info
+        tvDate.text = android.text.format.DateFormat.format("dd/MM/yyyy HH:mm", transaksi.tanggal)
+        tvTransactionNo.text = "#TRX-${transaksi.id.toString().padStart(3, '0')}"
+        
+        // Setup RecyclerView for items
+        recyclerViewItems.layoutManager = LinearLayoutManager(requireContext())
+        recyclerViewItems.adapter = ReceiptItemAdapter(items)
+        
+        // Set totals
+        tvTotal.text = formatCurrency(transaksi.totalHarga)
+        tvPaid.text = formatCurrency(transaksi.uangDiterima)
+        tvChange.text = formatCurrency(transaksi.kembalian)
+        
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .create()
+        
+        btnSavePdf.setOnClickListener {
+            saveReceiptAsPdf(transaksi, items)
+        }
+        
+        btnShare.setOnClickListener {
+            val receiptText = buildReceiptText(transaksi, items)
+            shareReceipt(receiptText)
+        }
+        
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+        
+        dialog.show()
     }
     
     private fun buildReceiptText(transaksi: Transaksi, items: List<TransaksiItem>): String {

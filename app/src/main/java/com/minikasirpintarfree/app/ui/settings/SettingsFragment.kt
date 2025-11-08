@@ -17,6 +17,8 @@ import com.minikasirpintarfree.app.data.repository.TransaksiRepository
 import com.minikasirpintarfree.app.databinding.FragmentSettingsBinding
 import com.minikasirpintarfree.app.ui.login.LoginActivity
 import com.minikasirpintarfree.app.utils.ThemeHelper
+import com.minikasirpintarfree.app.utils.StoreProfileHelper
+import com.minikasirpintarfree.app.utils.StoreProfile
 import com.minikasirpintarfree.app.viewmodel.LoginViewModel
 import com.minikasirpintarfree.app.viewmodel.LoginViewModelFactory
 import com.minikasirpintarfree.app.viewmodel.SettingsViewModel
@@ -68,6 +70,10 @@ class SettingsFragment : Fragment() {
             showThemeDialog()
         }
         
+        binding.cardStoreProfile.setOnClickListener {
+            showStoreProfileDialog()
+        }
+        
         binding.cardChangePassword.setOnClickListener {
             showChangePasswordDialog()
         }
@@ -106,6 +112,10 @@ class SettingsFragment : Fragment() {
         val currentTheme = ThemeHelper.getCurrentTheme(requireContext())
         val themeName = ThemeHelper.getThemeDisplayName(currentTheme)
         binding.tvCurrentTheme.text = "Tema Saat Ini: $themeName"
+        
+        // Load store profile
+        val storeProfile = StoreProfileHelper.getStoreProfile(requireContext())
+        binding.tvStoreName.text = storeProfile.name
         
         // Hide switch for backward compatibility
         binding.switchTheme.isChecked = false
@@ -168,6 +178,51 @@ class SettingsFragment : Fragment() {
         
         // Recreate activity to apply theme
         requireActivity().recreate()
+    }
+    
+    private fun showStoreProfileDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_edit_store_profile, null)
+        val etStoreName = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etStoreName)
+        val etStoreAddress = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etStoreAddress)
+        val etStorePhone = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etStorePhone)
+        val btnSave = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnSave)
+        val btnCancel = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnCancel)
+        
+        // Load current profile
+        val currentProfile = StoreProfileHelper.getStoreProfile(requireContext())
+        etStoreName.setText(currentProfile.name)
+        etStoreAddress.setText(currentProfile.address)
+        etStorePhone.setText(currentProfile.phone)
+        
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .create()
+        
+        btnSave.setOnClickListener {
+            val name = etStoreName.text.toString().trim()
+            val address = etStoreAddress.text.toString().trim()
+            val phone = etStorePhone.text.toString().trim()
+            
+            if (name.isEmpty()) {
+                Toast.makeText(requireContext(), "Nama toko harus diisi", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            
+            val newProfile = StoreProfile(name, address, phone)
+            StoreProfileHelper.saveStoreProfile(requireContext(), newProfile)
+            
+            // Update display
+            binding.tvStoreName.text = name
+            
+            Toast.makeText(requireContext(), "Profil toko berhasil disimpan", Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+        }
+        
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        
+        dialog.show()
     }
     
     private fun showChangePasswordDialog() {

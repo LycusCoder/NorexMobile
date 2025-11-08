@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             app:cardElevation="4dp"
-            app:cardCornerRadius="12dp">
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="?attr/colorSurface">
             
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,9 +51,9 @@
                         android:layout_weight="1"
                         android:hint="Cari nama produk..."
                         android:padding="12dp"
-                        android:background="@color/light_grey"
+                        android:background="?attr/colorBackground"
                         android:textColor="?attr/colorOnBackground"
-                        android:textColorHint="@color/grey"/>
+                        android:textColorHint="?attr/colorOnSurfaceVariant"/>
                     
                     <Button
                         android:id="@+id/btnSearchProduk"
@@ -97,7 +98,7 @@
             android:minHeight="200dp"
             android:text="Keranjang kosong\n\nScan atau cari produk untuk memulai transaksi"
             android:textSize="14sp"
-            android:textColor="@color/grey"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:gravity="center"
             android:visibility="visible"
             android:layout_marginBottom="16dp" />
@@ -129,7 +130,7 @@
                         android:layout_weight="1"
                         android:text="Total Harga:"
                         android:textSize="16sp"
-                        android:textColor="@color/white" />
+                        android:textColor="?attr/colorOnPrimary" />
                     
                     <TextView
                         android:id="@+id/tvTotalHarga"
@@ -138,7 +139,7 @@
                         android:text="Rp 0"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:textColor="@color/white" />
+                        android:textColor="?attr/colorOnPrimary" />
                 </LinearLayout>
                 
                 <LinearLayout
@@ -152,7 +153,7 @@
                         android:layout_weight="1"
                         android:text="Kembalian:"
                         android:textSize="14sp"
-                        android:textColor="@color/white" />
+                        android:textColor="?attr/colorOnPrimary" />
                     
                     <TextView
                         android:id="@+id/tvKembalian"
@@ -160,7 +161,7 @@
                         android:layout_height="wrap_content"
                         android:text="Rp 0"
                         android:textSize="16sp"
-                        android:textColor="@color/white" />
+                        android:textColor="?attr/colorOnPrimary" />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

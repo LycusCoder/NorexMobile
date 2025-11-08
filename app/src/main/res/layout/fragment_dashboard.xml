@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="?attr/colorBackground"
     android:paddingBottom="72dp"
     android:clipToPadding="false">
     
@@ -28,7 +28,7 @@
                 android:text="Halo, Mini Kasir Pintar 👋"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="@color/black" />
+                android:textColor="?attr/colorOnBackground" />
             
             <TextView
                 android:id="@+id/tvDate"
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="12 November 2025"
                 android:textSize="14sp"
-                android:textColor="@color/grey"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:layout_marginTop="4dp" />
         </LinearLayout>
         
@@ -47,7 +47,7 @@
             android:text="Statistik Hari Ini"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnBackground"
             android:layout_marginBottom="12dp" />
         
         <!-- Statistik Row - 3 Cards -->
@@ -65,7 +65,7 @@
                 android:layout_marginEnd="6dp"
                 app:cardElevation="2dp"
                 app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorSurface">
                 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -95,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:text="Produk"
                         android:textSize="11sp"
-                        android:textColor="@color/grey"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:layout_marginTop="2dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -109,7 +109,7 @@
                 android:layout_marginEnd="3dp"
                 app:cardElevation="2dp"
                 app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorSurface">
                 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -139,7 +139,7 @@
                         android:layout_height="wrap_content"
                         android:text="Transaksi"
                         android:textSize="11sp"
-                        android:textColor="@color/grey"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:layout_marginTop="2dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -152,7 +152,7 @@
                 android:layout_marginStart="6dp"
                 app:cardElevation="2dp"
                 app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardBackgroundColor="?attr/colorSurface">
                 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -184,7 +184,7 @@
                         android:layout_height="wrap_content"
                         android:text="Pendapatan"
                         android:textSize="11sp"
-                        android:textColor="@color/grey"
+                        android:textColor="?attr/colorOnSurfaceVariant"
                         android:layout_marginTop="2dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -253,7 +253,7 @@
                     android:text="⭐ Produk Terlaris"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/black" />
+                    android:textColor="?attr/colorOnBackground" />
             </LinearLayout>
             
             <androidx.recyclerview.widget.RecyclerView
@@ -268,7 +268,7 @@
                 android:layout_height="wrap_content"
                 android:text="Belum ada data penjualan"
                 android:textSize="13sp"
-                android:textColor="@color/grey"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:gravity="center"
                 android:padding="24dp"
                 android:visibility="gone" />
@@ -295,7 +295,7 @@
                     android:text="📝 Transaksi Terakhir"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/black" />
+                    android:textColor="?attr/colorOnBackground" />
             </LinearLayout>
             
             <androidx.recyclerview.widget.RecyclerView
@@ -310,7 +310,7 @@
                 android:layout_height="wrap_content"
                 android:text="Belum ada transaksi"
                 android:textSize="13sp"
-                android:textColor="@color/grey"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:gravity="center"
                 android:padding="24dp"
                 android:visibility="gone" />

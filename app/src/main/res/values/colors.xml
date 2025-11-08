@@ -11,6 +11,7 @@
     <!-- Legacy Colors (backward compatibility) -->
     <color name="orange">#FF9800</color>
     <color name="red">#FF5722</color>
+    <color name="green">#4CAF50</color>
     
     <!-- Ocean Blue Theme -->
     <color name="ocean_primary">#1976D2</color>
