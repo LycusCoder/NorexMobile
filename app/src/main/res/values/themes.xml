@@ -2,11 +2,18 @@
 <resources>
     <!-- Base Theme -->
     <style name="Theme.MiniKasir" parent="Theme.MaterialComponents.Light.NoActionBar">
+        
+        <!-- FIX KRITIS: Mendefinisikan atribut non-Android untuk diakses via ?attr/ -->
+        <item name="colorBackground">@color/colorBackground</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        
+        <!-- Atribut Android bawaan: tetap dipertahankan -->
         <item name="android:colorBackground">@color/colorBackground</item>
-        <item name="colorSurface">@color/colorSurface</item>
+        
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
         <item name="colorOnBackground">@color/colorOnBackground</item>
         <item name="colorOnSurface">@color/colorOnSurface</item>
@@ -20,7 +27,9 @@
         <item name="colorPrimary">@color/ocean_primary</item>
         <item name="colorPrimaryDark">@color/ocean_primary_dark</item>
         <item name="colorAccent">@color/ocean_accent</item>
+        
         <item name="android:colorBackground">@color/white</item>
+        <item name="colorBackground">@color/white</item>
         <item name="colorSurface">@color/white</item>
     </style>
     
@@ -29,7 +38,9 @@
         <item name="colorPrimary">@color/forest_primary</item>
         <item name="colorPrimaryDark">@color/forest_primary_dark</item>
         <item name="colorAccent">@color/forest_accent</item>
+        
         <item name="android:colorBackground">@color/white</item>
+        <item name="colorBackground">@color/white</item>
         <item name="colorSurface">@color/white</item>
     </style>
     
@@ -38,7 +49,9 @@
         <item name="colorPrimary">@color/royal_primary</item>
         <item name="colorPrimaryDark">@color/royal_primary_dark</item>
         <item name="colorAccent">@color/royal_accent</item>
+        
         <item name="android:colorBackground">@color/white</item>
+        <item name="colorBackground">@color/white</item>
         <item name="colorSurface">@color/white</item>
     </style>
     
@@ -47,7 +60,9 @@
         <item name="colorPrimary">@color/sunset_primary</item>
         <item name="colorPrimaryDark">@color/sunset_primary_dark</item>
         <item name="colorAccent">@color/sunset_accent</item>
+        
         <item name="android:colorBackground">@color/white</item>
+        <item name="colorBackground">@color/white</item>
         <item name="colorSurface">@color/white</item>
     </style>
     
@@ -56,17 +71,24 @@
         <item name="colorPrimary">@color/crimson_primary</item>
         <item name="colorPrimaryDark">@color/crimson_primary_dark</item>
         <item name="colorAccent">@color/crimson_accent</item>
+        
         <item name="android:colorBackground">@color/white</item>
+        <item name="colorBackground">@color/white</item>
         <item name="colorSurface">@color/white</item>
     </style>
     
     <!-- Dark Mode Theme -->
     <style name="Theme.MiniKasir.Dark" parent="Theme.MaterialComponents.NoActionBar">
+        
+        <!-- FIX KRITIS: Menambahkan atribut non-Android juga di Dark Mode -->
+        <item name="colorBackground">@color/dark_background</item>
+        <item name="colorSurface">@color/dark_surface</item>
+        
         <item name="colorPrimary">@color/dark_primary</item>
         <item name="colorPrimaryDark">@color/dark_primary_dark</item>
         <item name="colorAccent">@color/dark_accent</item>
         <item name="android:colorBackground">@color/dark_background</item>
-        <item name="colorSurface">@color/dark_surface</item>
+        
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnBackground">@color/white</item>
         <item name="colorOnSurface">@color/white</item>
@@ -74,4 +96,3 @@
         <item name="windowNoTitle">true</item>
     </style>
 </resources>
-

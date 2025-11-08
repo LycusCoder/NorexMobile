@@ -69,21 +69,8 @@ class DashboardFragment : Fragment() {
     }
     
     private fun setupClickListeners() {
-        binding.cardProduk.setOnClickListener {
-            findNavController().navigate(R.id.action_dashboard_to_produk)
-        }
-        
-        binding.cardTransaksi.setOnClickListener {
-            findNavController().navigate(R.id.action_dashboard_to_transaksi)
-        }
-        
-        binding.cardLaporan.setOnClickListener {
-            findNavController().navigate(R.id.action_dashboard_to_laporan)
-        }
-        
-        binding.cardSettings.setOnClickListener {
-            findNavController().navigate(R.id.action_dashboard_to_settings)
-        }
+        // Menu cards removed - navigation now handled by BottomNavigationView only
+        // Future feature: Add click listeners for new dashboard features here
     }
     
     private fun observeViewModel() {

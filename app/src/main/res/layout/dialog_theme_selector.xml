@@ -5,314 +5,441 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp">
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pilih Tema Favorit Anda"
-            android:textSize="18sp"
+            android:text="Pilih Tema Aplikasi"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginBottom="16dp" />
-        
-        <!-- Ocean Blue -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardThemeOcean"
+            android:textColor="#1A1A1A"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center_horizontal"/> <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="12dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground">
-            
-            <LinearLayout
-                android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardThemeOcean"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
-                
-                <View
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@color/ocean_primary"
-                    android:layout_marginEnd="16dp" />
-                
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="14dp"
+                app:strokeColor="#BDBDBD"
+                app:strokeWidth="1dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/previewOcean"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/circle_preview"
+                            android:backgroundTint="@color/ocean_primary"
+                            android:layout_centerHorizontal="true" />
+                        
+                        <ImageView
+                            android:id="@+id/checkOcean"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_alignEnd="@id/previewOcean"
+                            android:layout_alignBottom="@id/previewOcean"
+                            android:layout_marginEnd="-6dp"
+                            android:layout_marginBottom="-6dp"
+                            android:src="@drawable/ic_check"
+                            app:tint="@color/ocean_primary_dark"
+                            android:visibility="gone"
+                            android:elevation="3dp"/> 
+                    </RelativeLayout>
                     
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ocean Blue"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="@color/black" />
-                    
+                        android:textColor="#1A1A1A"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"/>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Professional &amp; modern (Default)"
-                        android:textSize="12sp"
-                        android:textColor="@color/grey"
-                        android:layout_marginTop="4dp" />
+                        android:text="Default"
+                        android:textSize="11sp"
+                        android:textColor="#9E9E9E"
+                        android:layout_marginTop="2dp" />
                 </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-        
-        <!-- Forest Green -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardThemeForest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="12dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground">
-            
-            <LinearLayout
-                android:layout_width="match_parent"
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardThemeForest"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
-                
-                <View
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@color/forest_primary"
-                    android:layout_marginEnd="16dp" />
-                
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="14dp"
+                app:strokeColor="#BDBDBD"
+                app:strokeWidth="1dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-                    
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/previewForest"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/circle_preview"
+                            android:backgroundTint="@color/forest_primary"
+                            android:layout_centerHorizontal="true" />
+
+                        <ImageView
+                            android:id="@+id/checkForest"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_alignEnd="@id/previewForest"
+                            android:layout_alignBottom="@id/previewForest"
+                            android:layout_marginEnd="-6dp"
+                            android:layout_marginBottom="-6dp"
+                            android:src="@drawable/ic_check"
+                            app:tint="@color/forest_primary_dark"
+                            android:visibility="gone"
+                            android:elevation="3dp"/>
+                    </RelativeLayout>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Forest Green"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="@color/black" />
-                    
+                        android:textColor="#1A1A1A"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"/>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Segar &amp; tenang"
-                        android:textSize="12sp"
-                        android:textColor="@color/grey"
-                        android:layout_marginTop="4dp" />
+                        android:text="Segar"
+                        android:textSize="11sp"
+                        android:textColor="#9E9E9E"
+                        android:layout_marginTop="2dp" />
                 </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-        
-        <!-- Royal Purple -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardThemeRoyal"
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="12dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground">
-            
-            <LinearLayout
-                android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardThemeRoyal"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
-                
-                <View
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@color/royal_primary"
-                    android:layout_marginEnd="16dp" />
-                
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="14dp"
+                app:strokeColor="#BDBDBD"
+                app:strokeWidth="1dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-                    
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/previewRoyal"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/circle_preview"
+                            android:backgroundTint="@color/royal_primary"
+                            android:layout_centerHorizontal="true" />
+
+                        <ImageView
+                            android:id="@+id/checkRoyal"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_alignEnd="@id/previewRoyal"
+                            android:layout_alignBottom="@id/previewRoyal"
+                            android:layout_marginEnd="-6dp"
+                            android:layout_marginBottom="-6dp"
+                            android:src="@drawable/ic_check"
+                            app:tint="@color/royal_primary_dark"
+                            android:visibility="gone"
+                            android:elevation="3dp"/>
+                    </RelativeLayout>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Royal Purple"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="@color/black" />
-                    
+                        android:textColor="#1A1A1A"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"/>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Elegan &amp; premium"
-                        android:textSize="12sp"
-                        android:textColor="@color/grey"
-                        android:layout_marginTop="4dp" />
+                        android:text="Elegan"
+                        android:textSize="11sp"
+                        android:textColor="#9E9E9E"
+                        android:layout_marginTop="2dp" />
                 </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-        
-        <!-- Sunset Orange -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardThemeSunset"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="12dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground">
-            
-            <LinearLayout
-                android:layout_width="match_parent"
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardThemeSunset"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
-                
-                <View
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@color/sunset_primary"
-                    android:layout_marginEnd="16dp" />
-                
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="14dp"
+                app:strokeColor="#BDBDBD"
+                app:strokeWidth="1dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-                    
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/previewSunset"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/circle_preview"
+                            android:backgroundTint="@color/sunset_primary"
+                            android:layout_centerHorizontal="true" />
+
+                        <ImageView
+                            android:id="@+id/checkSunset"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_alignEnd="@id/previewSunset"
+                            android:layout_alignBottom="@id/previewSunset"
+                            android:layout_marginEnd="-6dp"
+                            android:layout_marginBottom="-6dp"
+                            android:src="@drawable/ic_check"
+                            app:tint="@color/sunset_primary_dark"
+                            android:visibility="gone"
+                            android:elevation="3dp"/>
+                    </RelativeLayout>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Sunset Orange"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="@color/black" />
-                    
+                        android:textColor="#1A1A1A"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"/>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hangat &amp; modern"
-                        android:textSize="12sp"
-                        android:textColor="@color/grey"
-                        android:layout_marginTop="4dp" />
+                        android:text="Hangat"
+                        android:textSize="11sp"
+                        android:textColor="#9E9E9E"
+                        android:layout_marginTop="2dp" />
                 </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-        
-        <!-- Crimson Red -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardThemeCrimson"
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="12dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground">
-            
-            <LinearLayout
-                android:layout_width="match_parent"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardThemeCrimson"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
-                
-                <View
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@color/crimson_primary"
-                    android:layout_marginEnd="16dp" />
-                
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="14dp"
+                app:strokeColor="#BDBDBD"
+                app:strokeWidth="1dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-                    
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/previewCrimson"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/circle_preview"
+                            android:backgroundTint="@color/crimson_primary"
+                            android:layout_centerHorizontal="true" />
+
+                        <ImageView
+                            android:id="@+id/checkCrimson"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_alignEnd="@id/previewCrimson"
+                            android:layout_alignBottom="@id/previewCrimson"
+                            android:layout_marginEnd="-6dp"
+                            android:layout_marginBottom="-6dp"
+                            android:src="@drawable/ic_check"
+                            app:tint="@color/crimson_primary_dark"
+                            android:visibility="gone"
+                            android:elevation="3dp"/>
+                    </RelativeLayout>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Crimson Red"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="@color/black" />
-                    
+                        android:textColor="#1A1A1A"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"/>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Berani &amp; energik"
-                        android:textSize="12sp"
-                        android:textColor="@color/grey"
-                        android:layout_marginTop="4dp" />
+                        android:text="Berani"
+                        android:textSize="11sp"
+                        android:textColor="#9E9E9E"
+                        android:layout_marginTop="2dp" />
                 </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-        
-        <!-- Dark Mode -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardThemeDark"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="12dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground">
-            
-            <LinearLayout
-                android:layout_width="match_parent"
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardThemeDark"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
-                
-                <View
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@color/dark_primary"
-                    android:layout_marginEnd="16dp" />
-                
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="14dp"
+                app:strokeColor="#BDBDBD"
+                app:strokeWidth="1dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-                    
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/previewDark"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/circle_preview"
+                            android:backgroundTint="@color/dark_primary"
+                            android:layout_centerHorizontal="true" />
+
+                        <ImageView
+                            android:id="@+id/checkDark"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_alignEnd="@id/previewDark"
+                            android:layout_alignBottom="@id/previewDark"
+                            android:layout_marginEnd="-6dp"
+                            android:layout_marginBottom="-6dp"
+                            android:src="@drawable/ic_check"
+                            app:tint="@color/dark_accent"
+                            android:visibility="gone"
+                            android:elevation="3dp"/>
+                    </RelativeLayout>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Dark Mode"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="@color/black" />
-                    
+                        android:textColor="#1A1A1A"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"/>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ramah untuk mata"
-                        android:textSize="12sp"
-                        android:textColor="@color/grey"
-                        android:layout_marginTop="4dp" />
+                        android:text="Ramah Mata"
+                        android:textSize="11sp"
+                        android:textColor="#9E9E9E"
+                        android:layout_marginTop="2dp" />
                 </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-        
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

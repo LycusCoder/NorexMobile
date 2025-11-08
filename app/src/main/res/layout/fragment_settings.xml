@@ -4,16 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_grey"
-    android:paddingBottom="88dp"
-    android:clipToPadding="false">
-    
+    android:background="?attr/colorSurface"
+    android:clipToPadding="false"
+    android:paddingBottom="80dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
-        
+        android:paddingTop="16dp">
+
         <!-- Header -->
         <TextView
             android:layout_width="wrap_content"
@@ -21,227 +21,415 @@
             android:text="Pengaturan"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginBottom="24dp" />
-        
-        <!-- Theme Section -->
+            android:textColor="?attr/colorOnBackground"
+            android:layout_marginBottom="24dp"
+            android:layout_marginStart="16dp" />
+
+        <!-- ============================================= -->
+        <!-- SECTION 1: APLIKASI & TEMA -->
+        <!-- ============================================= -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aplikasi"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurface"
+            android:alpha="0.6"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp" />
+            
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardElevation="4dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginHorizontal="16dp"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="12dp">
+
+            <!-- Item: Tema Aplikasi (Full Clickable List Item Style) -->
+            <LinearLayout
+                android:id="@+id/cardTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="12dp"
+                android:paddingHorizontal="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_color_lens"
+                    app:tint="?attr/colorPrimary"
+                    android:layout_gravity="center_vertical" />
+                
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tema Aplikasi"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <TextView
+                        android:id="@+id/tvCurrentTheme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tema Saat Ini: Ocean Blue"
+                        android:textSize="13sp"
+                        android:textColor="?attr/colorOnSurface"
+                        android:alpha="0.7"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+                
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_chevron_right"
+                    app:tint="@color/grey"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+            
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ============================================= -->
+        <!-- SECTION 2: AKUN -->
+        <!-- ============================================= -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Akun"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurface"
+            android:alpha="0.6"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginHorizontal="16dp"
+            app:cardElevation="2dp"
             app:cardCornerRadius="12dp">
             
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-                
-                <TextView
-                    android:layout_width="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Item: Ubah Password -->
+                <LinearLayout
+                    android:id="@+id/cardChangePassword"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="🎨 Tema Aplikasi"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black" />
-                
-                <TextView
-                    android:id="@+id/tvCurrentTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tema Saat Ini: Sunset Orange"
-                    android:textSize="14sp"
-                    android:textColor="@color/grey"
-                    android:layout_marginTop="8dp" />
+                    android:orientation="horizontal"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
                     
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ketuk untuk mengganti tema"
-                    android:textSize="12sp"
-                    android:textColor="@color/grey"
-                    android:layout_marginTop="4dp" />
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_lock"
+                        app:tint="?attr/colorSecondary"
+                        android:layout_gravity="center_vertical" />
+                    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ubah Password"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorOnSurface" />
+                        
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hapus semua riwayat transaksi"
+                            android:textSize="13sp"
+                            android:textColor="?attr/colorOnSurface"
+                            android:alpha="0.7"
+                            android:layout_marginTop="2dp" />
+                    </LinearLayout>
+                    
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="@color/grey"
+                        android:layout_gravity="center_vertical" />
+                </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-        
-        <!-- Change Password -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardChangePassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="12dp">
-            
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-                
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🔒 Ubah Password"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black" />
-                
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ganti password akun Anda"
-                    android:textSize="14sp"
-                    android:textColor="@color/grey"
-                    android:layout_marginTop="8dp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-        
-        <!-- Data Management Header -->
+
+        <!-- ============================================= -->
+        <!-- SECTION 3: MANAJEMEN DATA -->
+        <!-- ============================================= -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Manajemen Data"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp" />
-        
-        <!-- Reset Produk -->
+            android:textColor="?attr/colorOnSurface"
+            android:alpha="0.6"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp" />
+
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardResetProduk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardElevation="4dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginHorizontal="16dp"
+            app:cardElevation="2dp"
             app:cardCornerRadius="12dp">
             
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-                
-                <TextView
-                    android:layout_width="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Item: Reset Produk -->
+                <LinearLayout
+                    android:id="@+id/cardResetProduk"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="🛒 Reset Data Produk"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black" />
+                    android:orientation="horizontal"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
+                    
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_delete"
+                        app:tint="?attr/colorSecondary"
+                        android:layout_gravity="center_vertical" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Reset Produk"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorOnSurface" />
+                        
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hapus semua data produk"
+                            android:textSize="13sp"
+                            android:textColor="?attr/colorOnSurface"
+                            android:alpha="0.7"
+                            android:layout_marginTop="2dp" />
+                    </LinearLayout>
+                </LinearLayout>
                 
-                <TextView
-                    android:layout_width="wrap_content"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_grey"
+                    android:layout_marginHorizontal="16dp" />
+
+                <!-- Item: Reset Transaksi -->
+                <LinearLayout
+                    android:id="@+id/cardResetTransaksi"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Hapus semua data produk"
-                    android:textSize="14sp"
-                    android:textColor="@color/grey"
-                    android:layout_marginTop="8dp" />
+                    android:orientation="horizontal"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
+                    
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_delete"
+                        app:tint="?attr/colorSecondary"
+                        android:layout_gravity="center_vertical" />
+                    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Reset Transaksi"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorOnSurface" />
+                        
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hapus semua riwayat transaksi"
+                            android:textSize="13sp"
+                            android:textColor="?attr/colorOnSurface"
+                            android:alpha="0.7"
+                            android:layout_marginTop="2dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_grey"
+                    android:layout_marginHorizontal="16dp" />
+
+                <!-- Item: Reset Semua Data (Kritis) -->
+                <LinearLayout
+                    android:id="@+id/cardResetAll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
+                    
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_warning"
+                        app:tint="@color/red"
+                        android:layout_gravity="center_vertical" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Reset Semua Data"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/red" />
+                        
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Aksi ini tidak dapat dibatalkan"
+                            android:textSize="13sp"
+                            android:textColor="@color/red"
+                            android:alpha="0.8"
+                            android:layout_marginTop="2dp" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
         
-        <!-- Reset Transaksi -->
+        <!-- ============================================= -->
+        <!-- SECTION 4: KELUAR -->
+        <!-- ============================================= -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Keluar"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurface"
+            android:alpha="0.6"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp" />
+            
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardResetTransaksi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:cardElevation="4dp"
+            android:layout_marginHorizontal="16dp"
+            app:cardElevation="2dp"
             app:cardCornerRadius="12dp">
             
+            <!-- Item: Logout -->
             <LinearLayout
+                android:id="@+id/cardLogout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:orientation="horizontal"
+                android:paddingVertical="12dp"
+                android:paddingHorizontal="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
                 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="📊 Reset Data Transaksi"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black" />
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_logout"
+                    app:tint="@color/red"
+                    android:layout_gravity="center_vertical" />
                 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Hapus semua riwayat transaksi"
-                    android:textSize="14sp"
-                    android:textColor="@color/grey"
-                    android:layout_marginTop="8dp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-        
-        <!-- Reset All -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardResetAll"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="12dp"
-            app:strokeColor="@color/red"
-            app:strokeWidth="2dp">
-            
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-                
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="⚠️ Reset Semua Data"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/red" />
-                
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hapus semua data (tidak dapat dibatalkan)"
-                    android:textSize="14sp"
-                    android:textColor="@color/red"
-                    android:layout_marginTop="8dp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-        
-        <!-- Logout -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardLogout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="@color/red">
-            
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-                
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🚪 Logout"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/white" />
-                
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Keluar dari aplikasi"
-                    android:textSize="14sp"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="8dp" />
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Logout"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/red" />
+                    
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Keluar dari aplikasi"
+                        android:textSize="13sp"
+                        android:textColor="@color/red"
+                        android:alpha="0.8"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
         

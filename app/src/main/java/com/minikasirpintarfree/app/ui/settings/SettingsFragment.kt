@@ -117,41 +117,35 @@ class SettingsFragment : Fragment() {
         val dialog = AlertDialog.Builder(requireContext())
             .setView(dialogView)
             .create()
+
+        // 1. Get current theme to show checkmark
+        val currentTheme = ThemeHelper.getCurrentTheme(requireContext())
         
-        // Ocean Blue
-        dialogView.findViewById<View>(R.id.cardThemeOcean).setOnClickListener {
-            applyTheme(ThemeHelper.THEME_OCEAN)
-            dialog.dismiss()
-        }
-        
-        // Forest Green
-        dialogView.findViewById<View>(R.id.cardThemeForest).setOnClickListener {
-            applyTheme(ThemeHelper.THEME_FOREST)
-            dialog.dismiss()
-        }
-        
-        // Royal Purple
-        dialogView.findViewById<View>(R.id.cardThemeRoyal).setOnClickListener {
-            applyTheme(ThemeHelper.THEME_ROYAL)
-            dialog.dismiss()
-        }
-        
-        // Sunset Orange
-        dialogView.findViewById<View>(R.id.cardThemeSunset).setOnClickListener {
-            applyTheme(ThemeHelper.THEME_SUNSET)
-            dialog.dismiss()
-        }
-        
-        // Crimson Red
-        dialogView.findViewById<View>(R.id.cardThemeCrimson).setOnClickListener {
-            applyTheme(ThemeHelper.THEME_CRIMSON)
-            dialog.dismiss()
-        }
-        
-        // Dark Mode
-        dialogView.findViewById<View>(R.id.cardThemeDark).setOnClickListener {
-            applyTheme(ThemeHelper.THEME_DARK)
-            dialog.dismiss()
+        // 2. Mapping Card IDs to Theme Constants and their Checkmark ImageViews
+        val themeMap = mapOf(
+            R.id.cardThemeOcean to Pair(ThemeHelper.THEME_OCEAN, R.id.checkOcean),
+            R.id.cardThemeForest to Pair(ThemeHelper.THEME_FOREST, R.id.checkForest),
+            R.id.cardThemeRoyal to Pair(ThemeHelper.THEME_ROYAL, R.id.checkRoyal),
+            R.id.cardThemeSunset to Pair(ThemeHelper.THEME_SUNSET, R.id.checkSunset),
+            R.id.cardThemeCrimson to Pair(ThemeHelper.THEME_CRIMSON, R.id.checkCrimson),
+            R.id.cardThemeDark to Pair(ThemeHelper.THEME_DARK, R.id.checkDark)
+        )
+
+        // 3. Setup Listeners and Checkmarks
+        themeMap.forEach { (cardId, themePair) ->
+            val (themeConstant, checkId) = themePair
+            
+            // Set OnClickListener for the card
+            dialogView.findViewById<View>(cardId).setOnClickListener {
+                applyTheme(themeConstant)
+                dialog.dismiss()
+            }
+            
+            // Show checkmark on the currently selected theme
+            if (currentTheme == themeConstant) {
+                // Gunakan ImageView, jangan View biasa
+                dialogView.findViewById<android.widget.ImageView>(checkId).visibility = View.VISIBLE
+            }
         }
         
         dialog.show()

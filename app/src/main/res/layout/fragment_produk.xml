@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/light_grey">
     
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,32 +13,64 @@
         android:padding="16dp"
         android:paddingBottom="88dp">
         
-        <!-- Search Bar -->
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/etSearch"
+        <!-- Search + Scan Bar - Unified in one row -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:elevation="4dp"
-            app:iconifiedByDefault="false"
-            app:queryHint="Cari produk..."
-            android:layout_marginBottom="8dp" />
-        
-        <!-- Scan Button -->
-        <Button
-            android:id="@+id/btnScanBarcode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Scan Barcode"
-            android:drawableLeft="@android:drawable/ic_menu_camera"
-            android:layout_marginBottom="16dp" />
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="12dp">
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp">
+                
+                <!-- Search View -->
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/etSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    app:iconifiedByDefault="false"
+                    app:queryHint="Cari produk..."
+                    app:queryBackground="@android:color/transparent" />
+                
+                <!-- Divider -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="32dp"
+                    android:background="#E0E0E0"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp" />
+                
+                <!-- Scan Button -->
+                <Button
+                    android:id="@+id/btnScanBarcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="📷 Scan"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    style="?attr/materialButtonStyle" />
+                    
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
         
         <!-- RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewProduk"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:clipToPadding="false" />
     </LinearLayout>
     
     <!-- FAB -->
@@ -47,9 +79,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="88dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="100dp"
         android:src="@android:drawable/ic_input_add"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        app:backgroundTint="@color/colorPrimary" />
     
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
