@@ -10,6 +10,7 @@
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
         <item name="colorOnBackground">@color/colorOnBackground</item>
         <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="colorOnSurfaceVariant">@color/grey</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

@@ -18,7 +18,7 @@
             android:text="Tambah Produk"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:textColor="#333333"
+            android:textColor="?attr/colorOnSurface"
             android:layout_marginBottom="24dp" />
 
         <!-- Informasi Dasar -->
@@ -28,7 +28,7 @@
             android:text="Informasi Dasar"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="#666666"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:layout_marginBottom="12dp"
             android:layout_marginTop="8dp" />
 
@@ -77,7 +77,7 @@
             android:text="Harga &amp; Stok"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="#666666"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:layout_marginBottom="12dp"
             android:layout_marginTop="8dp" />
 
@@ -138,7 +138,7 @@
             android:text="Informasi Tambahan (Opsional)"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="#666666"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:layout_marginBottom="12dp"
             android:layout_marginTop="8dp" />
 
@@ -147,6 +147,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:hint="Barcode"
+            app:helperText="Kosongkan untuk generate otomatis"
+            app:helperTextEnabled="true"
             app:startIconDrawable="@android:drawable/ic_menu_camera"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -156,8 +158,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:maxLines="1"
-                android:textColor="#000000"
-                android:textColorHint="#999999"
+                android:textColor="?attr/colorOnSurface"
+                android:textColorHint="?attr/colorOnSurfaceVariant"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -204,7 +206,7 @@
                 android:layout_height="wrap_content"
                 android:text="Simpan"
                 android:minWidth="100dp"
-                android:backgroundTint="#FF9800"
+                android:backgroundTint="?attr/colorPrimary"
                 app:icon="@android:drawable/ic_menu_save"
                 app:iconGravity="textStart" />
         </LinearLayout>

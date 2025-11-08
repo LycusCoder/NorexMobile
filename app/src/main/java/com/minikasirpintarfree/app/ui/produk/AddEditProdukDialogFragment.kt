@@ -9,11 +9,13 @@ import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.minikasirpintarfree.app.data.model.Produk
 import com.minikasirpintarfree.app.databinding.DialogAddEditProdukBinding
+import com.minikasirpintarfree.app.utils.BarcodeGenerator
 
 class AddEditProdukDialogFragment(
     private val produk: Produk?,
     private val onSave: (Produk) -> Unit,
-    private val prefillBarcode: String? = null  // ✅ TAMBAHAN: Parameter untuk pre-fill barcode
+    private val prefillBarcode: String? = null,  // ✅ TAMBAHAN: Parameter untuk pre-fill barcode
+    private val onBarcodeGenerated: ((Produk) -> Unit)? = null  // ✅ CALLBACK: For barcode preview
 ) : DialogFragment() {
     private lateinit var binding: DialogAddEditProdukBinding
     
@@ -60,7 +62,7 @@ class AddEditProdukDialogFragment(
             val kategori = binding.etKategori.text.toString().trim()
             val harga = binding.etHarga.text.toString().toDoubleOrNull() ?: 0.0
             val stok = binding.etStok.text.toString().toIntOrNull() ?: 0
-            val barcode = binding.etBarcode.text.toString().trim()
+            var barcode = binding.etBarcode.text.toString().trim()
             val deskripsi = binding.etDeskripsi.text.toString().trim()
             
             if (nama.isEmpty() || kategori.isEmpty()) {
@@ -68,7 +70,14 @@ class AddEditProdukDialogFragment(
                 return@setOnClickListener
             }
             
+            // ✅ AUTO-GENERATE BARCODE: Jika barcode kosong dan mode tambah produk baru
+            val isBarcodeGenerated = barcode.isEmpty() && produk == null
+            if (isBarcodeGenerated) {
+                barcode = BarcodeGenerator.generateLocalBarcode()
+            }
+            
             val produkToSave = if (produk != null) {
+                // Edit mode
                 produk.copy(
                     nama = nama,
                     kategori = kategori,
@@ -78,6 +87,7 @@ class AddEditProdukDialogFragment(
                     deskripsi = if (deskripsi.isEmpty()) null else deskripsi
                 )
             } else {
+                // Add mode
                 Produk(
                     nama = nama,
                     kategori = kategori,
@@ -89,6 +99,12 @@ class AddEditProdukDialogFragment(
             }
             
             onSave(produkToSave)
+            
+            // ✅ SHOW PREVIEW: Jika barcode auto-generated, show preview dialog
+            if (isBarcodeGenerated && onBarcodeGenerated != null) {
+                onBarcodeGenerated.invoke(produkToSave)
+            }
+            
             dismiss()
         }
         

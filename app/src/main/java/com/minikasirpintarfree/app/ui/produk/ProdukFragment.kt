@@ -35,6 +35,7 @@ class ProdukFragment : Fragment() {
     private val CAMERA_PERMISSION_CODE = 100
     
     private lateinit var scannerLauncher: ActivityResultLauncher<Intent>
+    private lateinit var addEditProdukLauncher: ActivityResultLauncher<Intent>
     
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +50,7 @@ class ProdukFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         try {
             setupScannerLauncher()
+            setupAddEditProdukLauncher()
             
             val database = AppDatabase.getDatabase(requireContext())
             val produkRepository = ProdukRepository(database.produkDao())
@@ -86,10 +88,12 @@ class ProdukFragment : Fragment() {
                             barcode,
                             onSuccess = { produk: Produk ->
                                 Toast.makeText(requireContext(), "Produk ditemukan: ${produk.nama}", Toast.LENGTH_SHORT).show()
-                                showEditProdukDialog(produk)
+                                showEditProdukActivity(produk)
                             },
                             onError = {
                                 Toast.makeText(requireContext(), "Produk dengan barcode $barcode tidak ditemukan", Toast.LENGTH_SHORT).show()
+                                // Barcode tidak ditemukan, buka form tambah dengan barcode pre-filled
+                                showAddProdukActivity(prefillBarcode = barcode)
                             }
                         )
                     }
@@ -98,10 +102,25 @@ class ProdukFragment : Fragment() {
         }
     }
     
+    private fun setupAddEditProdukLauncher() {
+        addEditProdukLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // Check if barcode was generated
+                val produk = result.data?.getParcelableExtra<Produk>(AddEditProdukActivity.RESULT_BARCODE_GENERATED)
+                if (produk != null) {
+                    // Show barcode preview
+                    showBarcodePreview(produk)
+                }
+            }
+        }
+    }
+    
     private fun setupRecyclerView() {
         adapter = ProdukAdapter(
             onItemClick = { produk ->
-                showEditProdukDialog(produk)
+                showEditProdukActivity(produk)
             },
             onItemDelete = { produk ->
                 viewModel.deleteProduk(produk)
@@ -113,7 +132,7 @@ class ProdukFragment : Fragment() {
     
     private fun setupClickListeners() {
         binding.fabAddProduk.setOnClickListener {
-            showAddProdukDialog()
+            showAddProdukActivity()
         }
         
         binding.btnScanBarcode.setOnClickListener {
@@ -220,31 +239,51 @@ class ProdukFragment : Fragment() {
         scannerLauncher.launch(integrator.createScanIntent())
     }
     
-    private fun showAddProdukDialog() {
-        val dialog = AddEditProdukDialogFragment(
+    private fun showAddProdukActivity(prefillBarcode: String? = null) {
+        val intent = AddEditProdukActivity.newIntent(
+            requireContext(),
             produk = null,
-            onSave = { produk ->
-                viewModel.insertProduk(produk)
-                NotificationHelper.showNotification(
-                    requireContext(),
-                    "Produk Berhasil Ditambahkan",
-                    "Produk ${produk.nama} berhasil didaftarkan",
-                    NotificationHelper.NOTIFICATION_ID_LOW_STOCK + 1,
-                    "PRODUCT_ADDED"
-                )
-            }
+            prefillBarcode = prefillBarcode
         )
-        dialog.show(parentFragmentManager, "AddProdukDialog")
+        addEditProdukLauncher.launch(intent)
     }
     
-    private fun showEditProdukDialog(produk: Produk) {
-        val dialog = AddEditProdukDialogFragment(
-            produk = produk,
-            onSave = { updatedProduk ->
-                viewModel.updateProduk(updatedProduk)
-            }
+    private fun showEditProdukActivity(produk: Produk) {
+        val intent = AddEditProdukActivity.newIntent(
+            requireContext(),
+            produk = produk
         )
-        dialog.show(parentFragmentManager, "EditProdukDialog")
+        addEditProdukLauncher.launch(intent)
+    }
+    
+    private fun showBarcodePreview(produk: Produk) {
+        try {
+            // Generate barcode bitmap
+            val barcodeBitmap = com.minikasirpintarfree.app.utils.BarcodeGenerator.generateBarcodeBitmap(
+                produk.barcode ?: "",
+                400,
+                200
+            )
+            
+            if (barcodeBitmap != null) {
+                // Show preview dialog
+                val previewDialog = BarcodePreviewDialogFragment(produk, barcodeBitmap)
+                previewDialog.show(parentFragmentManager, "BarcodePreviewDialog")
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "❌ Gagal generate barcode image",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(
+                requireContext(),
+                "❌ Error: ${e.message}",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
     
     override fun onDestroyView() {
