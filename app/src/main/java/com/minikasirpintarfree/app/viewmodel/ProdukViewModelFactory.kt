@@ -1,15 +1,18 @@
 package com.minikasirpintarfree.app.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.minikasirpintarfree.app.data.repository.ProdukRepository
+import com.minikasirpintarfree.app.MyApplication
 
-class ProdukViewModelFactory(private val produkRepository: ProdukRepository) : ViewModelProvider.Factory {
-    override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {
+class ProdukViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ProdukViewModel::class.java)) {
+            val app = application as MyApplication
+            val produkRepo = app.produkRepository
             @Suppress("UNCHECKED_CAST")
-            return ProdukViewModel(produkRepository) as T
+            return ProdukViewModel(produkRepo) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
-

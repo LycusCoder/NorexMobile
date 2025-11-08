@@ -16,8 +16,6 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.minikasirpintarfree.app.R
-import com.minikasirpintarfree.app.data.database.AppDatabase
-import com.minikasirpintarfree.app.data.repository.TransaksiRepository
 import com.minikasirpintarfree.app.databinding.FragmentLaporanBinding
 import com.minikasirpintarfree.app.viewmodel.LaporanViewModel
 import com.minikasirpintarfree.app.viewmodel.LaporanViewModelFactory
@@ -42,12 +40,9 @@ class LaporanFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         try {
-            val database = AppDatabase.getDatabase(requireContext())
-            val transaksiRepository = TransaksiRepository(database.transaksiDao())
-            viewModel = ViewModelProvider(
-                this,
-                LaporanViewModelFactory(transaksiRepository)
-            )[LaporanViewModel::class.java]
+            // Perbaikan: Inisialisasi ViewModel menggunakan factory dengan Application context
+            val factory = LaporanViewModelFactory(requireActivity().application)
+            viewModel = ViewModelProvider(this, factory)[LaporanViewModel::class.java]
 
             setupClickListeners()
             observeViewModel()

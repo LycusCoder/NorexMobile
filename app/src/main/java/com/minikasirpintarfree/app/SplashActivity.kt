@@ -3,15 +3,16 @@ package com.minikasirpintarfree.app
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.TypedValue
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.minikasirpintarfree.app.databinding.ActivitySplashBinding
 import com.minikasirpintarfree.app.ui.login.LoginActivity
 import com.minikasirpintarfree.app.viewmodel.LoginViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
 
@@ -29,9 +30,10 @@ class SplashActivity : AppCompatActivity() {
         setupVersionInfo()
         startAnimations()
 
-        Handler(Looper.getMainLooper()).postDelayed({
+        lifecycleScope.launch {
+            delay(splashDuration)
             navigateToNextScreen()
-        }, splashDuration)
+        }
     }
 
     private fun applyThemeColors() {

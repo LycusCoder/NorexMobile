@@ -1,5 +1,6 @@
 package com.minikasirpintarfree.app.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,13 +9,20 @@ import com.minikasirpintarfree.app.data.model.BestSellingProduct
 import com.minikasirpintarfree.app.data.model.Transaksi
 import com.minikasirpintarfree.app.data.repository.ProdukRepository
 import com.minikasirpintarfree.app.data.repository.TransaksiRepository
+import com.minikasirpintarfree.app.utils.StoreProfileHelper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Calendar
 
 class DashboardViewModel(
     private val produkRepository: ProdukRepository,
     private val transaksiRepository: TransaksiRepository
 ) : ViewModel() {
-    
+
+    private val _greetingText = MutableLiveData<String>()
+    val greetingText: LiveData<String> = _greetingText
+
     private val _totalProduk = MutableLiveData<Int>()
     val totalProduk: LiveData<Int> = _totalProduk
     
@@ -35,6 +43,28 @@ class DashboardViewModel(
     
     init {
         loadDashboardData()
+    }
+
+    fun loadGreeting(context: Context) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val storeProfile = StoreProfileHelper.getStoreProfile(context)
+            val namaToko = storeProfile.name
+            val greeting = getGreetingMessage()
+            withContext(Dispatchers.Main) {
+                _greetingText.value = "$greeting, $namaToko 👋"
+            }
+        }
+    }
+
+    private fun getGreetingMessage(): String {
+        val calendar = Calendar.getInstance()
+        return when (calendar.get(Calendar.HOUR_OF_DAY)) {
+            in 0..10 -> "Selamat Pagi"
+            in 11..14 -> "Selamat Siang"
+            in 15..17 -> "Selamat Sore"
+            in 18..23 -> "Selamat Malam"
+            else -> "Halo"
+        }
     }
     
     private fun loadDashboardData() {
@@ -99,4 +129,3 @@ class DashboardViewModel(
         }
     }
 }
-

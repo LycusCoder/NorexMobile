@@ -10,9 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.minikasirpintarfree.app.R
-import com.minikasirpintarfree.app.data.database.AppDatabase
 import com.minikasirpintarfree.app.data.model.Produk
-import com.minikasirpintarfree.app.data.repository.ProdukRepository
 import com.minikasirpintarfree.app.databinding.ActivityAddEditProdukBinding
 import com.minikasirpintarfree.app.utils.BarcodeGenerator
 import com.minikasirpintarfree.app.viewmodel.ProdukViewModel
@@ -49,9 +47,9 @@ class AddEditProdukActivity : AppCompatActivity() {
         binding = ActivityAddEditProdukBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val database = AppDatabase.getDatabase(this)
-        val produkRepository = ProdukRepository(database.produkDao())
-        viewModel = ViewModelProvider(this, ProdukViewModelFactory(produkRepository))[ProdukViewModel::class.java]
+        // Perbaikan: Inisialisasi ViewModel menggunakan factory dengan Application context
+        val factory = ProdukViewModelFactory(application)
+        viewModel = ViewModelProvider(this, factory)[ProdukViewModel::class.java]
 
         existingProduk = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(EXTRA_PRODUK, Produk::class.java)
@@ -84,8 +82,7 @@ class AddEditProdukActivity : AppCompatActivity() {
             binding.etHarga.setText(it.harga.toString())
             binding.etStok.setText(it.stok.toString())
             binding.etDeskripsi.setText(it.deskripsi ?: "")
-            
-            // If barcode exists, assume it's a scanned product
+
             if (!it.barcode.isNullOrEmpty()) {
                 isNewProductMode = false
                 binding.toggleProductType.check(R.id.btnScanProduct)
@@ -113,9 +110,7 @@ class AddEditProdukActivity : AppCompatActivity() {
             saveProduk()
         }
 
-        // Set listener for the end icon
         binding.tilBarcode.setEndIconOnClickListener {
-            // TODO: Launch barcode scanner here
             Toast.makeText(this, "Fitur Scan akan segera tersedia", Toast.LENGTH_SHORT).show()
         }
     }

@@ -13,11 +13,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.minikasirpintarfree.app.R
-import com.minikasirpintarfree.app.data.database.AppDatabase
 import com.minikasirpintarfree.app.data.model.Transaksi
 import com.minikasirpintarfree.app.data.model.TransaksiItem
-import com.minikasirpintarfree.app.data.repository.ProdukRepository
-import com.minikasirpintarfree.app.data.repository.TransaksiRepository
 import com.minikasirpintarfree.app.databinding.FragmentDashboardBinding
 import com.minikasirpintarfree.app.ui.dashboard.BestSellerAdapter
 import com.minikasirpintarfree.app.ui.dashboard.RecentTransaksiAdapter
@@ -54,21 +51,16 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         try {
-            val database = AppDatabase.getDatabase(requireContext())
-            val produkRepository = ProdukRepository(database.produkDao())
-            val transaksiRepository = TransaksiRepository(database.transaksiDao())
-
-            viewModel = ViewModelProvider(
-                this,
-                DashboardViewModelFactory(produkRepository, transaksiRepository)
-            )[DashboardViewModel::class.java]
+            val factory = DashboardViewModelFactory(requireActivity().application)
+            viewModel = ViewModelProvider(this, factory)[DashboardViewModel::class.java]
 
             NotificationHelper.createNotificationChannel(requireContext())
 
-            setupGreeting()
             setupRecyclerViews()
             setupClickListeners()
             observeViewModel()
+            setupGreeting()
+
         } catch (e: Exception) {
             android.util.Log.e("DashboardFragment", "Error in onViewCreated", e)
             Toast.makeText(requireContext(), "Terjadi kesalahan: ${e.message}", Toast.LENGTH_LONG).show()
@@ -76,25 +68,9 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setupGreeting() {
-        // Get store profile using the helper
-        val storeProfile = StoreProfileHelper.getStoreProfile(requireContext())
-        val namaToko = storeProfile.name
-        val greeting = getGreetingMessage()
-        binding.tvGreeting.text = "$greeting, $namaToko 👋"
-
+        viewModel.loadGreeting(requireContext())
         val currentDate = SimpleDateFormat("d MMMM yyyy", Locale("id", "ID")).format(java.util.Date())
         binding.tvDate.text = currentDate
-    }
-
-    private fun getGreetingMessage(): String {
-        val calendar = Calendar.getInstance()
-        return when (calendar.get(Calendar.HOUR_OF_DAY)) {
-            in 0..10 -> "Selamat Pagi"
-            in 11..14 -> "Selamat Siang"
-            in 15..17 -> "Selamat Sore"
-            in 18..23 -> "Selamat Malam"
-            else -> "Halo"
-        }
     }
 
     private fun setupRecyclerViews() {
@@ -128,6 +104,10 @@ class DashboardFragment : Fragment() {
     }
 
     private fun observeViewModel() {
+        viewModel.greetingText.observe(viewLifecycleOwner) { greeting ->
+            binding.tvGreeting.text = greeting
+        }
+
         viewModel.totalProduk.observe(viewLifecycleOwner) { total: Int ->
             binding.tvTotalProduk.text = total.toString()
         }
