@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="#F5F5F5">
+    android:background="?android:attr/colorBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,11 +14,11 @@
         android:gravity="center_horizontal"
         android:layout_gravity="center_vertical">
 
-        <!-- Storefront Icon -->
+        <!-- Logo Kasir -->
         <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/ic_storefront"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/logo_kasir"
             android:layout_marginBottom="24dp"
             android:contentDescription="Mini Kasir Icon" />
 
@@ -26,19 +26,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mini Kasir"
+            android:text="Mini Kasir Pintar"
             android:textSize="32sp"
             android:textStyle="bold"
-            android:textColor="#FF9800"
+            android:textColor="?attr/colorPrimary"
             android:layout_marginBottom="8dp" />
 
         <!-- Subtitle -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Aplikasi Kasir UMKM"
+            android:text="Solusi Kasir Modern UMKM"
             android:textSize="14sp"
-            android:textColor="#757575"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:layout_marginBottom="48dp" />
 
         <!-- Username Input -->
@@ -47,8 +47,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:hint="Username"
-            app:boxStrokeColor="#FF9800"
-            app:hintTextColor="#FF9800"
+            app:boxStrokeColor="?attr/colorPrimary"
+            app:hintTextColor="?attr/colorPrimary"
+            app:startIconDrawable="@android:drawable/ic_menu_myplaces"
+            app:startIconTint="?attr/colorPrimary"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -57,8 +59,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:maxLines="1"
-                android:textColor="#000000"
-                android:textColorHint="#999999"
+                android:textColor="?attr/colorOnSurface"
+                android:textColorHint="?attr/colorOnSurfaceVariant"
                 android:textSize="16sp"
                 android:minHeight="56dp"
                 android:paddingStart="16dp"
@@ -71,10 +73,12 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:hint="Password"
-            app:boxStrokeColor="#FF9800"
-            app:hintTextColor="#FF9800"
+            app:boxStrokeColor="?attr/colorPrimary"
+            app:hintTextColor="?attr/colorPrimary"
+            app:startIconDrawable="@android:drawable/ic_lock_idle_lock"
+            app:startIconTint="?attr/colorPrimary"
             app:endIconMode="password_toggle"
-            app:endIconTint="#FF9800"
+            app:endIconTint="?attr/colorPrimary"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -83,8 +87,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:textColor="#000000"
-                android:textColorHint="#999999"
+                android:textColor="?attr/colorOnSurface"
+                android:textColorHint="?attr/colorOnSurfaceVariant"
                 android:textSize="16sp"
                 android:minHeight="56dp"
                 android:paddingStart="16dp"
@@ -101,7 +105,7 @@
             android:textStyle="bold"
             android:textAllCaps="true"
             android:padding="18dp"
-            android:backgroundTint="#FF9800"
+            android:backgroundTint="?attr/colorPrimary"
             android:textColor="#FFFFFF"
             android:layout_marginBottom="16dp"
             app:cornerRadius="8dp" />
@@ -112,9 +116,8 @@
             android:layout_height="wrap_content"
             android:text="Username: admin | Password: admin123"
             android:textSize="12sp"
-            android:textColor="#757575"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:gravity="center" />
 
     </LinearLayout>
 </ScrollView>
-

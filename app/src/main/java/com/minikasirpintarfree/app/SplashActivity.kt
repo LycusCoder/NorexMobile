@@ -1,9 +1,12 @@
 package com.minikasirpintarfree.app
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.TypedValue
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
@@ -24,6 +27,9 @@ class SplashActivity : AppCompatActivity() {
         // Hide action bar
         supportActionBar?.hide()
         
+        // Apply theme color to splash background
+        applyThemeColors()
+        
         // Apply fade-in animation to logo
         val fadeIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
         binding.ivLogo.startAnimation(fadeIn)
@@ -34,6 +40,16 @@ class SplashActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             navigateToNextScreen()
         }, SPLASH_DURATION)
+    }
+    
+    private fun applyThemeColors() {
+        // Get colorPrimary from current theme
+        val typedValue = TypedValue()
+        theme.resolveAttribute(com.google.android.material.R.attr.colorPrimary, typedValue, true)
+        val colorPrimary = typedValue.data
+        
+        // Apply to splash background
+        binding.splashBackground.setBackgroundColor(colorPrimary)
     }
     
     private fun navigateToNextScreen() {
