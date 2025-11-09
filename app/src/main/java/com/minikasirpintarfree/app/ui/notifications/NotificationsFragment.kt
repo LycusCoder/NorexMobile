@@ -76,9 +76,11 @@ class NotificationsFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = NotifikasiAdapter {
-            lifecycleScope.launch {
-                viewModel.markAsRead(it.id)
+        adapter = NotifikasiAdapter { notifikasi ->
+            if (!notifikasi.isRead) {
+                lifecycleScope.launch {
+                    viewModel.markAsRead(notifikasi.id)
+                }
             }
         }
         binding.recyclerViewNotifications.layoutManager = LinearLayoutManager(requireContext())
