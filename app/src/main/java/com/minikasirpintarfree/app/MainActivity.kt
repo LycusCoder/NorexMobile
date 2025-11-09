@@ -53,9 +53,6 @@ class MainActivity : AppCompatActivity() {
 
             setSupportActionBar(binding.toolbar)
 
-            // Apply theme color to toolbar
-            binding.toolbar.setBackgroundColor(ThemeHelper.getToolbarColor(this))
-
             // Setup Navigation Component
             val navHostFragment = supportFragmentManager
                 .findFragmentById(R.id.nav_host_fragment) as NavHostFragment

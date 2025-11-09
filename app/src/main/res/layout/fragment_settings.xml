@@ -26,84 +26,6 @@
             android:layout_marginStart="16dp" />
 
         <!-- ============================================= -->
-        <!-- SECTION 1: APLIKASI & TEMA -->
-        <!-- ============================================= -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aplikasi"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorOnSurface"
-            android:alpha="0.6"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp" />
-            
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:layout_marginHorizontal="16dp"
-            app:cardElevation="2dp"
-            app:cardCornerRadius="12dp">
-
-            <!-- Item: Tema Aplikasi (Full Clickable List Item Style) -->
-            <LinearLayout
-                android:id="@+id/cardTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="12dp"
-                android:paddingHorizontal="16dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
-                
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_color_lens"
-                    app:tint="?attr/colorPrimary"
-                    android:layout_gravity="center_vertical" />
-                
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tema Aplikasi"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="?attr/colorOnSurface" />
-
-                    <TextView
-                        android:id="@+id/tvCurrentTheme"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tema Saat Ini: Ocean Blue"
-                        android:textSize="13sp"
-                        android:textColor="?attr/colorOnSurface"
-                        android:alpha="0.7"
-                        android:layout_marginTop="2dp" />
-                </LinearLayout>
-                
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_chevron_right"
-                    app:tint="@color/grey"
-                    android:layout_gravity="center_vertical" />
-            </LinearLayout>
-            
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- ============================================= -->
         <!-- SECTION 2: TOKO -->
         <!-- ============================================= -->
         <TextView
@@ -509,13 +431,6 @@
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-        
-        <!-- Hidden switch for backward compatibility -->
-        <Switch
-            android:id="@+id/switchTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
             
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
