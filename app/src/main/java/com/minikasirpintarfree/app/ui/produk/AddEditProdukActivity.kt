@@ -1,14 +1,22 @@
 package com.minikasirpintarfree.app.ui.produk
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.minikasirpintarfree.app.R
 import com.minikasirpintarfree.app.data.model.Produk
 import com.minikasirpintarfree.app.databinding.ActivityAddEditProdukBinding
@@ -22,8 +30,28 @@ class AddEditProdukActivity : AppCompatActivity() {
     private lateinit var viewModel: ProdukViewModel
     private var existingProduk: Produk? = null
     private var prefillBarcode: String? = null
+    private var imageUri: Uri? = null
 
     private var isNewProductMode = true // Default to new product
+
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+        if (isGranted) {
+            openGallery()
+        } else {
+            Toast.makeText(this, "Izin untuk mengakses galeri ditolak", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.data?.let {
+                imageUri = it
+                Glide.with(this)
+                    .load(imageUri)
+                    .into(binding.ivProdukGambar)
+            }
+        }
+    }
 
     companion object {
         private const val EXTRA_PRODUK = "extra_produk"
@@ -47,7 +75,6 @@ class AddEditProdukActivity : AppCompatActivity() {
         binding = ActivityAddEditProdukBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Perbaikan: Inisialisasi ViewModel menggunakan factory dengan Application context
         val factory = ProdukViewModelFactory(application)
         viewModel = ViewModelProvider(this, factory)[ProdukViewModel::class.java]
 
@@ -73,7 +100,6 @@ class AddEditProdukActivity : AppCompatActivity() {
     }
 
     private fun setupFields() {
-        // Set default mode
         updateBarcodeView(isNewProductMode)
 
         existingProduk?.let {
@@ -88,6 +114,16 @@ class AddEditProdukActivity : AppCompatActivity() {
                 binding.toggleProductType.check(R.id.btnScanProduct)
                 binding.etBarcode.setText(it.barcode)
             }
+            
+            it.gambar?.let {
+                imageUri = Uri.parse(it)
+                 Glide.with(this)
+                    .load(imageUri)
+                    .placeholder(R.drawable.ic_storefront)
+                    .error(R.drawable.ic_storefront)
+                    .into(binding.ivProdukGambar)
+            }
+
         } ?: run {
             if (!prefillBarcode.isNullOrEmpty()) {
                 isNewProductMode = false
@@ -106,13 +142,44 @@ class AddEditProdukActivity : AppCompatActivity() {
             }
         }
 
-        binding.fabSave.setOnClickListener {
+        binding.btnSimpan.setOnClickListener {
             saveProduk()
+        }
+
+        binding.btnPilihGambar.setOnClickListener {
+            checkPermissionAndOpenGallery()
         }
 
         binding.tilBarcode.setEndIconOnClickListener {
             Toast.makeText(this, "Fitur Scan akan segera tersedia", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun checkPermissionAndOpenGallery() {
+        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Manifest.permission.READ_MEDIA_IMAGES
+        } else {
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        }
+
+        when {
+            ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED -> {
+                openGallery()
+            }
+            shouldShowRequestPermissionRationale(permission) -> {
+                // Optionally, show a rationale to the user
+                Toast.makeText(this, "Izin diperlukan untuk memilih gambar", Toast.LENGTH_LONG).show()
+                requestPermissionLauncher.launch(permission)
+            }
+            else -> {
+                requestPermissionLauncher.launch(permission)
+            }
+        }
+    }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        pickImageLauncher.launch(intent)
     }
 
     private fun updateBarcodeView(isNew: Boolean) {
@@ -144,21 +211,21 @@ class AddEditProdukActivity : AppCompatActivity() {
         val deskripsi = binding.etDeskripsi.text.toString().trim()
 
         if (nama.isEmpty()) {
-            binding.etNama.error = "Nama produk harus diisi"
+            binding.tilNama.error = "Nama produk harus diisi"
             return
         }
         if (kategori.isEmpty()) {
-            binding.etKategori.error = "Kategori harus diisi"
+            binding.tilKategori.error = "Kategori harus diisi"
             return
         }
         val harga = hargaStr.toDoubleOrNull()
         if (harga == null || harga <= 0) {
-            binding.etHarga.error = "Harga harus valid"
+            binding.tilHarga.error = "Harga harus valid"
             return
         }
         val stok = stokStr.toIntOrNull()
         if (stok == null || stok < 0) {
-            binding.etStok.error = "Stok harus valid"
+            binding.tilStok.error = "Stok harus valid"
             return
         }
 
@@ -167,18 +234,20 @@ class AddEditProdukActivity : AppCompatActivity() {
             barcode = BarcodeGenerator.generateLocalBarcode()
             isBarcodeGenerated = true
         } else if (!isNewProductMode && barcode.isEmpty()) {
-            binding.etBarcode.error = "Barcode tidak boleh kosong untuk tipe produk ini"
+            binding.tilBarcode.error = "Barcode tidak boleh kosong"
             return
         }
 
         val produkToSave = existingProduk?.copy(
             nama = nama, kategori = kategori, harga = harga, stok = stok,
             barcode = if (barcode.isEmpty()) null else barcode,
-            deskripsi = if (deskripsi.isEmpty()) null else deskripsi
+            deskripsi = if (deskripsi.isEmpty()) null else deskripsi,
+            gambar = imageUri?.toString()
         ) ?: Produk(
             nama = nama, kategori = kategori, harga = harga, stok = stok,
             barcode = if (barcode.isEmpty()) null else barcode,
-            deskripsi = if (deskripsi.isEmpty()) null else deskripsi
+            deskripsi = if (deskripsi.isEmpty()) null else deskripsi,
+            gambar = imageUri?.toString()
         )
 
         lifecycleScope.launch {
