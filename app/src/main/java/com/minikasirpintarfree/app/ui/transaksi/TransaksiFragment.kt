@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,6 +31,7 @@ import com.minikasirpintarfree.app.ui.produk.AddEditProdukDialogFragment
 import com.minikasirpintarfree.app.utils.NotificationHelper
 import com.minikasirpintarfree.app.utils.PdfGenerator
 import com.minikasirpintarfree.app.utils.StoreProfileHelper
+import com.minikasirpintarfree.app.viewmodel.SharedViewModel
 import com.minikasirpintarfree.app.viewmodel.TransaksiViewModel
 import com.minikasirpintarfree.app.viewmodel.TransaksiViewModelFactory
 import kotlinx.coroutines.launch
@@ -40,6 +42,7 @@ class TransaksiFragment : Fragment() {
     private var _binding: FragmentTransaksiBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: TransaksiViewModel
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var adapter: TransaksiItemAdapter
     private val CAMERA_PERMISSION_CODE = 100
     
@@ -72,6 +75,7 @@ class TransaksiFragment : Fragment() {
             setupRecyclerView()
             setupClickListeners()
             observeViewModel()
+            observeSharedViewModel()
         } catch (e: Exception) {
             android.util.Log.e("TransaksiFragment", "Error in onViewCreated", e)
             Toast.makeText(requireContext(), "Terjadi kesalahan: ${e.message}", Toast.LENGTH_LONG).show()
@@ -111,11 +115,7 @@ class TransaksiFragment : Fragment() {
     
     private fun setupClickListeners() {
         binding.btnScanBarcode.setOnClickListener {
-            if (checkCameraPermission()) {
-                startBarcodeScanner()
-            } else {
-                requestCameraPermission()
-            }
+            startScan()
         }
         
         binding.btnSearchProduk.setOnClickListener {
@@ -160,6 +160,22 @@ class TransaksiFragment : Fragment() {
         
         viewModel.productNotFound.observe(viewLifecycleOwner) { barcode: String ->
             showProductNotFoundDialog(barcode)
+        }
+    }
+
+    private fun observeSharedViewModel() {
+        sharedViewModel.startScanEvent.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { 
+                startScan()
+            }
+        }
+    }
+
+    private fun startScan() {
+        if (checkCameraPermission()) {
+            startBarcodeScanner()
+        } else {
+            requestCameraPermission()
         }
     }
     

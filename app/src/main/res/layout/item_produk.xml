@@ -15,13 +15,13 @@
 
         <ImageView
             android:id="@+id/ivProduk"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:src="@drawable/ic_storefront" />
+            android:src="@drawable/ic_product_cart_final" />
 
         <TextView
             android:id="@+id/tvNamaProduk"

@@ -52,12 +52,12 @@ class ProdukAdapter(
 
             // Load product image
             if (produk.gambar.isNullOrEmpty()) {
-                binding.ivProduk.setImageResource(R.drawable.ic_storefront)
+                binding.ivProduk.setImageResource(R.drawable.ic_product_cart_final)
             } else {
                 Glide.with(binding.root.context)
                     .load(produk.gambar)
-                    .placeholder(R.drawable.ic_storefront)
-                    .error(R.drawable.ic_storefront)
+                    .placeholder(R.drawable.ic_product_cart_final)
+                    .error(R.drawable.ic_product_cart_final)
                     .into(binding.ivProduk)
             }
 

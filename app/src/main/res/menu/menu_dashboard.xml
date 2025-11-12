@@ -6,9 +6,4 @@
         android:title="Notifikasi"
         app:actionLayout="@layout/notification_badge"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/menu_logout"
-        android:title="Logout"
-        android:icon="@android:drawable/ic_lock_power_off"
-        app:showAsAction="ifRoom" />
 </menu>

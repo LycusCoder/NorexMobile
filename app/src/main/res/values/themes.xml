@@ -2,18 +2,12 @@
 <resources>
     <!-- Base Theme -->
     <style name="Theme.MiniKasir" parent="Theme.MaterialComponents.Light.NoActionBar">
-        
-        <!-- FIX KRITIS: Mendefinisikan atribut non-Android untuk diakses via ?attr/ -->
         <item name="colorBackground">@color/colorBackground</item>
         <item name="colorSurface">@color/colorSurface</item>
-        
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        
-        <!-- Atribut Android bawaan: tetap dipertahankan -->
         <item name="android:colorBackground">@color/colorBackground</item>
-        
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
         <item name="colorOnBackground">@color/colorOnBackground</item>
         <item name="colorOnSurface">@color/colorOnSurface</item>
@@ -21,4 +15,33 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <!-- Spring Theme -->
+    <style name="Theme.MiniKasir.Spring" parent="Theme.MiniKasir">
+        <item name="colorPrimary">@color/spring_primary</item>
+        <item name="colorPrimaryDark">@color/spring_primary_dark</item>
+        <item name="colorAccent">@color/spring_accent</item>
+    </style>
+
+    <!-- Summer Theme -->
+    <style name="Theme.MiniKasir.Summer" parent="Theme.MiniKasir">
+        <item name="colorPrimary">@color/summer_primary</item>
+        <item name="colorPrimaryDark">@color/summer_primary_dark</item>
+        <item name="colorAccent">@color/summer_accent</item>
+    </style>
+
+    <!-- Autumn Theme -->
+    <style name="Theme.MiniKasir.Autumn" parent="Theme.MiniKasir">
+        <item name="colorPrimary">@color/autumn_primary</item>
+        <item name="colorPrimaryDark">@color/autumn_primary_dark</item>
+        <item name="colorAccent">@color/autumn_accent</item>
+    </style>
+
+    <!-- Winter Theme -->
+    <style name="Theme.MiniKasir.Winter" parent="Theme.MiniKasir">
+        <item name="colorPrimary">@color/winter_primary</item>
+        <item name="colorPrimaryDark">@color/winter_primary_dark</item>
+        <item name="colorAccent">@color/winter_accent</item>
+    </style>
+
 </resources>

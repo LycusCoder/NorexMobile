@@ -137,11 +137,26 @@
                     android:padding="16dp"
                     android:gravity="center_vertical">
 
-                    <ImageView
+                    <FrameLayout
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/ic_payments"
-                        android:layout_marginEnd="16dp"/>
+                        android:layout_marginEnd="16dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/rupiah" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Rp"
+                            android:textColor="#1B5E20"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                    </FrameLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -167,7 +182,7 @@
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
         
-        <!-- Chart -->
+        <!-- Pie Chart -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -185,16 +200,48 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Grafik Penjualan"
+                    android:text="Grafik Pendapatan (Persen)"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?attr/colorOnSurface"
                     android:layout_marginBottom="12dp" />
                 
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Bar Chart -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="?attr/colorSurface">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Grafik Pendapatan (Rupiah)"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface"
+                    android:layout_marginBottom="12dp" />
+
                 <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/barChart"
                     android:layout_width="match_parent"
                     android:layout_height="250dp" />
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -216,7 +263,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="⭐ Produk Terlaris"
+                    android:text="⭐ 3 Produk Terlaris"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?attr/colorOnSurface"

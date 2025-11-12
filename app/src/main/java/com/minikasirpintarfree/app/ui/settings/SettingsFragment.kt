@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.minikasirpintarfree.app.R
 import com.minikasirpintarfree.app.data.database.AppDatabase
@@ -18,6 +19,7 @@ import com.minikasirpintarfree.app.databinding.FragmentSettingsBinding
 import com.minikasirpintarfree.app.ui.login.LoginActivity
 import com.minikasirpintarfree.app.utils.StoreProfileHelper
 import com.minikasirpintarfree.app.utils.StoreProfile
+import com.minikasirpintarfree.app.utils.ThemeHelper
 import com.minikasirpintarfree.app.viewmodel.LoginViewModel
 import com.minikasirpintarfree.app.viewmodel.LoginViewModelFactory
 import com.minikasirpintarfree.app.viewmodel.SettingsViewModel
@@ -65,8 +67,12 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupClickListeners() {
+        binding.cardTheme.setOnClickListener {
+            showThemeDialog()
+        }
+
         binding.cardStoreProfile.setOnClickListener {
-            showStoreProfileDialog()
+            findNavController().navigate(R.id.action_settingsFragment_to_profilTokoFragment)
         }
 
         binding.cardChangePassword.setOnClickListener {
@@ -103,54 +109,58 @@ class SettingsFragment : Fragment() {
     }
 
     private fun loadCurrentSettings() {
-        // Load store profile
+        val currentTheme = ThemeHelper.getCurrentTheme(requireContext())
+        val themeName = ThemeHelper.getThemeDisplayName(currentTheme)
+        binding.tvCurrentTheme.text = "Tema Saat Ini: $themeName"
+
         val storeProfile = StoreProfileHelper.getStoreProfile(requireContext())
         binding.tvStoreName.text = storeProfile.name
     }
 
-    private fun showStoreProfileDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_edit_store_profile, null)
-        val etStoreName = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etStoreName)
-        val etStoreAddress = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etStoreAddress)
-        val etStorePhone = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etStorePhone)
-        val btnSave = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnSave)
-        val btnCancel = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnCancel)
-
-        // Load current profile
-        val currentProfile = StoreProfileHelper.getStoreProfile(requireContext())
-        etStoreName.setText(currentProfile.name)
-        etStoreAddress.setText(currentProfile.address)
-        etStorePhone.setText(currentProfile.phone)
-
+    private fun showThemeDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_theme_selector, null)
         val dialog = AlertDialog.Builder(requireContext())
             .setView(dialogView)
             .create()
 
-        btnSave.setOnClickListener {
-            val name = etStoreName.text.toString().trim()
-            val address = etStoreAddress.text.toString().trim()
-            val phone = etStorePhone.text.toString().trim()
+        val currentTheme = ThemeHelper.getCurrentTheme(requireContext())
 
-            if (name.isEmpty()) {
-                Toast.makeText(requireContext(), "Nama toko harus diisi", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+        val themeMap = mapOf(
+            R.id.cardThemeSpring to Pair(ThemeHelper.THEME_SPRING, R.id.checkSpring),
+            R.id.cardThemeSummer to Pair(ThemeHelper.THEME_SUMMER, R.id.checkSummer),
+            R.id.cardThemeAutumn to Pair(ThemeHelper.THEME_AUTUMN, R.id.checkAutumn),
+            R.id.cardThemeWinter to Pair(ThemeHelper.THEME_WINTER, R.id.checkWinter)
+        )
+
+        themeMap.forEach { (cardId, themePair) ->
+            val (themeConstant, checkId) = themePair
+
+            dialogView.findViewById<View>(cardId).setOnClickListener {
+                applyTheme(themeConstant)
+                dialog.dismiss()
             }
 
-            val newProfile = StoreProfile(name, address, phone)
-            StoreProfileHelper.saveStoreProfile(requireContext(), newProfile)
-
-            // Update display
-            binding.tvStoreName.text = name
-
-            Toast.makeText(requireContext(), "Profil toko berhasil disimpan", Toast.LENGTH_SHORT).show()
-            dialog.dismiss()
-        }
-
-        btnCancel.setOnClickListener {
-            dialog.dismiss()
+            if (currentTheme == themeConstant) {
+                dialogView.findViewById<android.widget.ImageView>(checkId).visibility = View.VISIBLE
+            }
         }
 
         dialog.show()
+    }
+
+    private fun applyTheme(theme: String) {
+        ThemeHelper.saveTheme(requireContext(), theme)
+
+        val themeName = ThemeHelper.getThemeDisplayName(theme)
+        binding.tvCurrentTheme.text = "Tema Saat Ini: $themeName"
+
+        Toast.makeText(
+            requireContext(),
+            "Tema $themeName diterapkan! Restart aplikasi untuk melihat perubahan.",
+            Toast.LENGTH_LONG
+        ).show()
+
+        requireActivity().recreate()
     }
 
     private fun showChangePasswordDialog() {

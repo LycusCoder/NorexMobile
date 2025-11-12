@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background with rounded corners -->
+    <item android:drawable="@drawable/bg_product_icon" />
+
+    <!-- Shopping Cart Icon (bottom layer) -->
+    <item
+        android:drawable="@drawable/ic_shopping_cart_outline"
+        android:left="10dp"
+        android:right="10dp"
+        android:top="10dp"
+        android:bottom="10dp" />
+
+    <!-- Price Tag Icon (top layer, slightly offset) -->
+    <item
+        android:drawable="@drawable/ic_product_tag_icon"
+        android:left="14dp"
+        android:right="6dp"
+        android:top="6dp"
+        android:bottom="14dp" />
+
+</layer-list>

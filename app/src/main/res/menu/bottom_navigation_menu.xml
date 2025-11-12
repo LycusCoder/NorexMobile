@@ -9,9 +9,8 @@
         android:icon="@drawable/ic_product"
         android:title="Produk" />
     <item
-        android:id="@+id/transaksiFragment"
-        android:icon="@drawable/ic_transaksi_baru"
-        android:title="Transaksi" />
+        android:id="@+id/placeholder"
+        android:title="" />
     <item
         android:id="@+id/laporanFragment"
         android:icon="@drawable/ic_laporan_baru"
@@ -21,4 +20,3 @@
         android:icon="@drawable/ic_pengaturan_baru"
         android:title="Pengaturan" />
 </menu>
-

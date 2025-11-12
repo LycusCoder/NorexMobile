@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.MiniKasir" parent="Theme.MaterialComponents.NoActionBar">
-        
-        <!-- FIX KRITIS: Menambahkan atribut non-Android juga di Dark Mode -->
+    <!-- Base Dark Theme -->
+    <style name="Theme.MiniKasir.Dark" parent="Theme.MaterialComponents.NoActionBar">
         <item name="colorBackground">@color/dark_background</item>
         <item name="colorSurface">@color/dark_surface</item>
-        
         <item name="colorPrimary">@color/dark_primary</item>
         <item name="colorPrimaryDark">@color/dark_primary_dark</item>
         <item name="colorAccent">@color/dark_accent</item>
         <item name="android:colorBackground">@color/dark_background</item>
-        
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnBackground">@color/white</item>
         <item name="colorOnSurface">@color/white</item>
@@ -18,4 +15,33 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <!-- Spring Dark Theme -->
+    <style name="Theme.MiniKasir.Spring.Dark" parent="Theme.MiniKasir.Dark">
+        <item name="colorPrimary">@color/spring_primary</item>
+        <item name="colorPrimaryDark">@color/spring_primary_dark</item>
+        <item name="colorAccent">@color/spring_accent</item>
+    </style>
+
+    <!-- Summer Dark Theme -->
+    <style name="Theme.MiniKasir.Summer.Dark" parent="Theme.MiniKasir.Dark">
+        <item name="colorPrimary">@color/summer_primary</item>
+        <item name="colorPrimaryDark">@color/summer_primary_dark</item>
+        <item name="colorAccent">@color/summer_accent</item>
+    </style>
+
+    <!-- Autumn Dark Theme -->
+    <style name="Theme.MiniKasir.Autumn.Dark" parent="Theme.MiniKasir.Dark">
+        <item name="colorPrimary">@color/autumn_primary</item>
+        <item name="colorPrimaryDark">@color/autumn_primary_dark</item>
+        <item name="colorAccent">@color/autumn_accent</item>
+    </style>
+
+    <!-- Winter Dark Theme -->
+    <style name="Theme.MiniKasir.Winter.Dark" parent="Theme.MiniKasir.Dark">
+        <item name="colorPrimary">@color/winter_primary</item>
+        <item name="colorPrimaryDark">@color/winter_primary_dark</item>
+        <item name="colorAccent">@color/winter_accent</item>
+    </style>
+
 </resources>

@@ -4,64 +4,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/dashboardFragment">
-    
+
     <!-- Dashboard Fragment -->
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.minikasirpintarfree.app.ui.dashboard.DashboardFragment"
         android:label="Dashboard"
         tools:layout="@layout/fragment_dashboard">
-        
+
         <action
             android:id="@+id/action_dashboard_to_produk"
             app:destination="@id/produkFragment" />
-        
+
         <action
             android:id="@+id/action_dashboard_to_transaksi"
-            app:destination="@id/transaksiFragment" />
-        
+            app:destination="@+id/transaksiFragment" />
+
         <action
             android:id="@+id/action_dashboard_to_laporan"
-            app:destination="@id/laporanFragment" />
-        
+            app:destination="@+id/laporanFragment" />
+
         <action
             android:id="@+id/action_dashboard_to_settings"
-            app:destination="@id/settingsFragment" />
+            app:destination="@+id/settingsFragment" />
     </fragment>
-    
+
     <!-- Produk Fragment -->
     <fragment
         android:id="@+id/produkFragment"
         android:name="com.minikasirpintarfree.app.ui.produk.ProdukFragment"
         android:label="Daftar Produk"
         tools:layout="@layout/fragment_produk" />
-    
+
     <!-- Transaksi Fragment -->
     <fragment
         android:id="@+id/transaksiFragment"
         android:name="com.minikasirpintarfree.app.ui.transaksi.TransaksiFragment"
         android:label="Transaksi"
         tools:layout="@layout/fragment_transaksi" />
-    
+
     <!-- Laporan Fragment -->
     <fragment
         android:id="@+id/laporanFragment"
         android:name="com.minikasirpintarfree.app.ui.laporan.LaporanFragment"
         android:label="Laporan"
         tools:layout="@layout/fragment_laporan" />
-    
+
     <!-- Settings Fragment -->
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.minikasirpintarfree.app.ui.settings.SettingsFragment"
         android:label="Pengaturan"
-        tools:layout="@layout/fragment_settings" />
-    
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_profilTokoFragment"
+            app:destination="@id/profilTokoFragment" />
+    </fragment>
+
+    <!-- Profil Toko Fragment -->
+    <fragment
+        android:id="@+id/profilTokoFragment"
+        android:name="com.minikasirpintarfree.app.ui.settings.ProfilTokoFragment"
+        android:label="Profil Toko"
+        tools:layout="@layout/fragment_profil_toko" />
+
     <!-- Notifications Fragment -->
     <fragment
         android:id="@+id/notificationsFragment"
         android:name="com.minikasirpintarfree.app.ui.notifications.NotificationsFragment"
         android:label="Notifikasi"
         tools:layout="@layout/fragment_notifications" />
-        
+
 </navigation>

@@ -90,7 +90,14 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setupClickListeners() {
-        // No-op for now
+        binding.cardTambahProduk.setOnClickListener {
+            findNavController().navigate(R.id.produkFragment)
+        }
+
+        binding.cardScanBarcode.setOnClickListener {
+            // TODO: Implement barcode scanning functionality
+            Toast.makeText(requireContext(), "Fitur segera hadir!", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun showTransaksiDetail(transaksi: Transaksi) {
@@ -138,7 +145,7 @@ class DashboardFragment : Fragment() {
             } else {
                 binding.recyclerBestSeller.visibility = View.VISIBLE
                 binding.tvEmptyBestSeller.visibility = View.GONE
-                bestSellerAdapter.submitList(products)
+                bestSellerAdapter.submitList(products.take(3))
             }
         }
 
@@ -149,7 +156,7 @@ class DashboardFragment : Fragment() {
             } else {
                 binding.recyclerRecentTransaksi.visibility = View.VISIBLE
                 binding.tvEmptyTransaksi.visibility = View.GONE
-                recentTransaksiAdapter.submitList(transaksiList)
+                recentTransaksiAdapter.submitList(transaksiList.take(3))
             }
         }
     }

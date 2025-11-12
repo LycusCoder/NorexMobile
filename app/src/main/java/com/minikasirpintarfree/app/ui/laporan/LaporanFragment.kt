@@ -6,17 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.minikasirpintarfree.app.R
+import com.minikasirpintarfree.app.data.model.BestSellingProduct
 import com.minikasirpintarfree.app.databinding.FragmentLaporanBinding
+import com.minikasirpintarfree.app.ui.laporan.adapter.ProdukTerlarisAdapter
 import com.minikasirpintarfree.app.viewmodel.LaporanViewModel
 import com.minikasirpintarfree.app.viewmodel.LaporanViewModelFactory
 import kotlinx.coroutines.launch
@@ -27,6 +34,7 @@ class LaporanFragment : Fragment() {
     private var _binding: FragmentLaporanBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: LaporanViewModel
+    private lateinit var produkTerlarisAdapter: ProdukTerlarisAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,16 +48,25 @@ class LaporanFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         try {
-            // Perbaikan: Inisialisasi ViewModel menggunakan factory dengan Application context
             val factory = LaporanViewModelFactory(requireActivity().application)
             viewModel = ViewModelProvider(this, factory)[LaporanViewModel::class.java]
 
+            setupRecyclerView()
             setupClickListeners()
             observeViewModel()
             loadDefaultReport()
         } catch (e: Exception) {
             android.util.Log.e("LaporanFragment", "Error in onViewCreated", e)
             Toast.makeText(requireContext(), "Terjadi kesalahan: ${e.message}", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun setupRecyclerView() {
+        produkTerlarisAdapter = ProdukTerlarisAdapter()
+        binding.recyclerProdukTerlaris.apply {
+            adapter = produkTerlarisAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+            isNestedScrollingEnabled = false
         }
     }
 
@@ -73,13 +90,31 @@ class LaporanFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.transaksiList.collect { _ ->
                 updateStatistics()
-                updateChart()
+                updatePieChart()
+                updateBarChart()
+            }
+        }
+
+        // Observe best-selling products
+        lifecycleScope.launch {
+            viewModel.produkTerlaris.collect { produkList ->
+                updateProdukTerlaris(produkList)
             }
         }
     }
 
+    private fun updateProdukTerlaris(produkList: List<BestSellingProduct>) {
+        if (produkList.isEmpty()) {
+            binding.tvEmptyProdukTerlaris.visibility = View.VISIBLE
+            binding.recyclerProdukTerlaris.visibility = View.GONE
+        } else {
+            binding.tvEmptyProdukTerlaris.visibility = View.GONE
+            binding.recyclerProdukTerlaris.visibility = View.VISIBLE
+            produkTerlarisAdapter.submitList(produkList.take(3))
+        }
+    }
+
     private fun loadDefaultReport() {
-        // Default to loading today's report
         binding.toggleGroupPeriod.check(R.id.btnHariIni)
         viewModel.loadTransaksiHariIni()
     }
@@ -92,7 +127,58 @@ class LaporanFragment : Fragment() {
         binding.tvTotalTransaksi.text = totalTransaksi.toString()
     }
 
-    private fun updateChart() {
+    private fun updatePieChart() {
+        val chartData = viewModel.getChartData()
+        if (chartData.isEmpty()) {
+            binding.pieChart.visibility = View.GONE
+            return
+        }
+        binding.pieChart.visibility = View.VISIBLE
+
+        val entries = chartData.map { PieEntry(it.second.toFloat(), it.first) }
+
+        val dataSet = PieDataSet(entries, "Grafik Penjualan")
+
+        // --- Chart Modernization ---
+
+        // 1. Resolve theme colors
+        val typedValue = android.util.TypedValue()
+        requireContext().theme.resolveAttribute(com.google.android.material.R.attr.colorOnSurface, typedValue, true)
+        val colorOnSurface = typedValue.data
+
+        // 2. Styling dataset
+        dataSet.colors = ColorTemplate.MATERIAL_COLORS.toList()
+        dataSet.valueTextColor = Color.WHITE
+        dataSet.valueTextSize = 12f
+        dataSet.sliceSpace = 2f
+
+        val pieData = PieData(dataSet)
+        pieData.setValueFormatter(PercentFormatter(binding.pieChart))
+
+        // 3. Setup Chart
+        with(binding.pieChart) {
+            data = pieData
+            description.isEnabled = false
+            legend.textColor = colorOnSurface
+            legend.verticalAlignment = com.github.mikephil.charting.components.Legend.LegendVerticalAlignment.BOTTOM
+            legend.horizontalAlignment = com.github.mikephil.charting.components.Legend.LegendHorizontalAlignment.CENTER
+            legend.orientation = com.github.mikephil.charting.components.Legend.LegendOrientation.HORIZONTAL
+            legend.setDrawInside(false)
+            setUsePercentValues(true)
+            isDrawHoleEnabled = true
+            setHoleColor(Color.TRANSPARENT)
+            setHoleRadius(58f)
+            setTransparentCircleRadius(61f)
+            setEntryLabelColor(colorOnSurface)
+            setEntryLabelTextSize(10f)
+
+            // 6. Animation & Invalidation
+            animateY(1400, com.github.mikephil.charting.animation.Easing.EaseInOutQuad)
+            invalidate()
+        }
+    }
+
+    private fun updateBarChart() {
         val chartData = viewModel.getChartData()
         val entries = chartData.mapIndexed { index, pair ->
             BarEntry(index.toFloat(), pair.second.toFloat())

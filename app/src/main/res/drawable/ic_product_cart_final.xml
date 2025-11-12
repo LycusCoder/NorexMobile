@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background with rounded corners -->
+    <item android:drawable="@drawable/bg_product_icon" />
+
+    <!-- Shopping Cart Icon -->
+    <item
+        android:drawable="@drawable/ic_shopping_cart_outline"
+        android:top="12dp"
+        android:bottom="12dp"
+        android:left="12dp"
+        android:right="12dp" />
+</layer-list>

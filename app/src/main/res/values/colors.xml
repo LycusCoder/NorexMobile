@@ -7,49 +7,39 @@
     <color name="light_grey">#F5F5F5</color>
     <color name="dark_grey">#424242</color>
     <color name="background">#F5F5F5</color>
-    
+
     <!-- Legacy Colors (backward compatibility) -->
     <color name="orange">#FF9800</color>
     <color name="red">#FF5722</color>
     <color name="green">#4CAF50</color>
-    
-    <!-- Ocean Blue Theme -->
-    <color name="ocean_primary">#1976D2</color>
-    <color name="ocean_primary_dark">#0D47A1</color>
-    <color name="ocean_accent">#03A9F4</color>
-    <color name="ocean_light">#E3F2FD</color>
-    
-    <!-- Forest Green Theme -->
-    <color name="forest_primary">#388E3C</color>
-    <color name="forest_primary_dark">#1B5E20</color>
-    <color name="forest_accent">#66BB6A</color>
-    <color name="forest_light">#E8F5E9</color>
-    
-    <!-- Royal Purple Theme -->
-    <color name="royal_primary">#7B1FA2</color>
-    <color name="royal_primary_dark">#4A148C</color>
-    <color name="royal_accent">#AB47BC</color>
-    <color name="royal_light">#F3E5F5</color>
-    
-    <!-- Sunset Orange Theme (Modern) -->
-    <color name="sunset_primary">#F57C00</color>
-    <color name="sunset_primary_dark">#E65100</color>
-    <color name="sunset_accent">#FF9800</color>
-    <color name="sunset_light">#FFF3E0</color>
-    
-    <!-- Crimson Red Theme -->
-    <color name="crimson_primary">#D32F2F</color>
-    <color name="crimson_primary_dark">#B71C1C</color>
-    <color name="crimson_accent">#EF5350</color>
-    <color name="crimson_light">#FFEBEE</color>
-    
+
+    <!-- Spring Theme -->
+    <color name="spring_primary">#66BB6A</color>
+    <color name="spring_primary_dark">#388E3C</color>
+    <color name="spring_accent">#81C784</color>
+
+    <!-- Summer Theme -->
+    <color name="summer_primary">#FFCA28</color>
+    <color name="summer_primary_dark">#FFA000</color>
+    <color name="summer_accent">#FFD54F</color>
+
+    <!-- Autumn Theme -->
+    <color name="autumn_primary">#FF7043</color>
+    <color name="autumn_primary_dark">#E64A19</color>
+    <color name="autumn_accent">#FF8A65</color>
+
+    <!-- Winter Theme -->
+    <color name="winter_primary">#42A5F5</color>
+    <color name="winter_primary_dark">#1976D2</color>
+    <color name="winter_accent">#64B5F6</color>
+
     <!-- Dark Mode Theme -->
     <color name="dark_primary">#212121</color>
     <color name="dark_primary_dark">#000000</color>
     <color name="dark_accent">#BB86FC</color>
     <color name="dark_surface">#303030</color>
     <color name="dark_background">#121212</color>
-    
+
     <!-- Dynamic Theme Colors (will be changed based on selected theme) -->
     <color name="colorPrimary">#1976D2</color>
     <color name="colorPrimaryDark">#0D47A1</color>

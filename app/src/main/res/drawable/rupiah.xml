@@ -1,0 +1,29 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="64dp"
+    android:height="64dp"
+    android:viewportWidth="64"
+    android:viewportHeight="64">
+
+    <!-- Outer border -->
+    <path
+        android:fillColor="#4CAF50"
+        android:pathData="M4,20h56v24H4z" />
+
+    <!-- Inner background -->
+    <path
+        android:fillColor="#81C784"
+        android:pathData="M6,22h52v20H6z" />
+
+    <!-- Inner border -->
+    <path
+        android:strokeColor="#2E7D32"
+        android:strokeWidth="1"
+        android:fillColor="#00000000"
+        android:pathData="M8,24h48v16H8z" />
+
+    <!-- Central circle for accent -->
+    <path
+        android:fillColor="#A5D6A7"
+        android:pathData="M32,25a7,7 0 1,1 0,14a7,7 0 1,1 0,-14z" />
+
+</vector>
