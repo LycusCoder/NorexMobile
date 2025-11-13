@@ -10,7 +10,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
+        android:fitsSystemWindows="true" 
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -53,7 +53,6 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- Gambar Produk Section -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -72,9 +71,8 @@
                             android:layout_height="wrap_content"
                             android:text="Gambar Produk"
                             android:layout_marginBottom="8dp"
-                            android:textAppearance="?attr/textAppearanceTitleMedium" />
-
-                        <ImageView
+                            android:textAppearance="?attr/textAppearanceTitleLarge"
+                            android:textSize="22sp" /> <ImageView
                             android:id="@+id/ivProdukGambar"
                             android:layout_width="120dp"
                             android:layout_height="120dp"
@@ -92,24 +90,23 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="8dp"
                             android:text="Pilih Gambar"
-                            app:icon="@drawable/ic_add" />
+                            android:textSize="16sp" app:icon="@drawable/ic_add" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Jenis Produk Selector -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pilih Jenis Produk"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
-                    android:layout_marginBottom="8dp"/>
+                    android:textAppearance="?attr/textAppearanceTitleLarge"
+                    android:textSize="22sp" android:layout_marginBottom="8dp"/>
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
                     android:id="@+id/toggleProductType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:singleSelection="true"
-                    app:checkedButton="@id/btnNewProduct"
+                    app:checkedButton="@+id/btnNewProduct"
                     android:layout_marginBottom="16dp">
 
                     <Button
@@ -118,7 +115,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Produk Baru"
-                        style="?attr/materialButtonOutlinedStyle" />
+                        android:textSize="16sp" style="?attr/materialButtonOutlinedStyle" />
 
                     <Button
                         android:id="@+id/btnScanProduct"
@@ -126,10 +123,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Scan Produk"
-                        style="?attr/materialButtonOutlinedStyle" />
+                        android:textSize="16sp" style="?attr/materialButtonOutlinedStyle" />
                 </com.google.android.material.button.MaterialButtonToggleGroup>
 
-                <!-- Barcode Section -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -192,7 +188,6 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Detail Produk Section -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

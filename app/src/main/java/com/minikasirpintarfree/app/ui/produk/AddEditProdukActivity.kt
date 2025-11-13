@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -89,6 +90,7 @@ class AddEditProdukActivity : AppCompatActivity() {
         setupToolbar()
         setupFields()
         setupClickListeners()
+        setupFocusListeners()
         observeViewModel()
     }
 
@@ -153,6 +155,27 @@ class AddEditProdukActivity : AppCompatActivity() {
         binding.tilBarcode.setEndIconOnClickListener {
             Toast.makeText(this, "Fitur Scan akan segera tersedia", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun setupFocusListeners() {
+        val listener = View.OnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                // Delay is to allow the keyboard to come up before we scroll.
+                v.postDelayed({
+                    // This generic call asks the parent hierarchy to scroll to make the view v visible.
+                    // The NestedScrollView will handle this request.
+                    val rect = Rect(0, 0, v.width, v.height)
+                    v.requestRectangleOnScreen(rect, false)
+                }, 200)
+            }
+        }
+
+        binding.etBarcode.onFocusChangeListener = listener
+        binding.etNama.onFocusChangeListener = listener
+        binding.etKategori.onFocusChangeListener = listener
+        binding.etHarga.onFocusChangeListener = listener
+        binding.etStok.onFocusChangeListener = listener
+        binding.etDeskripsi.onFocusChangeListener = listener
     }
 
     private fun checkPermissionAndOpenGallery() {
