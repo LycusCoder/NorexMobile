@@ -225,7 +225,15 @@ class TransaksiFragment : Fragment() {
             produk = null,
             onSave = { newProduk ->
                 lifecycleScope.launch {
-                    viewModel.insertProdukAndAddToCart(newProduk)
+                    val success = viewModel.insertProdukAndAddToCart(newProduk)
+                    if (success) {
+                        // Tampilkan notifikasi saat produk baru ditambahkan
+                        NotificationHelper.createNotificationChannel(requireContext())
+                        NotificationHelper.showProductAddedNotification(
+                            requireContext(),
+                            newProduk.nama
+                        )
+                    }
                 }
             },
             prefillBarcode = barcode
@@ -282,6 +290,26 @@ class TransaksiFragment : Fragment() {
         
         btnBatal.setOnClickListener {
             dialog.dismiss()
+        }
+        
+        // Auto-focus dan show keyboard saat dialog muncul
+        dialog.setOnShowListener {
+            etUang.requestFocus()
+            val imm = requireContext().getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+            imm.showSoftInput(etUang, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT)
+        }
+        
+        // Handle IME action (Done button di keyboard)
+        etUang.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
+                val uang = etUang.text.toString().toDoubleOrNull() ?: 0.0
+                if (uang >= totalHarga) {
+                    btnBayar.performClick()
+                }
+                true
+            } else {
+                false
+            }
         }
         
         dialog.show()

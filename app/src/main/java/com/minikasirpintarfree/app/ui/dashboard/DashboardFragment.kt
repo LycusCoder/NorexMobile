@@ -22,8 +22,12 @@ import com.minikasirpintarfree.app.ui.transaksi.ReceiptItemAdapter
 import com.minikasirpintarfree.app.utils.NotificationHelper
 import com.minikasirpintarfree.app.utils.PdfGenerator
 import com.minikasirpintarfree.app.utils.StoreProfileHelper
+import com.minikasirpintarfree.app.data.database.AppDatabase
+import com.minikasirpintarfree.app.data.repository.ProdukRepository
 import com.minikasirpintarfree.app.viewmodel.DashboardViewModel
 import com.minikasirpintarfree.app.viewmodel.DashboardViewModelFactory
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.text.NumberFormat
@@ -60,6 +64,7 @@ class DashboardFragment : Fragment() {
             setupClickListeners()
             observeViewModel()
             setupGreeting()
+            checkLowStockNotifications()
 
         } catch (e: Exception) {
             android.util.Log.e("DashboardFragment", "Error in onViewCreated", e)
@@ -157,6 +162,38 @@ class DashboardFragment : Fragment() {
                 binding.recyclerRecentTransaksi.visibility = View.VISIBLE
                 binding.tvEmptyTransaksi.visibility = View.GONE
                 recentTransaksiAdapter.submitList(transaksiList.take(3))
+            }
+        }
+    }
+    
+    private fun checkLowStockNotifications() {
+        lifecycleScope.launch {
+            try {
+                val database = AppDatabase.getDatabase(requireContext())
+                val produkRepository = ProdukRepository(database.produkDao())
+                
+                produkRepository.getProdukStokMenipis(10).collect { produkList ->
+                    produkList.forEach { produk ->
+                        if (produk.stok <= 10) {
+                            // Cek apakah sudah ada notifikasi untuk produk ini hari ini
+                            val hasNotificationToday = NotificationHelper.hasLowStockNotificationToday(
+                                requireContext(),
+                                produk.nama
+                            )
+                            
+                            // Hanya kirim notifikasi jika belum ada notifikasi hari ini
+                            if (!hasNotificationToday) {
+                                NotificationHelper.showLowStockNotification(
+                                    requireContext(),
+                                    produk.nama,
+                                    produk.stok
+                                )
+                            }
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                android.util.Log.e("DashboardFragment", "Error checking low stock notifications", e)
             }
         }
     }

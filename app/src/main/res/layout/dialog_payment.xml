@@ -31,9 +31,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:hint="Uang Diterima"
-        app:startIconDrawable="@drawable/rupiah"
-        app:startIconContentDescription="Rupiah"
+        app:prefixText="Rp "
+        app:prefixTextColor="?attr/colorOnSurface"
         app:boxBackgroundMode="filled"
+        app:boxBackgroundColor="?attr/colorSurface"
         app:boxCornerRadiusTopStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
@@ -41,16 +42,24 @@
         app:hintTextColor="?attr/colorPrimary"
         app:boxStrokeColor="?attr/colorPrimary"
         app:boxStrokeWidth="2dp"
-        app:boxStrokeWidthFocused="2dp">
+        app:boxStrokeWidthFocused="3dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etUangDiterima"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
-            android:textSize="18sp"
-            android:padding="16dp"
-            android:maxLines="1" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurface"
+            android:minHeight="64dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:maxLines="1"
+            android:imeOptions="actionDone"
+            android:gravity="center_vertical" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Section Kembalian -->
@@ -108,19 +117,23 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBatal"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Batal"
-            android:layout_marginEnd="12dp"
-            android:minWidth="120dp"
+            android:layout_marginEnd="8dp"
+            android:minHeight="48dp"
+            android:textSize="16sp"
             style="@style/Widget.Material3.Button.OutlinedButton" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBayar"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Bayar"
-            android:minWidth="120dp"
+            android:minHeight="48dp"
+            android:textSize="16sp"
             app:cornerRadius="8dp" />
     </LinearLayout>
 </LinearLayout>

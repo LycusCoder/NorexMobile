@@ -32,5 +32,16 @@ interface NotifikasiDao {
     
     @Query("DELETE FROM notifikasi")
     suspend fun deleteAllNotifikasi()
+    
+    // Cek apakah sudah ada notifikasi LOW_STOCK untuk produk tertentu hari ini
+    // Menggunakan timestamp dalam milliseconds (Room menyimpan Date sebagai Long)
+    @Query("""
+        SELECT COUNT(*) FROM notifikasi 
+        WHERE type = 'LOW_STOCK' 
+        AND message LIKE '%' || :productName || '%'
+        AND timestamp >= :startOfDay
+        AND timestamp < :endOfDay
+    """)
+    suspend fun hasLowStockNotificationToday(productName: String, startOfDay: Long, endOfDay: Long): Int
 }
 

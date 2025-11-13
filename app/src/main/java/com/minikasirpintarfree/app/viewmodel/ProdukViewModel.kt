@@ -85,6 +85,7 @@ class ProdukViewModel(private val produkRepository: ProdukRepository) : ViewMode
                 produkRepository.insertProduk(produk)
                 _successMessage.postValue("Produk berhasil ditambahkan")
                 loadAllProduk()
+                // Notifikasi akan dipanggil dari Activity/Fragment yang memiliki Context
             } catch (e: Exception) {
                 _errorMessage.postValue("Gagal menambahkan produk: ${e.message}")
             }

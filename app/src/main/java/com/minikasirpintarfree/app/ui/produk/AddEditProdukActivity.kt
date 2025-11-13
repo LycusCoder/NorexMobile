@@ -279,6 +279,12 @@ class AddEditProdukActivity : AppCompatActivity() {
                     viewModel.updateProduk(produkToSave)
                 } else {
                     viewModel.insertProduk(produkToSave)
+                    // Tampilkan notifikasi saat produk baru ditambahkan
+                    com.minikasirpintarfree.app.utils.NotificationHelper.createNotificationChannel(this@AddEditProdukActivity)
+                    com.minikasirpintarfree.app.utils.NotificationHelper.showProductAddedNotification(
+                        this@AddEditProdukActivity,
+                        produkToSave.nama
+                    )
                 }
 
                 if (isBarcodeGenerated) {

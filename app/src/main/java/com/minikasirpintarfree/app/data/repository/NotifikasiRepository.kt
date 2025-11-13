@@ -20,5 +20,9 @@ class NotifikasiRepository(private val notifikasiDao: NotifikasiDao) {
     suspend fun deleteNotifikasi(id: Long) = notifikasiDao.deleteNotifikasi(id)
     
     suspend fun deleteAllNotifikasi() = notifikasiDao.deleteAllNotifikasi()
+    
+    suspend fun hasLowStockNotificationToday(productName: String, startOfDay: Long, endOfDay: Long): Int {
+        return notifikasiDao.hasLowStockNotificationToday(productName, startOfDay, endOfDay)
+    }
 }
 

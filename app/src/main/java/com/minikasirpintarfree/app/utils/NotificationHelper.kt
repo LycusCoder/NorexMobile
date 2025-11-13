@@ -23,6 +23,7 @@ object NotificationHelper {
     const val NOTIFICATION_ID_TRANSACTION = 1001
     const val NOTIFICATION_ID_LOW_STOCK = 1002
     const val NOTIFICATION_ID_WEEKLY_REPORT = 1003
+    const val NOTIFICATION_ID_PRODUCT_ADDED = 1004
     
     fun createNotificationChannel(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -108,6 +109,32 @@ object NotificationHelper {
         )
     }
     
+    /**
+     * Cek apakah sudah ada notifikasi LOW_STOCK untuk produk tertentu hari ini
+     * Mengembalikan true jika sudah ada notifikasi hari ini, false jika belum
+     */
+    suspend fun hasLowStockNotificationToday(context: Context, productName: String): Boolean {
+        return try {
+            val calendar = java.util.Calendar.getInstance()
+            calendar.set(java.util.Calendar.HOUR_OF_DAY, 0)
+            calendar.set(java.util.Calendar.MINUTE, 0)
+            calendar.set(java.util.Calendar.SECOND, 0)
+            calendar.set(java.util.Calendar.MILLISECOND, 0)
+            val startOfDay = calendar.timeInMillis
+            
+            calendar.add(java.util.Calendar.DAY_OF_MONTH, 1)
+            val endOfDay = calendar.timeInMillis
+            
+            val database = AppDatabase.getDatabase(context)
+            val repository = NotifikasiRepository(database.notifikasiDao())
+            val count = repository.hasLowStockNotificationToday(productName, startOfDay, endOfDay)
+            count > 0
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+    
     fun showWeeklyReportNotification(context: Context, totalRevenue: Double) {
         showNotification(
             context,
@@ -115,6 +142,16 @@ object NotificationHelper {
             "Total pendapatan minggu ini: ${formatCurrency(totalRevenue)}",
             NOTIFICATION_ID_WEEKLY_REPORT,
             "WEEKLY_REPORT"
+        )
+    }
+    
+    fun showProductAddedNotification(context: Context, productName: String) {
+        showNotification(
+            context,
+            "Produk Baru Ditambahkan",
+            "Produk \"$productName\" berhasil ditambahkan ke katalog",
+            NOTIFICATION_ID_PRODUCT_ADDED,
+            "PRODUCT_ADDED"
         )
     }
     

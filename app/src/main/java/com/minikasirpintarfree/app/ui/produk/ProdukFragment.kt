@@ -168,22 +168,25 @@ class ProdukFragment : Fragment() {
         }
     }
 
-    private var lastNotificationTime = mutableMapOf<String, Long>()
-
     private fun checkLowStockNotifications() {
         lifecycleScope.launch {
             viewModel.produkStokMenipis.collect { produkList: List<Produk> ->
-                val currentTime = System.currentTimeMillis()
                 produkList.forEach { produk: Produk ->
-                    if (produk.stok <= 5) {
-                        val lastTime = lastNotificationTime[produk.nama] ?: 0
-                        if (currentTime - lastTime > 3600000) {
+                    if (produk.stok <= 10) {
+                        // Cek apakah sudah ada notifikasi untuk produk ini hari ini
+                        val hasNotificationToday = NotificationHelper.hasLowStockNotificationToday(
+                            requireContext(),
+                            produk.nama
+                        )
+                        
+                        // Hanya kirim notifikasi jika belum ada notifikasi hari ini
+                        if (!hasNotificationToday) {
+                            NotificationHelper.createNotificationChannel(requireContext())
                             NotificationHelper.showLowStockNotification(
                                 requireContext(),
                                 produk.nama,
                                 produk.stok
                             )
-                            lastNotificationTime[produk.nama] = currentTime
                         }
                     }
                 }
