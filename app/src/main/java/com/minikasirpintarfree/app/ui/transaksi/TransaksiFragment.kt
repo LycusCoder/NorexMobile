@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -44,9 +43,18 @@ class TransaksiFragment : Fragment() {
     private lateinit var viewModel: TransaksiViewModel
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var adapter: TransaksiItemAdapter
-    private val CAMERA_PERMISSION_CODE = 100
     
     private lateinit var scannerLauncher: ActivityResultLauncher<Intent>
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            startBarcodeScanner()
+        } else {
+            Toast.makeText(requireContext(), "Permission kamera diperlukan untuk scan barcode", Toast.LENGTH_SHORT).show()
+        }
+    }
     
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -187,23 +195,7 @@ class TransaksiFragment : Fragment() {
     }
     
     private fun requestCameraPermission() {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            arrayOf(Manifest.permission.CAMERA),
-            CAMERA_PERMISSION_CODE
-        )
-    }
-    
-    @Deprecated("Deprecated in Java")
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == CAMERA_PERMISSION_CODE && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            startBarcodeScanner()
-        }
+        requestPermissionLauncher.launch(Manifest.permission.CAMERA)
     }
     
     private fun startBarcodeScanner() {
@@ -377,7 +369,7 @@ class TransaksiFragment : Fragment() {
         sb.appendLine("Total: ${formatCurrency(transaksi.totalHarga)}")
         sb.appendLine("Bayar: ${formatCurrency(transaksi.uangDiterima)}")
         sb.appendLine("Kembali: ${formatCurrency(transaksi.kembalian)}")
-        sb.appendLine("======================")
+        sb.appendLine("=======================")
         return sb.toString()
     }
     

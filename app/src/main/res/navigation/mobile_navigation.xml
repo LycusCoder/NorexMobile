@@ -34,7 +34,11 @@
         android:id="@+id/produkFragment"
         android:name="com.minikasirpintarfree.app.ui.produk.ProdukFragment"
         android:label="Daftar Produk"
-        tools:layout="@layout/fragment_produk" />
+        tools:layout="@layout/fragment_produk" >
+        <action
+            android:id="@+id/action_produkFragment_to_addProdukFragment"
+            app:destination="@id/addProdukFragment" />
+    </fragment>
 
     <!-- Transaksi Fragment -->
     <fragment
@@ -74,5 +78,17 @@
         android:name="com.minikasirpintarfree.app.ui.notifications.NotificationsFragment"
         android:label="Notifikasi"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/addProdukFragment"
+        android:name="com.minikasirpintarfree.app.ui.produk.AddProdukFragment"
+        android:label="Tambah Produk"
+        tools:layout="@layout/fragment_add_produk">
+        <argument
+            android:name="prefillBarcode"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="null" />
+    </fragment>
 
 </navigation>

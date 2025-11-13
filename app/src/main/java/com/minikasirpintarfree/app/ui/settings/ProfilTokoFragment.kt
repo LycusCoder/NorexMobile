@@ -6,12 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.bottomappbar.BottomAppBar
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.minikasirpintarfree.app.R
 import com.minikasirpintarfree.app.databinding.FragmentProfilTokoBinding
 import com.minikasirpintarfree.app.utils.StoreProfile
 import com.minikasirpintarfree.app.utils.StoreProfileHelper
@@ -20,8 +16,6 @@ class ProfilTokoFragment : Fragment() {
 
     private var _binding: FragmentProfilTokoBinding? = null
     private val binding get() = _binding!!
-
-    private var toolbar: Toolbar? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,11 +29,6 @@ class ProfilTokoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Hide bottom navigation
-        activity?.findViewById<BottomAppBar>(R.id.bottom_app_bar)?.visibility = View.GONE
-        activity?.findViewById<FloatingActionButton>(R.id.fab_new_transaksi)?.visibility = View.GONE
-
-        setupToolbar()
         loadStoreProfile()
         loadNotificationSettings()
 
@@ -48,17 +37,6 @@ class ProfilTokoFragment : Fragment() {
             saveNotificationSettings()
             Toast.makeText(requireContext(), "Pengaturan berhasil disimpan", Toast.LENGTH_SHORT).show()
             findNavController().navigateUp()
-        }
-    }
-
-    private fun setupToolbar() {
-        toolbar = activity?.findViewById(R.id.toolbar)
-        toolbar?.apply {
-            title = "Profil Toko"
-            setNavigationIcon(R.drawable.ic_arrow_back)
-            setNavigationOnClickListener {
-                findNavController().navigateUp()
-            }
         }
     }
 
@@ -100,15 +78,5 @@ class ProfilTokoFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-
-        // Restore bottom navigation and toolbar
-        activity?.findViewById<BottomAppBar>(R.id.bottom_app_bar)?.visibility = View.VISIBLE
-        activity?.findViewById<FloatingActionButton>(R.id.fab_new_transaksi)?.visibility = View.VISIBLE
-
-        toolbar?.apply {
-            title = getString(R.string.app_name)
-            navigationIcon = null
-            setNavigationOnClickListener(null)
-        }
     }
 }

@@ -13,7 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -31,82 +33,83 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
     private var notificationBadge: TextView? = null
     private lateinit var notificationsViewModel: NotificationsViewModel
     private val sharedViewModel: SharedViewModel by viewModels()
     private var notificationMenuItem: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Apply theme before super.onCreate
         ThemeHelper.applyTheme(this)
-
         super.onCreate(savedInstanceState)
 
-        // Check login status first
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false)
-
-        if (!isLoggedIn) {
-            // Not logged in, redirect to login
+        if (!sharedPreferences.getBoolean("is_logged_in", false)) {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
             return
         }
 
-        // User is logged in, setup main activity
         try {
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
 
             setSupportActionBar(binding.toolbar)
 
-            // Setup Navigation Component
-            val navHostFragment = supportFragmentManager
-                .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
             navController = navHostFragment.navController
 
-            // Because the included layout uses <merge>, we must find the views manually.
             val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
             val fabNewTransaksi: FloatingActionButton = findViewById(R.id.fab_new_transaksi)
             val bottomAppBar: BottomAppBar = findViewById(R.id.bottom_app_bar)
 
-            // Wire up BottomNavigationView with NavController
+            appBarConfiguration = AppBarConfiguration(
+                setOf(
+                    R.id.dashboardFragment,
+                    R.id.produkFragment,
+                    R.id.laporanFragment,
+                    R.id.settingsFragment
+                )
+            )
+
+            setupActionBarWithNavController(navController, appBarConfiguration)
             NavigationUI.setupWithNavController(bottomNavigation, navController)
 
             fabNewTransaksi.setOnClickListener {
-                sharedViewModel.triggerStartScan()
                 navController.navigate(R.id.transaksiFragment)
             }
 
             navController.addOnDestinationChangedListener { _, destination, _ ->
-                val isBottomBarVisible = when (destination.id) {
-                    R.id.notificationsFragment -> false
-                    else -> true
+                val isTopLevelDestination = appBarConfiguration.topLevelDestinations.contains(destination.id)
+
+                if (isTopLevelDestination) {
+                    bottomAppBar.visibility = View.VISIBLE
+                    fabNewTransaksi.visibility = View.VISIBLE
+                } else {
+                    bottomAppBar.visibility = View.GONE
+                    fabNewTransaksi.visibility = View.GONE
                 }
-                bottomAppBar.visibility = if (isBottomBarVisible) View.VISIBLE else View.GONE
-                fabNewTransaksi.visibility = if (isBottomBarVisible) View.VISIBLE else View.GONE
 
                 notificationMenuItem?.isVisible = destination.id != R.id.notificationsFragment
             }
 
-            // Initialize ViewModel
             val database = AppDatabase.getDatabase(this)
             val notifikasiRepository = NotifikasiRepository(database.notifikasiDao())
-            notificationsViewModel = ViewModelProvider(
-                this,
-                NotificationsViewModelFactory(notifikasiRepository)
-            )[NotificationsViewModel::class.java]
-
+            notificationsViewModel = ViewModelProvider(this, NotificationsViewModelFactory(notifikasiRepository))[NotificationsViewModel::class.java]
             observeNotificationCount()
-
         } catch (e: Exception) {
             android.util.Log.e("MainActivity", "Error in onCreate", e)
-            android.widget.Toast.makeText(
-                this,
-                "Terjadi kesalahan: ${e.message}",
-                android.widget.Toast.LENGTH_LONG
-            ).show()
+            android.widget.Toast.makeText(this, "Terjadi kesalahan: ${e.message}", android.widget.Toast.LENGTH_LONG).show()
             finish()
+        }
+    }
+
+    private fun observeNotificationCount() {
+        lifecycleScope.launch {
+            notificationsViewModel.notifikasiList.collect { list ->
+                val unreadCount = list.count { !it.isRead }
+                updateNotificationBadge(unreadCount)
+            }
         }
     }
 
@@ -118,18 +121,8 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.notificationsFragment)
         }
         notificationBadge = actionView?.findViewById(R.id.notification_badge)
-        // Hide on create if we are already on the notifications screen
         notificationMenuItem?.isVisible = navController.currentDestination?.id != R.id.notificationsFragment
         return true
-    }
-
-    private fun observeNotificationCount() {
-        lifecycleScope.launch {
-            notificationsViewModel.notifikasiList.collect { list ->
-                val unreadCount = list.count { !it.isRead }
-                updateNotificationBadge(unreadCount)
-            }
-        }
     }
 
     fun updateNotificationBadge(count: Int) {
@@ -142,6 +135,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
+        return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp()
     }
 }
