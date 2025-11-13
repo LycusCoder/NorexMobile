@@ -2,9 +2,14 @@ package com.minikasirpintarfree.app.ui.notifications
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -48,31 +53,31 @@ class NotificationsFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
-        }
-
-        // Inflate the menu into the toolbar
-        binding.toolbar.inflateMenu(R.menu.menu_notifications)
-
-        // Set the menu item click listener
-        binding.toolbar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.menu_mark_all_read -> {
-                    lifecycleScope.launch {
-                        viewModel.markAllAsRead()
-                    }
-                    true
-                }
-                R.id.menu_clear_all -> {
-                    lifecycleScope.launch {
-                        viewModel.clearAll()
-                    }
-                    true
-                }
-                else -> false
+        // Setup menu di toolbar MainActivity menggunakan MenuProvider (modern approach)
+        // Navigation Component di MainActivity sudah menangani tombol back otomatis
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_notifications, menu)
             }
-        }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.menu_mark_all_read -> {
+                        lifecycleScope.launch {
+                            viewModel.markAllAsRead()
+                        }
+                        true
+                    }
+                    R.id.menu_clear_all -> {
+                        lifecycleScope.launch {
+                            viewModel.clearAll()
+                        }
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun setupRecyclerView() {

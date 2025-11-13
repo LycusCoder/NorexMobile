@@ -31,10 +31,10 @@ abstract class AppDatabase : RoomDatabase() {
 
         // Migration dari versi 2 ke 3 (kosong karena tidak ada perubahan skema spesifik)
         val MIGRATION_2_3 = object : Migration(2, 3) {
-            override fun migrate(database: SupportSQLiteDatabase) {
+            override fun migrate(db: SupportSQLiteDatabase) {
                 // Tidak ada perubahan skema yang perlu ditangani di sini
                 // Jika ada perubahan, tambahkan query SQL di sini.
-                // Contoh: database.execSQL("ALTER TABLE produk ADD COLUMN new_column TEXT")
+                // Contoh: db.execSQL("ALTER TABLE produk ADD COLUMN new_column TEXT")
             }
         }
 
