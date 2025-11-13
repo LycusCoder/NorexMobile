@@ -24,6 +24,7 @@ import com.minikasirpintarfree.app.databinding.ActivityAddEditProdukBinding
 import com.minikasirpintarfree.app.utils.BarcodeGenerator
 import com.minikasirpintarfree.app.viewmodel.ProdukViewModel
 import com.minikasirpintarfree.app.viewmodel.ProdukViewModelFactory
+import com.minikasirpintarfree.app.utils.ThemeHelper
 import kotlinx.coroutines.launch
 
 class AddEditProdukActivity : AppCompatActivity() {
@@ -72,6 +73,7 @@ class AddEditProdukActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        ThemeHelper.applyTheme(this)
         super.onCreate(savedInstanceState)
         binding = ActivityAddEditProdukBinding.inflate(layoutInflater)
         setContentView(binding.root)
