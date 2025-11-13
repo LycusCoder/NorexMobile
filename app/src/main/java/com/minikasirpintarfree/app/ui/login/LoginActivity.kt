@@ -17,6 +17,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var viewModel: LoginViewModel
     
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Apply theme yang mengikuti sistem (dark/light mode)
+        com.minikasirpintarfree.app.utils.ThemeHelper.applyTheme(this)
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -29,6 +31,31 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
             return
+        }
+        
+        // Auto-focus ke username field dan show keyboard
+        binding.etUsername.requestFocus()
+        val imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+        imm.showSoftInput(binding.etUsername, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT)
+        
+        // Handle IME action (Next button di keyboard untuk pindah ke password)
+        binding.etUsername.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_NEXT) {
+                binding.etPassword.requestFocus()
+                true
+            } else {
+                false
+            }
+        }
+        
+        // Handle IME action (Done button di keyboard untuk login)
+        binding.etPassword.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
+                binding.btnLogin.performClick()
+                true
+            } else {
+                false
+            }
         }
         
         binding.btnLogin.setOnClickListener {

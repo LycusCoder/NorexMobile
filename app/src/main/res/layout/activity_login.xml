@@ -10,27 +10,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="40dp"
         android:gravity="center_horizontal"
         android:layout_gravity="center_vertical">
 
         <!-- Logo Kasir -->
         <ImageView
-            android:layout_width="140dp"
-            android:layout_height="140dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:src="@drawable/logo_kasir"
-            android:layout_marginBottom="24dp"
-            android:contentDescription="Mini Kasir Icon" />
+            android:layout_marginBottom="32dp"
+            android:contentDescription="Mini Kasir Icon"
+            android:scaleType="fitCenter" />
 
         <!-- Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mini Kasir Pintar"
-            android:textSize="32sp"
+            android:textSize="28sp"
             android:textStyle="bold"
-            android:textColor="?attr/colorPrimary"
-            android:layout_marginBottom="8dp" />
+            android:textColor="?attr/colorOnBackground"
+            android:layout_marginBottom="8dp"
+            android:gravity="center" />
 
         <!-- Subtitle -->
         <TextView
@@ -39,18 +44,27 @@
             android:text="Solusi Kasir Modern UMKM"
             android:textSize="14sp"
             android:textColor="?attr/colorOnSurfaceVariant"
-            android:layout_marginBottom="48dp" />
+            android:layout_marginBottom="40dp"
+            android:gravity="center" />
 
         <!-- Username Input -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="20dp"
             android:hint="Username"
             app:boxStrokeColor="?attr/colorPrimary"
+            app:boxStrokeWidth="2dp"
+            app:boxStrokeWidthFocused="2dp"
             app:hintTextColor="?attr/colorPrimary"
             app:startIconDrawable="@android:drawable/ic_menu_myplaces"
             app:startIconTint="?attr/colorPrimary"
+            app:boxBackgroundMode="filled"
+            app:boxBackgroundColor="?attr/colorSurface"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -58,27 +72,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:imeOptions="actionNext"
                 android:maxLines="1"
                 android:textColor="?attr/colorOnSurface"
                 android:textColorHint="?attr/colorOnSurfaceVariant"
                 android:textSize="16sp"
-                android:minHeight="56dp"
+                android:minHeight="60dp"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp" />
+                android:paddingEnd="16dp"
+                android:paddingTop="18dp"
+                android:paddingBottom="18dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Password Input -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="28dp"
             android:hint="Password"
             app:boxStrokeColor="?attr/colorPrimary"
+            app:boxStrokeWidth="2dp"
+            app:boxStrokeWidthFocused="2dp"
             app:hintTextColor="?attr/colorPrimary"
             app:startIconDrawable="@android:drawable/ic_lock_idle_lock"
             app:startIconTint="?attr/colorPrimary"
             app:endIconMode="password_toggle"
             app:endIconTint="?attr/colorPrimary"
+            app:boxBackgroundMode="filled"
+            app:boxBackgroundColor="?attr/colorSurface"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -86,13 +111,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
+                android:imeOptions="actionDone"
                 android:maxLines="1"
                 android:textColor="?attr/colorOnSurface"
                 android:textColorHint="?attr/colorOnSurfaceVariant"
                 android:textSize="16sp"
-                android:minHeight="56dp"
+                android:minHeight="60dp"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp" />
+                android:paddingEnd="16dp"
+                android:paddingTop="18dp"
+                android:paddingBottom="18dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Login Button -->
@@ -104,11 +132,14 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textAllCaps="true"
-            android:padding="18dp"
+            android:minHeight="56dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
             android:backgroundTint="?attr/colorPrimary"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="16dp"
-            app:cornerRadius="8dp" />
+            android:textColor="?attr/colorOnPrimary"
+            android:layout_marginBottom="20dp"
+            app:cornerRadius="12dp"
+            app:elevation="2dp" />
 
         <!-- Hint Text -->
         <TextView
@@ -117,7 +148,8 @@
             android:text="Username: admin | Password: admin123"
             android:textSize="12sp"
             android:textColor="?attr/colorOnSurfaceVariant"
-            android:gravity="center" />
+            android:gravity="center"
+            android:alpha="0.7" />
 
     </LinearLayout>
 </ScrollView>

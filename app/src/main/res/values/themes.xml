@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base Theme -->
-    <style name="Theme.MiniKasir" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <!-- Base Theme - Mengikuti sistem dark/light mode -->
+    <style name="Theme.MiniKasir" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorBackground">@color/colorBackground</item>
         <item name="colorSurface">@color/colorSurface</item>
         <item name="colorPrimary">@color/colorPrimary</item>
