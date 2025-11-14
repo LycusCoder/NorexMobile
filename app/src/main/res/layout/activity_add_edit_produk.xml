@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorBackground"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="?attr/colorBackground">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true" 
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -19,365 +18,360 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:title="Tambah Produk"
-            app:titleTextColor="?attr/colorOnPrimary"
             app:navigationIcon="@drawable/ic_arrow_back"
-            app:navigationIconTint="?attr/colorOnPrimary" />
+            app:navigationIconTint="?attr/colorOnPrimary"
+            app:title="Tambah Produk"
+            app:titleTextColor="?attr/colorOnPrimary" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/colorBackground"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSimpan"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="Simpan Produk"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:layout_margin="16dp"
-            app:cornerRadius="16dp" />
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nestedScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/btnSimpan"
-            android:background="?attr/colorBackground"
-            android:fillViewport="true">
-
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="?attr/colorSurface"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
 
-                <com.google.android.material.card.MaterialCardView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    app:cardBackgroundColor="?attr/colorSurface"
-                    app:cardElevation="2dp"
-                    app:cardCornerRadius="12dp">
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Gambar Produk"
+                        android:textAppearance="?attr/textAppearanceTitleLarge"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="22sp" />
+
+                    <ImageView
+                        android:id="@+id/ivProdukGambar"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/dotted_border"
+                        android:padding="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_package" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPilihGambar"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="8dp"
+                        android:text="Pilih Gambar"
+                        android:textSize="16sp"
+                        app:icon="@drawable/ic_add" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Pilih Jenis Produk"
+                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="22sp" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleProductType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:checkedButton="@+id/btnNewProduct"
+                app:singleSelection="true">
+
+                <Button
+                    android:id="@+id/btnNewProduct"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Produk Baru"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/btnScanProduct"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Scan Produk"
+                    android:textSize="16sp" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="?attr/colorSurface"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <LinearLayout
+                        android:id="@+id/layoutScanBarcode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilBarcode"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Scan atau Masukkan Barcode"
+                            app:boxBackgroundColor="?attr/colorSurface"
+                            app:boxCornerRadiusBottomEnd="12dp"
+                            app:boxCornerRadiusBottomStart="12dp"
+                            app:boxCornerRadiusTopEnd="12dp"
+                            app:boxCornerRadiusTopStart="12dp"
+                            app:endIconContentDescription="Scan Barcode"
+                            app:endIconDrawable="@drawable/ic_barcode_scanner"
+                            app:endIconMode="custom">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etBarcode"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:minHeight="60dp"
+                                android:paddingStart="16dp"
+                                android:paddingTop="18dp"
+                                android:paddingEnd="16dp"
+                                android:paddingBottom="18dp"
+                                android:textColor="?attr/colorOnSurface"
+                                android:textColorHint="?attr/colorOnSurfaceVariant"
+                                android:textSize="16sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutNewBarcode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/dotted_border"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginEnd="12dp"
+                            android:src="@drawable/ic_info"
+                            app:tint="?attr/colorPrimary" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Gambar Produk"
-                            android:layout_marginBottom="8dp"
-                            android:textAppearance="?attr/textAppearanceTitleLarge"
+                            android:text="Barcode akan dibuat otomatis oleh sistem."
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilNama"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:hint="Nama Produk"
+                        app:boxBackgroundColor="?attr/colorSurface"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusTopStart="12dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etNama"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="60dp"
+                            android:paddingStart="16dp"
+                            android:paddingTop="18dp"
+                            android:paddingEnd="16dp"
+                            android:paddingBottom="18dp"
                             android:textColor="?attr/colorOnSurface"
-                            android:textSize="22sp" /> <ImageView
-                            android:id="@+id/ivProdukGambar"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
-                            android:layout_gravity="center_horizontal"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ic_storefront"
-                            android:background="@drawable/dotted_border"
-                            android:padding="4dp"/>
+                            android:textColorHint="?attr/colorOnSurfaceVariant"
+                            android:textSize="16sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnPilihGambar"
-                            style="?attr/materialButtonOutlinedStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="8dp"
-                            android:text="Pilih Gambar"
-                            android:textSize="16sp" app:icon="@drawable/ic_add" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pilih Jenis Produk"
-                    android:textAppearance="?attr/textAppearanceTitleLarge"
-                    android:textColor="?attr/colorOnBackground"
-                    android:textSize="22sp" android:layout_marginBottom="8dp"/>
-
-                <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/toggleProductType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:singleSelection="true"
-                    app:checkedButton="@+id/btnNewProduct"
-                    android:layout_marginBottom="16dp">
-
-                    <Button
-                        android:id="@+id/btnNewProduct"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Produk Baru"
-                        android:textSize="16sp" style="?attr/materialButtonOutlinedStyle" />
-
-                    <Button
-                        android:id="@+id/btnScanProduct"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Scan Produk"
-                        android:textSize="16sp" style="?attr/materialButtonOutlinedStyle" />
-                </com.google.android.material.button.MaterialButtonToggleGroup>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    app:cardBackgroundColor="?attr/colorSurface"
-                    app:cardElevation="2dp"
-                    app:cardCornerRadius="12dp">
-                    <LinearLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilKategori"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp">
+                        android:layout_marginBottom="12dp"
+                        android:hint="Kategori"
+                        app:boxBackgroundColor="?attr/colorSurface"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusTopStart="12dp">
 
-                        <LinearLayout
-                            android:id="@+id/layoutScanBarcode"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etKategori"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="gone"
-                            tools:visibility="visible">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/tilBarcode"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="Scan atau Masukkan Barcode"
-                                app:endIconMode="custom"
-                                app:endIconDrawable="@drawable/ic_barcode_scanner"
-                                app:endIconContentDescription="Scan Barcode"
-                                app:boxBackgroundMode="filled"
-                                app:boxBackgroundColor="?attr/colorSurface"
-                                app:boxCornerRadiusTopStart="12dp"
-                                app:boxCornerRadiusTopEnd="12dp"
-                                app:boxCornerRadiusBottomStart="12dp"
-                                app:boxCornerRadiusBottomEnd="12dp"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/etBarcode"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="?attr/colorOnSurface"
-                                    android:textColorHint="?attr/colorOnSurfaceVariant"
-                                    android:minHeight="60dp"
-                                    android:paddingStart="16dp"
-                                    android:paddingEnd="16dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp"
-                                    android:textSize="16sp"/>
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/layoutNewBarcode"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical"
-                            android:background="@drawable/dotted_border"
-                            android:padding="12dp">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_info"
-                                app:tint="?attr/colorPrimary"
-                                android:layout_marginEnd="12dp"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Barcode akan dibuat otomatis oleh sistem."
-                                android:textColor="?attr/colorOnSurfaceVariant"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    app:cardElevation="2dp"
-                    app:cardCornerRadius="12dp">
+                            android:minHeight="60dp"
+                            android:paddingStart="16dp"
+                            android:paddingTop="18dp"
+                            android:paddingEnd="16dp"
+                            android:paddingBottom="18dp"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textColorHint="?attr/colorOnSurfaceVariant"
+                            android:textSize="16sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp">
+                        android:orientation="horizontal">
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilNama"
-                            android:layout_width="match_parent"
+                            android:id="@+id/tilHarga"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="12dp"
-                            android:hint="Nama Produk"
-                            app:boxBackgroundMode="filled"
+                            android:layout_weight="1"
+                            android:hint="Harga"
                             app:boxBackgroundColor="?attr/colorSurface"
-                            app:boxCornerRadiusTopStart="12dp"
-                            app:boxCornerRadiusTopEnd="12dp"
-                            app:boxCornerRadiusBottomStart="12dp"
                             app:boxCornerRadiusBottomEnd="12dp"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                            app:boxCornerRadiusBottomStart="12dp"
+                            app:boxCornerRadiusTopEnd="12dp"
+                            app:boxCornerRadiusTopStart="12dp"
+                            app:prefixText="Rp "
+                            app:prefixTextColor="?attr/colorOnSurface">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etNama"
+                                android:id="@+id/etHarga"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textColor="?attr/colorOnSurface"
-                                android:textColorHint="?attr/colorOnSurfaceVariant"
+                                android:inputType="numberDecimal"
                                 android:minHeight="60dp"
                                 android:paddingStart="16dp"
-                                android:paddingEnd="16dp"
                                 android:paddingTop="18dp"
+                                android:paddingEnd="16dp"
                                 android:paddingBottom="18dp"
-                                android:textSize="16sp"/>
+                                android:textColor="?attr/colorOnSurface"
+                                android:textColorHint="?attr/colorOnSurfaceVariant"
+                                android:textSize="16sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilKategori"
-                            android:layout_width="match_parent"
+                            android:id="@+id/tilStok"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="12dp"
-                            android:hint="Kategori"
-                            app:boxBackgroundMode="filled"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:hint="Stok"
                             app:boxBackgroundColor="?attr/colorSurface"
-                            app:boxCornerRadiusTopStart="12dp"
-                            app:boxCornerRadiusTopEnd="12dp"
-                            app:boxCornerRadiusBottomStart="12dp"
                             app:boxCornerRadiusBottomEnd="12dp"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                            app:boxCornerRadiusBottomStart="12dp"
+                            app:boxCornerRadiusTopEnd="12dp"
+                            app:boxCornerRadiusTopStart="12dp">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etKategori"
+                                android:id="@+id/etStok"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textColor="?attr/colorOnSurface"
-                                android:textColorHint="?attr/colorOnSurfaceVariant"
+                                android:inputType="number"
                                 android:minHeight="60dp"
                                 android:paddingStart="16dp"
-                                android:paddingEnd="16dp"
                                 android:paddingTop="18dp"
+                                android:paddingEnd="16dp"
                                 android:paddingBottom="18dp"
-                                android:textSize="16sp"/>
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/tilHarga"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:hint="Harga"
-                                app:prefixText="Rp "
-                                app:prefixTextColor="?attr/colorOnSurface"
-                                app:boxBackgroundMode="filled"
-                                app:boxBackgroundColor="?attr/colorSurface"
-                                app:boxCornerRadiusTopStart="12dp"
-                                app:boxCornerRadiusTopEnd="12dp"
-                                app:boxCornerRadiusBottomStart="12dp"
-                                app:boxCornerRadiusBottomEnd="12dp"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/etHarga"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="numberDecimal"
-                                    android:textColor="?attr/colorOnSurface"
-                                    android:textColorHint="?attr/colorOnSurfaceVariant"
-                                    android:minHeight="60dp"
-                                    android:paddingStart="16dp"
-                                    android:paddingEnd="16dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp"
-                                    android:textSize="16sp"/>
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/tilStok"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:hint="Stok"
-                                android:layout_marginStart="8dp"
-                                app:boxBackgroundMode="filled"
-                                app:boxBackgroundColor="?attr/colorSurface"
-                                app:boxCornerRadiusTopStart="12dp"
-                                app:boxCornerRadiusTopEnd="12dp"
-                                app:boxCornerRadiusBottomStart="12dp"
-                                app:boxCornerRadiusBottomEnd="12dp"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/etStok"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="number"
-                                    android:textColor="?attr/colorOnSurface"
-                                    android:textColorHint="?attr/colorOnSurfaceVariant"
-                                    android:minHeight="60dp"
-                                    android:paddingStart="16dp"
-                                    android:paddingEnd="16dp"
-                                    android:paddingTop="18dp"
-                                    android:paddingBottom="18dp"
-                                    android:textSize="16sp"/>
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </LinearLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilDeskripsi"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:hint="Deskripsi (Opsional)"
-                            app:boxBackgroundMode="filled"
-                            app:boxBackgroundColor="?attr/colorSurface"
-                            app:boxCornerRadiusTopStart="12dp"
-                            app:boxCornerRadiusTopEnd="12dp"
-                            app:boxCornerRadiusBottomStart="12dp"
-                            app:boxCornerRadiusBottomEnd="12dp"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etDeskripsi"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="top"
-                                android:minLines="3"
                                 android:textColor="?attr/colorOnSurface"
                                 android:textColorHint="?attr/colorOnSurfaceVariant"
-                                android:paddingStart="16dp"
-                                android:paddingEnd="16dp"
-                                android:paddingTop="18dp"
-                                android:paddingBottom="18dp"
                                 android:textSize="16sp" />
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
 
-    </RelativeLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilDeskripsi"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="Deskripsi (Opsional)"
+                        app:boxBackgroundColor="?attr/colorSurface"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusTopStart="12dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etDeskripsi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="top"
+                            android:minLines="3"
+                            android:paddingStart="16dp"
+                            android:paddingTop="18dp"
+                            android:paddingEnd="16dp"
+                            android:paddingBottom="18dp"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textColorHint="?attr/colorOnSurfaceVariant"
+                            android:textSize="16sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSimpan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="16dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Simpan Produk"
+        app:cornerRadius="16dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Rect
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -92,7 +91,6 @@ class AddEditProdukActivity : AppCompatActivity() {
         setupToolbar()
         setupFields()
         setupClickListeners()
-        setupFocusListeners()
         observeViewModel()
     }
 
@@ -123,8 +121,8 @@ class AddEditProdukActivity : AppCompatActivity() {
                 imageUri = Uri.parse(it)
                  Glide.with(this)
                     .load(imageUri)
-                    .placeholder(R.drawable.ic_storefront)
-                    .error(R.drawable.ic_storefront)
+                    .placeholder(R.drawable.ic_package)
+                    .error(R.drawable.ic_package)
                     .into(binding.ivProdukGambar)
             }
 
@@ -159,27 +157,6 @@ class AddEditProdukActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupFocusListeners() {
-        val listener = View.OnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                // Delay is to allow the keyboard to come up before we scroll.
-                v.postDelayed({
-                    // This generic call asks the parent hierarchy to scroll to make the view v visible.
-                    // The NestedScrollView will handle this request.
-                    val rect = Rect(0, 0, v.width, v.height)
-                    v.requestRectangleOnScreen(rect, false)
-                }, 200)
-            }
-        }
-
-        binding.etBarcode.onFocusChangeListener = listener
-        binding.etNama.onFocusChangeListener = listener
-        binding.etKategori.onFocusChangeListener = listener
-        binding.etHarga.onFocusChangeListener = listener
-        binding.etStok.onFocusChangeListener = listener
-        binding.etDeskripsi.onFocusChangeListener = listener
-    }
-
     private fun checkPermissionAndOpenGallery() {
         val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             Manifest.permission.READ_MEDIA_IMAGES
@@ -208,13 +185,8 @@ class AddEditProdukActivity : AppCompatActivity() {
     }
 
     private fun updateBarcodeView(isNew: Boolean) {
-        if (isNew) {
-            binding.layoutNewBarcode.visibility = View.VISIBLE
-            binding.layoutScanBarcode.visibility = View.GONE
-        } else {
-            binding.layoutNewBarcode.visibility = View.GONE
-            binding.layoutScanBarcode.visibility = View.VISIBLE
-        }
+        binding.layoutNewBarcode.visibility = if (isNew) View.VISIBLE else View.GONE
+        binding.layoutScanBarcode.visibility = if (isNew) View.GONE else View.VISIBLE
     }
 
     private fun observeViewModel() {
