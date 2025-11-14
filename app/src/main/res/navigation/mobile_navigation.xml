@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_dashboard_to_settings"
             app:destination="@+id/settingsFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_transactionHistoryFragment"
+            app:destination="@id/transactionHistoryFragment" />
     </fragment>
 
     <!-- Produk Fragment -->
@@ -62,7 +65,10 @@
         tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/action_settingsFragment_to_profilTokoFragment"
-            app:destination="@id/profilTokoFragment" />
+            app:destination="@+id/profilTokoFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
     </fragment>
 
     <!-- Profil Toko Fragment -->
@@ -71,6 +77,13 @@
         android:name="com.minikasirpintarfree.app.ui.settings.ProfilTokoFragment"
         android:label="Profil Toko"
         tools:layout="@layout/fragment_profil_toko" />
+
+    <!-- Change Password Fragment -->
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.minikasirpintarfree.app.ui.settings.ChangePasswordFragment"
+        android:label="Ubah Password"
+        tools:layout="@layout/fragment_change_password" />
 
     <!-- Notifications Fragment -->
     <fragment

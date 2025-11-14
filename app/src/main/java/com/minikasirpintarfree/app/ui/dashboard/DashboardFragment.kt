@@ -94,6 +94,10 @@ class DashboardFragment : Fragment() {
         binding.cardScanBarcode.setOnClickListener {
             Toast.makeText(requireContext(), "Fitur segera hadir!", Toast.LENGTH_SHORT).show()
         }
+
+        binding.tvSeeAllTransactions.setOnClickListener {
+            findNavController().navigate(R.id.action_dashboardFragment_to_transactionHistoryFragment)
+        }
     }
 
     private fun showTransaksiDetail(transaksi: Transaksi) {

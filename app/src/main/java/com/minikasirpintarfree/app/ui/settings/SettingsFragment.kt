@@ -18,10 +18,7 @@ import com.minikasirpintarfree.app.data.repository.TransaksiRepository
 import com.minikasirpintarfree.app.databinding.FragmentSettingsBinding
 import com.minikasirpintarfree.app.ui.login.LoginActivity
 import com.minikasirpintarfree.app.utils.StoreProfileHelper
-import com.minikasirpintarfree.app.utils.StoreProfile
 import com.minikasirpintarfree.app.utils.ThemeHelper
-import com.minikasirpintarfree.app.viewmodel.LoginViewModel
-import com.minikasirpintarfree.app.viewmodel.LoginViewModelFactory
 import com.minikasirpintarfree.app.viewmodel.SettingsViewModel
 import com.minikasirpintarfree.app.viewmodel.SettingsViewModelFactory
 
@@ -29,7 +26,6 @@ class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: SettingsViewModel
-    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,11 +49,6 @@ class SettingsFragment : Fragment() {
                 SettingsViewModelFactory(produkRepository, transaksiRepository, sharedPreferences)
             )[SettingsViewModel::class.java]
 
-            loginViewModel = ViewModelProvider(
-                this,
-                LoginViewModelFactory(sharedPreferences)
-            )[LoginViewModel::class.java]
-
             setupClickListeners()
             loadCurrentSettings()
         } catch (e: Exception) {
@@ -76,7 +67,7 @@ class SettingsFragment : Fragment() {
         }
 
         binding.cardChangePassword.setOnClickListener {
-            showChangePasswordDialog()
+            findNavController().navigate(R.id.action_settingsFragment_to_changePasswordFragment)
         }
 
         binding.cardResetProduk.setOnClickListener {
@@ -161,52 +152,6 @@ class SettingsFragment : Fragment() {
         ).show()
 
         requireActivity().recreate()
-    }
-
-    private fun showChangePasswordDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_change_password, null)
-        val etOldPassword = dialogView.findViewById<android.widget.EditText>(R.id.etOldPassword)
-        val etNewPassword = dialogView.findViewById<android.widget.EditText>(R.id.etNewPassword)
-        val etConfirmPassword = dialogView.findViewById<android.widget.EditText>(R.id.etConfirmPassword)
-
-        AlertDialog.Builder(requireContext())
-            .setTitle("Ubah Password")
-            .setView(dialogView)
-            .setPositiveButton("Simpan") { _, _ ->
-                val oldPassword = etOldPassword.text.toString()
-                val newPassword = etNewPassword.text.toString()
-                val confirmPassword = etConfirmPassword.text.toString()
-
-                if (oldPassword.isEmpty()) {
-                    Toast.makeText(requireContext(), "Password lama harus diisi", Toast.LENGTH_SHORT).show()
-                    return@setPositiveButton
-                }
-
-                if (newPassword.isEmpty()) {
-                    Toast.makeText(requireContext(), "Password baru harus diisi", Toast.LENGTH_SHORT).show()
-                    return@setPositiveButton
-                }
-
-                if (newPassword != confirmPassword) {
-                    Toast.makeText(requireContext(), "Password baru tidak cocok", Toast.LENGTH_SHORT).show()
-                    return@setPositiveButton
-                }
-
-                if (newPassword.length < 6) {
-                    Toast.makeText(requireContext(), "Password minimal 6 karakter", Toast.LENGTH_SHORT).show()
-                    return@setPositiveButton
-                }
-
-                val success = loginViewModel.changePassword(oldPassword, newPassword)
-
-                if (success) {
-                    Toast.makeText(requireContext(), "Password berhasil diubah", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(requireContext(), "Password lama salah", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .setNegativeButton("Batal", null)
-            .show()
     }
 
     private fun showResetDialog(dataType: String, onConfirm: () -> Unit) {
