@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.minikasirpintarfree.app.data.database.AppDatabase
 import com.minikasirpintarfree.app.data.repository.TransaksiRepository
@@ -32,16 +31,9 @@ class TransactionHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupToolbar()
         setupViewModel()
         setupRecyclerView()
         observeViewModel()
-    }
-
-    private fun setupToolbar() {
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
-        }
     }
 
     private fun setupViewModel() {

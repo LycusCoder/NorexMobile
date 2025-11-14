@@ -5,6 +5,8 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,8 +44,9 @@ class TransaksiFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: TransaksiViewModel
     private val sharedViewModel: SharedViewModel by activityViewModels()
-    private lateinit var adapter: TransaksiItemAdapter
-    
+    private lateinit var cartAdapter: TransaksiItemAdapter
+    private lateinit var searchAdapter: SearchResultAdapter
+
     private lateinit var scannerLauncher: ActivityResultLauncher<Intent>
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -55,7 +58,7 @@ class TransaksiFragment : Fragment() {
             Toast.makeText(requireContext(), "Permission kamera diperlukan untuk scan barcode", Toast.LENGTH_SHORT).show()
         }
     }
-    
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -64,12 +67,12 @@ class TransaksiFragment : Fragment() {
         _binding = FragmentTransaksiBinding.inflate(inflater, container, false)
         return binding.root
     }
-    
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         try {
             setupScannerLauncher()
-            
+
             val database = AppDatabase.getDatabase(requireContext())
             val produkRepository = ProdukRepository(database.produkDao())
             val transaksiRepository = TransaksiRepository(database.transaksiDao())
@@ -77,10 +80,11 @@ class TransaksiFragment : Fragment() {
                 this,
                 TransaksiViewModelFactory(transaksiRepository, produkRepository)
             )[TransaksiViewModel::class.java]
-            
+
             NotificationHelper.createNotificationChannel(requireContext())
-            
-            setupRecyclerView()
+
+            setupRecyclerViews()
+            setupSearch()
             setupClickListeners()
             observeViewModel()
             observeSharedViewModel()
@@ -89,7 +93,7 @@ class TransaksiFragment : Fragment() {
             Toast.makeText(requireContext(), "Terjadi kesalahan: ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
-    
+
     private fun setupScannerLauncher() {
         scannerLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -107,9 +111,10 @@ class TransaksiFragment : Fragment() {
             }
         }
     }
-    
-    private fun setupRecyclerView() {
-        adapter = TransaksiItemAdapter(
+
+    private fun setupRecyclerViews() {
+        // Cart Adapter
+        cartAdapter = TransaksiItemAdapter(
             onQuantityChange = { item, newQuantity ->
                 viewModel.updateItemQuantity(item, newQuantity)
             },
@@ -118,57 +123,76 @@ class TransaksiFragment : Fragment() {
             }
         )
         binding.recyclerViewCart.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerViewCart.adapter = adapter
+        binding.recyclerViewCart.adapter = cartAdapter
+
+        // Search Adapter
+        searchAdapter = SearchResultAdapter { produk ->
+            viewModel.addProductToCart(produk)
+            binding.etSearchProduk.text?.clear()
+            binding.rvSearchResults.visibility = View.GONE
+        }
+        binding.rvSearchResults.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvSearchResults.adapter = searchAdapter
     }
-    
+
+    private fun setupSearch() {
+        binding.etSearchProduk.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                viewModel.searchProduk(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
+
     private fun setupClickListeners() {
         binding.btnScanBarcode.setOnClickListener {
             startScan()
         }
-        
-        binding.btnSearchProduk.setOnClickListener {
-            val query = binding.etSearchProduk.text.toString().trim()
-            if (query.isNotEmpty()) {
-                viewModel.searchAndAddProduk(query)
-            }
-        }
-        
+
         binding.btnBayar.setOnClickListener {
             showPaymentDialog()
         }
-        
+
         binding.btnClearCart.setOnClickListener {
             viewModel.clearCart()
         }
     }
-    
+
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.cartItems.collect { items: List<TransaksiItem> ->
-                adapter.submitList(items)
+                cartAdapter.submitList(items)
                 val isEmpty = items.isEmpty()
                 binding.tvEmptyCart.visibility = if (isEmpty) View.VISIBLE else View.GONE
                 binding.btnBayar.isEnabled = !isEmpty
                 binding.btnClearCart.isEnabled = !isEmpty
             }
         }
-        
+
+        viewModel.searchResults.observe(viewLifecycleOwner) { results ->
+            searchAdapter.submitList(results)
+            binding.rvSearchResults.visibility = if (results.isNotEmpty()) View.VISIBLE else View.GONE
+        }
+
         viewModel.totalHarga.observe(viewLifecycleOwner) { total: Double ->
             binding.tvTotalHarga.text = formatCurrency(total)
         }
-        
+
         viewModel.kembalian.observe(viewLifecycleOwner) { kembalian: Double ->
             binding.tvKembalian.text = formatCurrency(kembalian)
         }
-        
+
         viewModel.errorMessage.observe(viewLifecycleOwner) { message: String ->
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
-        
+
         viewModel.successMessage.observe(viewLifecycleOwner) { message: String ->
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
-        
+
         viewModel.productNotFound.observe(viewLifecycleOwner) { barcode: String ->
             showProductNotFoundDialog(barcode)
         }
@@ -176,7 +200,7 @@ class TransaksiFragment : Fragment() {
 
     private fun observeSharedViewModel() {
         sharedViewModel.startScanEvent.observe(viewLifecycleOwner) { event ->
-            event.getContentIfNotHandled()?.let { 
+            event.getContentIfNotHandled()?.let {
                 startScan()
             }
         }
@@ -189,28 +213,28 @@ class TransaksiFragment : Fragment() {
             requestCameraPermission()
         }
     }
-    
+
     private fun checkCameraPermission(): Boolean {
         return ContextCompat.checkSelfPermission(
             requireContext(),
             Manifest.permission.CAMERA
         ) == PackageManager.PERMISSION_GRANTED
     }
-    
+
     private fun requestCameraPermission() {
         requestPermissionLauncher.launch(Manifest.permission.CAMERA)
     }
-    
+
     private fun startBarcodeScanner() {
         val integrator = IntentIntegrator.forSupportFragment(this)
         integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES)
         integrator.setPrompt("Scan barcode produk")
         integrator.setCameraId(0)
         integrator.setBeepEnabled(false)
-        
+
         scannerLauncher.launch(integrator.createScanIntent())
     }
-    
+
     private fun showProductNotFoundDialog(barcode: String) {
         AlertDialog.Builder(requireContext())
             .setTitle("Produk Tidak Ditemukan")
@@ -222,7 +246,7 @@ class TransaksiFragment : Fragment() {
             .setIcon(android.R.drawable.ic_dialog_alert)
             .show()
     }
-    
+
     private fun showAddProdukDialog(barcode: String) {
         val dialog = AddEditProdukDialogFragment(
             produk = null,
@@ -230,7 +254,6 @@ class TransaksiFragment : Fragment() {
                 lifecycleScope.launch {
                     val success = viewModel.insertProdukAndAddToCart(newProduk)
                     if (success) {
-                        // Tampilkan notifikasi saat produk baru ditambahkan
                         NotificationHelper.createNotificationChannel(requireContext())
                         NotificationHelper.showProductAddedNotification(
                             requireContext(),
@@ -243,7 +266,7 @@ class TransaksiFragment : Fragment() {
         )
         dialog.show(parentFragmentManager, "AddProdukDialog")
     }
-    
+
     private fun showPaymentDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_payment, null)
         val etUang = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etUangDiterima)
@@ -251,14 +274,13 @@ class TransaksiFragment : Fragment() {
         val tvKembalian = dialogView.findViewById<android.widget.TextView>(R.id.tvKembalian)
         val btnBayar = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnBayar)
         val btnBatal = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnBatal)
-        
+
         val dialog = AlertDialog.Builder(requireContext())
             .setView(dialogView)
             .create()
-        
+
         val totalHarga = viewModel.totalHarga.value ?: 0.0
-        
-        // Setup realtime kembalian calculation
+
         etUang.addTextChangedListener(object : android.text.TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -280,7 +302,7 @@ class TransaksiFragment : Fragment() {
                 }
             }
         })
-        
+
         btnBayar.setOnClickListener {
             val uang = etUang.text.toString().toDoubleOrNull() ?: 0.0
             viewModel.setUangDiterima(uang)
@@ -290,19 +312,17 @@ class TransaksiFragment : Fragment() {
             }
             dialog.dismiss()
         }
-        
+
         btnBatal.setOnClickListener {
             dialog.dismiss()
         }
-        
-        // Auto-focus dan show keyboard saat dialog muncul
+
         dialog.setOnShowListener {
             etUang.requestFocus()
             val imm = requireContext().getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
             imm.showSoftInput(etUang, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT)
         }
-        
-        // Handle IME action (Done button di keyboard)
+
         etUang.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE) {
                 val uang = etUang.text.toString().toDoubleOrNull() ?: 0.0
@@ -314,22 +334,20 @@ class TransaksiFragment : Fragment() {
                 false
             }
         }
-        
+
         dialog.show()
     }
-    
+
     private fun showReceiptDialog(transaksi: Transaksi) {
         val items = viewModel.getTransaksiItems(transaksi)
         showModernReceiptDialog(transaksi, items)
     }
-    
+
     private fun showModernReceiptDialog(transaksi: Transaksi, items: List<TransaksiItem>) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_receipt_modern, null)
-        
-        // Get store profile
+
         val storeProfile = StoreProfileHelper.getStoreProfile(requireContext())
-        
-        // Setup views
+
         val tvStoreName = dialogView.findViewById<android.widget.TextView>(R.id.tvStoreName)
         val tvStoreAddress = dialogView.findViewById<android.widget.TextView>(R.id.tvStoreAddress)
         val tvStorePhone = dialogView.findViewById<android.widget.TextView>(R.id.tvStorePhone)
@@ -342,8 +360,7 @@ class TransaksiFragment : Fragment() {
         val btnSavePdf = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnSavePdf)
         val btnShare = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnShare)
         val btnClose = dialogView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnClose)
-        
-        // Set store info
+
         tvStoreName.text = storeProfile.name
         if (storeProfile.address.isNotEmpty()) {
             tvStoreAddress.text = storeProfile.address
@@ -353,40 +370,37 @@ class TransaksiFragment : Fragment() {
             tvStorePhone.text = storeProfile.phone
             tvStorePhone.visibility = View.VISIBLE
         }
-        
-        // Set transaction info
+
         tvDate.text = android.text.format.DateFormat.format("dd/MM/yyyy HH:mm", transaksi.tanggal)
         tvTransactionNo.text = "#TRX-${transaksi.id.toString().padStart(3, '0')}"
-        
-        // Setup RecyclerView for items
+
         recyclerViewItems.layoutManager = LinearLayoutManager(requireContext())
         recyclerViewItems.adapter = ReceiptItemAdapter(items)
-        
-        // Set totals
+
         tvTotal.text = formatCurrency(transaksi.totalHarga)
         tvPaid.text = formatCurrency(transaksi.uangDiterima)
         tvChange.text = formatCurrency(transaksi.kembalian)
-        
+
         val dialog = AlertDialog.Builder(requireContext())
             .setView(dialogView)
             .create()
-        
+
         btnSavePdf.setOnClickListener {
             saveReceiptAsPdf(transaksi, items)
         }
-        
+
         btnShare.setOnClickListener {
             val receiptText = buildReceiptText(transaksi, items)
             shareReceipt(receiptText)
         }
-        
+
         btnClose.setOnClickListener {
             dialog.dismiss()
         }
-        
+
         dialog.show()
     }
-    
+
     private fun buildReceiptText(transaksi: Transaksi, items: List<TransaksiItem>): String {
         val sb = StringBuilder()
         sb.appendLine("=== STRUK TRANSAKSI ===")
@@ -403,7 +417,7 @@ class TransaksiFragment : Fragment() {
         sb.appendLine("=======================")
         return sb.toString()
     }
-    
+
     private fun saveReceiptAsPdf(transaksi: Transaksi, items: List<TransaksiItem>) {
         try {
             val pdfPath = PdfGenerator.generateReceipt(requireContext(), transaksi, items)
@@ -412,7 +426,7 @@ class TransaksiFragment : Fragment() {
             Toast.makeText(requireContext(), "Gagal menyimpan PDF: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
-    
+
     private fun shareReceipt(receiptText: String) {
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
@@ -420,12 +434,12 @@ class TransaksiFragment : Fragment() {
         }
         startActivity(Intent.createChooser(intent, "Bagikan struk"))
     }
-    
+
     private fun formatCurrency(amount: Double): String {
         val format = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
         return format.format(amount)
     }
-    
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

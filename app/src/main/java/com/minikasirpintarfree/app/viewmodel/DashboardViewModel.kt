@@ -5,12 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.preference.PreferenceManager
 import com.minikasirpintarfree.app.data.model.BestSellingProduct
 import com.minikasirpintarfree.app.data.model.Transaksi
 import com.minikasirpintarfree.app.data.repository.ProdukRepository
 import com.minikasirpintarfree.app.data.repository.TransaksiRepository
+import com.minikasirpintarfree.app.utils.NotificationHelper
 import com.minikasirpintarfree.app.utils.StoreProfileHelper
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Calendar
@@ -25,22 +28,22 @@ class DashboardViewModel(
 
     private val _totalProduk = MutableLiveData<Int>()
     val totalProduk: LiveData<Int> = _totalProduk
-    
+
     private val _totalTransaksiHariIni = MutableLiveData<Int>()
     val totalTransaksiHariIni: LiveData<Int> = _totalTransaksiHariIni
-    
+
     private val _totalPendapatanHariIni = MutableLiveData<Double>()
     val totalPendapatanHariIni: LiveData<Double> = _totalPendapatanHariIni
-    
+
     private val _stokMenipis = MutableLiveData<Int>()
     val stokMenipis: LiveData<Int> = _stokMenipis
-    
+
     private val _bestSellingProducts = MutableLiveData<List<BestSellingProduct>>()
     val bestSellingProducts: LiveData<List<BestSellingProduct>> = _bestSellingProducts
-    
+
     private val _recentTransaksi = MutableLiveData<List<Transaksi>>()
     val recentTransaksi: LiveData<List<Transaksi>> = _recentTransaksi
-    
+
     init {
         loadDashboardData()
     }
@@ -66,7 +69,7 @@ class DashboardViewModel(
             else -> "Halo"
         }
     }
-    
+
     private fun loadDashboardData() {
         viewModelScope.launch {
             try {
@@ -77,7 +80,7 @@ class DashboardViewModel(
                 _totalProduk.postValue(0)
             }
         }
-        
+
         viewModelScope.launch {
             try {
                 transaksiRepository.getTotalTransaksiHariIni().collect { total ->
@@ -87,7 +90,7 @@ class DashboardViewModel(
                 _totalTransaksiHariIni.postValue(0)
             }
         }
-        
+
         viewModelScope.launch {
             try {
                 transaksiRepository.getTotalPendapatanHariIni().collect { total ->
@@ -97,7 +100,7 @@ class DashboardViewModel(
                 _totalPendapatanHariIni.postValue(0.0)
             }
         }
-        
+
         viewModelScope.launch {
             try {
                 produkRepository.getProdukStokMenipis(10).collect { list ->
@@ -107,7 +110,7 @@ class DashboardViewModel(
                 _stokMenipis.postValue(0)
             }
         }
-        
+
         viewModelScope.launch {
             try {
                 transaksiRepository.getBestSellingProducts(5).collect { list ->
@@ -117,7 +120,7 @@ class DashboardViewModel(
                 _bestSellingProducts.postValue(emptyList())
             }
         }
-        
+
         viewModelScope.launch {
             try {
                 transaksiRepository.getRecentTransaksi(5).collect { list ->
@@ -125,6 +128,36 @@ class DashboardViewModel(
                 }
             } catch (e: Exception) {
                 _recentTransaksi.postValue(emptyList())
+            }
+        }
+    }
+
+    fun checkLowStockNotifications(context: Context) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+            val isNotificationEnabled = prefs.getBoolean("notifikasi_stok_harian", false)
+
+            if (!isNotificationEnabled) return@launch
+
+            val today = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
+            val lastNotifDay = prefs.getInt("last_low_stock_notif_day", -1)
+
+            if (today == lastNotifDay) return@launch
+
+            try {
+                val produkList = produkRepository.getProdukStokMenipis(10).first()
+                var notificationSent = false
+                produkList.forEach { produk ->
+                    if (!NotificationHelper.hasLowStockNotificationToday(context, produk.nama)) {
+                        NotificationHelper.showLowStockNotification(context, produk.nama, produk.stok)
+                        notificationSent = true
+                    }
+                }
+                if (notificationSent) {
+                    prefs.edit().putInt("last_low_stock_notif_day", today).apply()
+                }
+            } catch (e: Exception) {
+                // Handle error
             }
         }
     }
