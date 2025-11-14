@@ -146,7 +146,10 @@ class TransaksiFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.cartItems.collect { items: List<TransaksiItem> ->
                 adapter.submitList(items)
-                binding.tvEmptyCart.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+                val isEmpty = items.isEmpty()
+                binding.tvEmptyCart.visibility = if (isEmpty) View.VISIBLE else View.GONE
+                binding.btnBayar.isEnabled = !isEmpty
+                binding.btnClearCart.isEnabled = !isEmpty
             }
         }
         

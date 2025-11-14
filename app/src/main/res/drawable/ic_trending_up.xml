@@ -1,10 +1,9 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24">
-    <!-- Panah naik dengan garis grafik -->
-    <path
-        android:fillColor="#FF000000"
-        android:pathData="M16,6l2.29,2.29 -4.88,4.88 -4,-4L2,16.59 3.41,18l6,-6 4,4 6.3,-6.29L22,12V6z"/>
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+  <path
+      android:pathData="m136,720 l-56,-56 296,-298 160,160 208,-206L640,320v-80h240v240h-80v-104L536,640 376,480 136,720Z"
+      android:fillColor="#000000"/>
 </vector>

@@ -6,4 +6,9 @@
         android:title="Notifikasi"
         app:actionLayout="@layout/notification_badge"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_transaction_history"
+        android:icon="@drawable/ic_receipt_long"
+        android:title="Riwayat Transaksi"
+        app:showAsAction="always" />
 </menu>

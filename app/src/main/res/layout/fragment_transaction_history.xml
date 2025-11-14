@@ -1,41 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="?attr/colorBackground">
+    android:background="?attr/colorBackground"
+    tools:context=".ui.history.TransactionHistoryFragment">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:fitsSystemWindows="true"
+        app:elevation="0dp">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:title="Riwayat Transaksi"
-            app:navigationIcon="?attr/homeAsUpIndicator" />
-
+            app:titleTextColor="?attr/colorOnPrimary"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:navigationIconTint="?attr/colorOnPrimary" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerTransactionHistory"
+        android:id="@+id/rv_transaction_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:clipToPadding="false"
         android:padding="8dp"
-        android:clipToPadding="false" />
+        tools:listitem="@layout/item_transaction_history" />
 
     <TextView
-        android:id="@+id/tvEmptyHistory"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/tv_empty_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Belum ada riwayat transaksi"
-        android:textSize="16sp"
+        android:textAppearance="?attr/textAppearanceBody1"
         android:textColor="?attr/colorOnSurfaceVariant"
-        android:gravity="center"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:layout_anchor="@id/rv_transaction_history"
+        app:layout_anchorGravity="center" />
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var notificationsViewModel: NotificationsViewModel
     private val sharedViewModel: SharedViewModel by viewModels()
     private var notificationMenuItem: MenuItem? = null
+    private var transactionHistoryMenuItem: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeHelper.applyTheme(this)
@@ -90,7 +91,20 @@ class MainActivity : AppCompatActivity() {
                     fabNewTransaksi.visibility = View.GONE
                 }
 
-                notificationMenuItem?.isVisible = destination.id != R.id.notificationsFragment
+                when (destination.id) {
+                    R.id.transaksiFragment -> {
+                        notificationMenuItem?.isVisible = false
+                        transactionHistoryMenuItem?.isVisible = true
+                    }
+                    R.id.notificationsFragment -> {
+                        notificationMenuItem?.isVisible = false
+                        transactionHistoryMenuItem?.isVisible = false
+                    }
+                    else -> {
+                        notificationMenuItem?.isVisible = true
+                        transactionHistoryMenuItem?.isVisible = false
+                    }
+                }
             }
 
             val database = AppDatabase.getDatabase(this)
@@ -116,13 +130,29 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_dashboard, menu)
         notificationMenuItem = menu.findItem(R.id.menu_notifications)
+        transactionHistoryMenuItem = menu.findItem(R.id.menu_transaction_history)
+        
         val actionView = notificationMenuItem?.actionView
         actionView?.setOnClickListener {
             navController.navigate(R.id.notificationsFragment)
         }
         notificationBadge = actionView?.findViewById(R.id.notification_badge)
-        notificationMenuItem?.isVisible = navController.currentDestination?.id != R.id.notificationsFragment
+        
+        // Initial visibility setup
+        val currentId = navController.currentDestination?.id
+        notificationMenuItem?.isVisible = currentId != R.id.notificationsFragment && currentId != R.id.transaksiFragment
+        transactionHistoryMenuItem?.isVisible = currentId == R.id.transaksiFragment
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_transaction_history -> {
+                navController.navigate(R.id.transactionHistoryFragment)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     fun updateNotificationBadge(count: Int) {

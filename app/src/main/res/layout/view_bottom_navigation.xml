@@ -29,7 +29,7 @@
         android:id="@+id/fab_new_transaksi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_scan"
+        android:src="@drawable/ic_barcode_reader"
         app:tint="?attr/colorOnPrimary"
         app:backgroundTint="?attr/colorPrimary"
         app:layout_anchor="@id/bottom_app_bar"

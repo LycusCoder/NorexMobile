@@ -24,7 +24,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:background="@drawable/ic_product"
+            android:background="@drawable/ic_package"
             android:backgroundTint="?attr/colorPrimary"
             android:gravity="center"
             android:layout_marginEnd="12dp" />

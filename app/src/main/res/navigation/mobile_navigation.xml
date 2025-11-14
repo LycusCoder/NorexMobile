@@ -91,4 +91,10 @@
             android:defaultValue="null" />
     </fragment>
 
+    <fragment
+        android:id="@+id/transactionHistoryFragment"
+        android:name="com.minikasirpintarfree.app.ui.history.TransactionHistoryFragment"
+        android:label="Riwayat Transaksi"
+        tools:layout="@layout/fragment_transaction_history" />
+
 </navigation>

@@ -1,11 +1,9 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24"
-    android:tint="?attr/colorPrimary">
-    <!-- Menggunakan pathData untuk ikon "check" dari Material Icons -->
-    <path
-        android:fillColor="@android:color/white"
-        android:pathData="M9,16.17L4.83,12l-1.42,1.41L9,19 21,7l-1.41,-1.41L9,16.17z"/>
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+  <path
+      android:pathData="M382,720 L154,492l57,-57 171,171 367,-367 57,57 -424,424Z"
+      android:fillColor="#1f1f1f"/>
 </vector>

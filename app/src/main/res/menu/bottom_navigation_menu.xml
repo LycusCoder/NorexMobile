@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/dashboardFragment"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_dashboard"
         android:title="Home" />
     <item
         android:id="@+id/produkFragment"
-        android:icon="@drawable/ic_product"
+        android:icon="@drawable/ic_package"
         android:title="Produk" />
     <item
         android:id="@+id/placeholder"
         android:title="" />
     <item
         android:id="@+id/laporanFragment"
-        android:icon="@drawable/ic_laporan_baru"
+        android:icon="@drawable/ic_analytics"
         android:title="Laporan" />
     <item
         android:id="@+id/settingsFragment"
-        android:icon="@drawable/ic_pengaturan_baru"
+        android:icon="@drawable/ic_settings"
         android:title="Pengaturan" />
 </menu>
