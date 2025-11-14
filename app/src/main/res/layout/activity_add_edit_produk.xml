@@ -69,7 +69,7 @@
                         android:background="@drawable/dotted_border"
                         android:padding="4dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_package" />
+                        android:src="@drawable/ic_upload_photo" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnPilihGambar"

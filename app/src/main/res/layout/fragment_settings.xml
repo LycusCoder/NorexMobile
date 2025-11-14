@@ -25,17 +25,12 @@
             android:layout_marginBottom="24dp"
             android:layout_marginStart="16dp" />
 
-        <!-- ============================================= -->
-        <!-- SECTION 1: APLIKASI & TEMA -->
-        <!-- ============================================= -->
+        <!-- SECTION: APLIKASI -->
         <TextView
+            style="@style/TextAppearance.MaterialComponents.Subtitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Aplikasi"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorOnSurface"
-            android:alpha="0.6"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="16dp" />
 
@@ -43,134 +38,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:layout_marginHorizontal="16dp"
-            app:cardElevation="2dp"
-            app:cardCornerRadius="12dp">
+            android:layout_marginHorizontal="16dp">
 
-            <!-- Item: Tema Aplikasi (Full Clickable List Item Style) -->
             <LinearLayout
                 android:id="@+id/cardTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="12dp"
-                android:paddingHorizontal="16dp"
+                android:padding="16dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground">
-
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_color_lens"
                     app:tint="?attr/colorPrimary"
                     android:layout_gravity="center_vertical" />
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp">
-
+                    android:layout_marginStart="16dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tema Aplikasi"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="?attr/colorOnSurface" />
-
+                        android:textSize="16sp"/>
                     <TextView
                         android:id="@+id/tvCurrentTheme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tema Saat Ini: Ocean Blue"
-                        android:textSize="13sp"
-                        android:textColor="?attr/colorOnSurface"
-                        android:alpha="0.7"
-                        android:layout_marginTop="2dp" />
+                        android:text="Tema Saat Ini: Winter"/>
                 </LinearLayout>
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_chevron_right"
-                    app:tint="@color/grey"
-                    android:layout_gravity="center_vertical" />
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- ============================================= -->
-        <!-- SECTION 2: TOKO -->
-        <!-- ============================================= -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Toko"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorOnSurface"
-            android:alpha="0.6"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:layout_marginHorizontal="16dp"
-            app:cardElevation="2dp"
-            app:cardCornerRadius="12dp">
-
-            <!-- Item: Profil Toko -->
-            <LinearLayout
-                android:id="@+id/cardStoreProfile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="12dp"
-                android:paddingHorizontal="16dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_store"
-                    app:tint="?attr/colorPrimary"
-                    android:layout_gravity="center_vertical" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Profil Toko"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="?attr/colorOnSurface" />
-
-                    <TextView
-                        android:id="@+id/tvStoreName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="MiniKasir"
-                        android:textSize="13sp"
-                        android:textColor="?attr/colorOnSurface"
-                        android:alpha="0.7"
-                        android:layout_marginTop="2dp" />
-                </LinearLayout>
-
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
@@ -180,17 +81,12 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- ============================================= -->
-        <!-- SECTION 3: AKUN -->
-        <!-- ============================================= -->
+        <!-- SECTION: TOKO & AKUN -->
         <TextView
+            style="@style/TextAppearance.MaterialComponents.Subtitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Akun"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorOnSurface"
-            android:alpha="0.6"
+            android:text="Toko &amp; Akun"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="16dp" />
 
@@ -198,60 +94,86 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:layout_marginHorizontal="16dp"
-            app:cardElevation="2dp"
-            app:cardCornerRadius="12dp">
+            android:layout_marginHorizontal="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- Item: Ubah Password -->
                 <LinearLayout
-                    android:id="@+id/cardChangePassword"
+                    android:id="@+id/cardStoreProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingVertical="12dp"
-                    android:paddingHorizontal="16dp"
+                    android:padding="16dp"
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground">
-
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_lock"
-                        app:tint="?attr/colorSecondary"
+                        android:src="@drawable/ic_storefront"
+                        app:tint="?attr/colorPrimary"
                         android:layout_gravity="center_vertical" />
-
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="8dp">
+                        android:layout_marginStart="16dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Profil Toko"
+                            android:textSize="16sp"/>
+                        <TextView
+                            android:id="@+id/tvStoreName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="MiniKasir"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="@color/grey"
+                        android:layout_gravity="center_vertical" />
+                </LinearLayout>
 
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/light_grey" android:layout_marginHorizontal="16dp"/>
+
+                <LinearLayout
+                    android:id="@+id/cardChangePassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_lock"
+                        app:tint="?attr/colorPrimary"
+                        android:layout_gravity="center_vertical" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Ubah Password"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="?attr/colorOnSurface" />
-
+                            android:textSize="16sp"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ubah password akun"
-                            android:textSize="13sp"
-                            android:textColor="?attr/colorOnSurface"
-                            android:alpha="0.7"
-                            android:layout_marginTop="2dp" />
+                            android:text="Ubah password akun"/>
                     </LinearLayout>
-
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
@@ -261,18 +183,13 @@
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
-        <!-- ============================================= -->
-        <!-- SECTION 4: MANAJEMEN DATA -->
-        <!-- ============================================= -->
+        
+        <!-- SECTION: MANAJEMEN DATA -->
         <TextView
+            style="@style/TextAppearance.MaterialComponents.Subtitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Manajemen Data"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorOnSurface"
-            android:alpha="0.6"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="16dp" />
 
@@ -280,235 +197,84 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:layout_marginHorizontal="16dp"
-            app:cardElevation="2dp"
-            app:cardCornerRadius="12dp">
+            android:layout_marginHorizontal="16dp">
 
             <LinearLayout
+                android:id="@+id/cardDataManagement"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <!-- Item: Reset Produk -->
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_database"
+                    app:tint="?attr/colorPrimary"
+                    android:layout_gravity="center_vertical" />
                 <LinearLayout
-                    android:id="@+id/cardResetProduk"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingVertical="12dp"
-                    android:paddingHorizontal="16dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_delete"
-                        app:tint="?attr/colorSecondary"
-                        android:layout_gravity="center_vertical" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp">
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="8dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Reset Produk"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="?attr/colorOnSurface" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hapus semua data produk"
-                            android:textSize="13sp"
-                            android:textColor="?attr/colorOnSurface"
-                            android:alpha="0.7"
-                            android:layout_marginTop="2dp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/light_grey"
-                    android:layout_marginHorizontal="16dp" />
-
-                <!-- Item: Reset Transaksi -->
-                <LinearLayout
-                    android:id="@+id/cardResetTransaksi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingVertical="12dp"
-                    android:paddingHorizontal="16dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_delete"
-                        app:tint="?attr/colorSecondary"
-                        android:layout_gravity="center_vertical" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
+                        android:text="Impor, Ekspor &amp; Reset"
+                        android:textSize="16sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="8dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Reset Transaksi"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="?attr/colorOnSurface" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hapus semua riwayat transaksi"
-                            android:textSize="13sp"
-                            android:textColor="?attr/colorOnSurface"
-                            android:alpha="0.7"
-                            android:layout_marginTop="2dp" />
-                    </LinearLayout>
+                        android:text="Kelola data aplikasi"/>
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/light_grey"
-                    android:layout_marginHorizontal="16dp" />
-
-                <!-- Item: Reset Semua Data (Kritis) -->
-                <LinearLayout
-                    android:id="@+id/cardResetAll"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingVertical="12dp"
-                    android:paddingHorizontal="16dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_warning"
-                        app:tint="@color/red"
-                        android:layout_gravity="center_vertical" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="8dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Reset Semua Data"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/red" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Aksi ini tidak dapat dibatalkan"
-                            android:textSize="13sp"
-                            android:textColor="@color/red"
-                            android:alpha="0.8"
-                            android:layout_marginTop="2dp" />
-                    </LinearLayout>
-                </LinearLayout>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_chevron_right"
+                    app:tint="@color/grey"
+                    android:layout_gravity="center_vertical" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- ============================================= -->
-        <!-- SECTION 5: KELUAR -->
-        <!-- ============================================= -->
+        <!-- SECTION: KELUAR -->
         <TextView
+            style="@style/TextAppearance.MaterialComponents.Subtitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Keluar"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorOnSurface"
-            android:alpha="0.6"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="16dp" />
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginHorizontal="16dp"
-            app:cardElevation="2dp"
-            app:cardCornerRadius="12dp">
-
-            <!-- Item: Logout -->
+            android:layout_marginHorizontal="16dp">
             <LinearLayout
                 android:id="@+id/cardLogout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingVertical="12dp"
-                android:paddingHorizontal="16dp"
+                android:padding="16dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground">
-
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_logout"
-                    app:tint="@color/red"
+                    app:tint="@color/design_default_color_error"
                     android:layout_gravity="center_vertical" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
                     android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Logout"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/red" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Keluar dari aplikasi"
-                        android:textSize="13sp"
-                        android:textColor="@color/red"
-                        android:alpha="0.8"
-                        android:layout_marginTop="2dp" />
-                </LinearLayout>
+                    android:text="Logout"
+                    android:textColor="@color/design_default_color_error"
+                    android:textSize="16sp"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

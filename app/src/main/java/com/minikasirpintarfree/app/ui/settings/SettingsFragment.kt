@@ -12,20 +12,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.minikasirpintarfree.app.R
-import com.minikasirpintarfree.app.data.database.AppDatabase
-import com.minikasirpintarfree.app.data.repository.ProdukRepository
-import com.minikasirpintarfree.app.data.repository.TransaksiRepository
 import com.minikasirpintarfree.app.databinding.FragmentSettingsBinding
 import com.minikasirpintarfree.app.ui.login.LoginActivity
 import com.minikasirpintarfree.app.utils.StoreProfileHelper
 import com.minikasirpintarfree.app.utils.ThemeHelper
-import com.minikasirpintarfree.app.viewmodel.SettingsViewModel
-import com.minikasirpintarfree.app.viewmodel.SettingsViewModelFactory
 
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: SettingsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,16 +33,6 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         try {
-            val database = AppDatabase.getDatabase(requireContext())
-            val produkRepository = ProdukRepository(database.produkDao())
-            val transaksiRepository = TransaksiRepository(database.transaksiDao())
-            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-
-            viewModel = ViewModelProvider(
-                this,
-                SettingsViewModelFactory(produkRepository, transaksiRepository, sharedPreferences)
-            )[SettingsViewModel::class.java]
-
             setupClickListeners()
             loadCurrentSettings()
         } catch (e: Exception) {
@@ -70,28 +54,8 @@ class SettingsFragment : Fragment() {
             findNavController().navigate(R.id.action_settingsFragment_to_changePasswordFragment)
         }
 
-        binding.cardResetProduk.setOnClickListener {
-            showResetDialog("Produk") {
-                viewModel.resetDataProduk {
-                    Toast.makeText(requireContext(), "Data produk telah direset", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-        binding.cardResetTransaksi.setOnClickListener {
-            showResetDialog("Transaksi") {
-                viewModel.resetDataTransaksi {
-                    Toast.makeText(requireContext(), "Data transaksi telah direset", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-        binding.cardResetAll.setOnClickListener {
-            showResetDialog("Semua Data") {
-                viewModel.resetAllData {
-                    Toast.makeText(requireContext(), "Semua data telah direset", Toast.LENGTH_SHORT).show()
-                }
-            }
+        binding.cardDataManagement.setOnClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_dataManagementFragment)
         }
 
         binding.cardLogout.setOnClickListener {
@@ -152,17 +116,6 @@ class SettingsFragment : Fragment() {
         ).show()
 
         requireActivity().recreate()
-    }
-
-    private fun showResetDialog(dataType: String, onConfirm: () -> Unit) {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Reset Data")
-            .setMessage("Apakah Anda yakin ingin menghapus semua data $dataType? Tindakan ini tidak dapat dibatalkan.")
-            .setPositiveButton("Ya, Hapus") { _, _ ->
-                onConfirm()
-            }
-            .setNegativeButton("Batal", null)
-            .show()
     }
 
     private fun logout() {
